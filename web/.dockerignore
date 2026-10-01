@@ -1,0 +1,14 @@
+node_modules
+.next
+media
+.git
+.env
+.env.*
+!.env.example
+*.tmp.mjs
+test-results
+playwright-report
+tests
+deploy/backups
+npm-debug.log*
+.vscode

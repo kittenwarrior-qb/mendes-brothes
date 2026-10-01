@@ -1,0 +1,19 @@
+# Local development database only:  docker compose -f docker-compose.dev.yml up -d
+# Matches DATABASE_URL in .env.example (port 5440).
+name: mendez-dev
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mendez
+      POSTGRES_PASSWORD: mendez
+      POSTGRES_DB: mendez
+    ports:
+      - '127.0.0.1:5440:5432'
+    volumes:
+      - pgdata-dev:/var/lib/postgresql/data
+
+volumes:
+  pgdata-dev:

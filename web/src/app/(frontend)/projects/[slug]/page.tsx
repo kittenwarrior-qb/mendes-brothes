@@ -1,0 +1,259 @@
+import type { Metadata } from 'next'
+
+import configPromise from '@payload-config'
+import Link from 'next/link'
+import { draftMode } from 'next/headers'
+import { getPayload } from 'payload'
+import React, { cache } from 'react'
+
+import type { Equipment, Project, Service, ServiceArea, Testimonial } from '@/payload-types'
+
+import { toLightboxImages } from '@/blocks/Gallery/Component'
+import { ReviewCard } from '@/blocks/Testimonials/Component'
+import { clientTypeOptions } from '@/collections/Projects'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
+import RichText from '@/components/RichText'
+import { BeforeAfter } from '@/components/site/BeforeAfter'
+import { Breadcrumbs } from '@/components/site/Breadcrumbs'
+import { Img } from '@/components/site/Img'
+import { Lightbox } from '@/components/site/Lightbox'
+import { ProjectCard } from '@/components/site/ProjectCard'
+import { SiteCtaBand } from '@/components/site/SiteCtaBand'
+import { generateMeta } from '@/utilities/generateMeta'
+import { getGlobal } from '@/utilities/getGlobals'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
+import { asDoc, asDocs, asMedia, formatAcres, formatMonthYear } from '@/utilities/site'
+
+type Args = { params: Promise<{ slug?: string }> }
+
+export async function generateStaticParams() {
+  try {
+    const payload = await getPayload({ config: configPromise })
+    const res = await payload.find({
+      collection: 'projects',
+      draft: false,
+      limit: 1000,
+      pagination: false,
+      overrideAccess: false,
+      select: { slug: true },
+    })
+    return res.docs.filter((d) => d.slug).map(({ slug }) => ({ slug }))
+  } catch {
+    return []
+  }
+}
+
+const getProject = cache(async (slug: string) => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config: configPromise })
+  const res = await payload.find({
+    collection: 'projects',
+    draft,
+    overrideAccess: draft,
+    where: { slug: { equals: slug } },
+    limit: 1,
+    depth: 2,
+    pagination: false,
+  })
+  return res.docs[0] ?? null
+})
+
+const pic = (m: unknown) => {
+  const media = asMedia(m)
+  return media?.url
+    ? {
+        src: getMediaUrl(media.url, media.updatedAt),
+        width: media.width ?? 1600,
+        height: media.height ?? 900,
+        alt: media.alt ?? '',
+      }
+    : null
+}
+
+export default async function ProjectPage({ params }: Args) {
+  const { isEnabled: draft } = await draftMode()
+  const { slug = '' } = await params
+  const decoded = decodeURIComponent(slug)
+  const url = `/projects/${decoded}`
+  const project = await getProject(decoded)
+  if (!project) return <PayloadRedirects url={url} />
+
+  const listing = await getGlobal('listing-pages', 0)
+  const services = asDocs<Service>(project.services)
+  const equipment = asDocs<Equipment>(project.equipment)
+  const area = asDoc<ServiceArea>(project.area)
+  const testimonial = asDoc<Testimonial>(project.testimonial)
+  const before = pic(project.beforeAfter?.before)
+  const after = pic(project.beforeAfter?.after)
+  const gallery = toLightboxImages(
+    (project.gallery ?? []).map((g) => ({ media: g.image, caption: g.caption })),
+  )
+
+  const payload = await getPayload({ config: configPromise })
+  const related = services[0]
+    ? (
+        await payload.find({
+          collection: 'projects',
+          where: {
+            and: [
+              { _status: { equals: 'published' } },
+              { id: { not_equals: project.id } },
+              { services: { contains: services[0].id } },
+            ],
+          },
+          sort: '-completedAt',
+          limit: 3,
+          depth: 1,
+          overrideAccess: false,
+        })
+      ).docs
+    : []
+
+  const facts: [string, React.ReactNode][] = [
+    [
+      'Town',
+      area ? (
+        <Link href={`/areas/${area.slug}`}>
+          {[area.name, area.state].filter(Boolean).join(', ')}
+        </Link>
+      ) : null,
+    ],
+    ['Lot size', typeof project.acres === 'number' ? formatAcres(project.acres) : null],
+    ['Completed', formatMonthYear(project.completedAt)],
+    ['Duration', project.duration],
+    ['Client', clientTypeOptions.find((c) => c.value === project.clientType)?.label],
+  ]
+
+  return (
+    <article>
+      <PayloadRedirects disableNotFound url={url} />
+      {draft && <LivePreviewListener />}
+
+      <section className="phero phero-simple sec">
+        <div className="wrap">
+          <Breadcrumbs
+            items={[
+              { name: 'Home', path: '/' },
+              { name: 'Projects', path: '/projects' },
+              { name: project.title, path: url },
+            ]}
+          />
+          <h1>{project.title}</h1>
+          <p className="lede">{project.summary}</p>
+          {services.length ? (
+            <div className="tags" style={{ marginTop: 18 }}>
+              {services.map((s) => (
+                <Link className="tag" href={`/projects?service=${s.slug}`} key={s.id}>
+                  {s.title}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="sec pad-md">
+        <div className="wrap detail-grid">
+          <div>
+            <div className="cover-img">
+              <Img media={project.cover} priority sizes="(max-width: 960px) 100vw, 860px" />
+            </div>
+            {before && after ? (
+              <>
+                <h2 className="sub-title">Before &amp; after</h2>
+                <BeforeAfter after={after} before={before} />
+              </>
+            ) : null}
+            {project.body ? (
+              <>
+                <h2 className="sub-title">The job</h2>
+                <RichText
+                  className="prose-site"
+                  data={project.body}
+                  enableGutter={false}
+                  enableProse={false}
+                />
+              </>
+            ) : null}
+            {gallery.length ? (
+              <>
+                <h2 className="sub-title">Photos</h2>
+                <Lightbox columns={3} images={gallery} />
+              </>
+            ) : null}
+            {testimonial ? (
+              <>
+                <h2 className="sub-title">What the client said</h2>
+                <ReviewCard t={testimonial} />
+              </>
+            ) : null}
+          </div>
+          <aside className="facts">
+            <dl>
+              {facts
+                .filter(([, v]) => v)
+                .map(([k, v]) => (
+                  <div key={k}>
+                    <dt>{k}</dt>
+                    <dd>{v}</dd>
+                  </div>
+                ))}
+            </dl>
+            {equipment.length || project.extraEquipment?.length ? (
+              <>
+                <h3 style={{ marginTop: 18, fontSize: '1rem' }}>Equipment used</h3>
+                <div className="tags">
+                  {equipment.map((e) => (
+                    <span className="tag g" key={e.id}>
+                      {e.name}
+                    </span>
+                  ))}
+                  {project.extraEquipment?.map((e) => (
+                    <span className="tag g" key={e}>
+                      {e}
+                    </span>
+                  ))}
+                </div>
+              </>
+            ) : null}
+            <Link
+              className="btn btn-primary"
+              href={`/contact${services[0] ? `?service=${services[0].slug}` : ''}`}
+            >
+              {listing.projects?.detailCtaLabel || 'Get an estimate for a similar job'}
+            </Link>
+          </aside>
+        </div>
+      </section>
+
+      {related.length ? (
+        <section className="sec pad-md bg-alt">
+          <div className="wrap">
+            <div className="sec-head">
+              <h2>
+                Similar <span className="o">projects</span>
+              </h2>
+              <Link className="btn btn-outline" href={`/projects?service=${services[0]?.slug}`}>
+                More {services[0]?.title}
+              </Link>
+            </div>
+            <div className="proj-grid">
+              {related.map((p: Project) => (
+                <ProjectCard key={p.id} project={p} />
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+      <SiteCtaBand />
+    </article>
+  )
+}
+
+export async function generateMetadata({ params }: Args): Promise<Metadata> {
+  const { slug = '' } = await params
+  const decoded = decodeURIComponent(slug)
+  const project = await getProject(decoded)
+  return generateMeta({ doc: project, fallbackImage: project?.cover, path: `/projects/${decoded}` })
+}

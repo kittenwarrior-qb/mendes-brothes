@@ -1,0 +1,38 @@
+# Optional global block — your email for Let's Encrypt expiry notices:
+# {
+# 	email you@example.com
+# }
+
+# www → apex redirect
+www.{$SITE_DOMAIN} {
+	redir https://{$SITE_DOMAIN}{uri} permanent
+}
+
+{$SITE_DOMAIN} {
+	encode zstd gzip
+
+	# Static build assets and fonts never change for a given URL.
+	@immutable path /_next/static/* /fonts/*
+	header @immutable Cache-Control "public, max-age=31536000, immutable"
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+
+	# Large uploads in the admin (photos, videos)
+	request_body {
+		max_size 50MB
+	}
+
+	reverse_proxy app:3000 {
+		header_up X-Real-IP {remote_host}
+	}
+
+	log {
+		output file /data/access.log {
+			roll_size 10mb
+			roll_keep 5
+		}
+	}
+}
