@@ -1,6 +1,6 @@
 import type { Block } from 'payload'
 
-import { blockSettings, headingField, ledeField } from '@/fields/common'
+import { blockSettings, eyebrowField, headingField, ledeField } from '@/fields/common'
 import { linkGroup } from '@/fields/linkGroup'
 
 export const HeroHome: Block = {
@@ -11,18 +11,19 @@ export const HeroHome: Block = {
     {
       name: 'variant',
       type: 'select',
-      defaultValue: 'split',
+      defaultValue: 'fullImage',
       options: [
-        { label: 'Split: text left, photo collage right', value: 'split' },
-        { label: 'Full-width photo background', value: 'fullImage' },
+        { label: 'Cinematic: full-screen photo, giant headline', value: 'fullImage' },
+        { label: 'Split: text left, photo right', value: 'split' },
       ],
     },
     {
       name: 'showLogo',
       label: 'Show the wordmark logo above the heading',
       type: 'checkbox',
-      defaultValue: true,
+      defaultValue: false,
     },
+    eyebrowField(),
     headingField({ required: true }),
     ledeField(),
     linkGroup({ appearances: ['default', 'outline'], overrides: { maxRows: 2 } }),

@@ -4,6 +4,7 @@ import { HIGHLIGHT_HINT } from '../fields/common'
 import { revalidateGlobal } from '../hooks/revalidateSite'
 
 const heroFields = (defaults: { heading: string; lede: string }): Field[] => [
+  { name: 'eyebrow', label: 'Label above heading', type: 'text' },
   {
     name: 'heading',
     type: 'text',

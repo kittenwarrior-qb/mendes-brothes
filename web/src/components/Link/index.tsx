@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Arrow } from '@/components/site/Section'
 import { SmartLink } from '@/components/site/SmartLink'
 import { cn } from '@/utilities/ui'
 import { docPath } from '@/utilities/docPath'
@@ -40,6 +41,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const { appearance = 'inline', children, className, label, newTab } = props
   const href = resolveLinkHref(props)
   if (!href) return null
+  const isButton = Boolean(appearance && appearanceClass[appearance])
 
   return (
     <SmartLink
@@ -49,6 +51,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     >
       {label}
       {children}
+      {isButton ? <Arrow /> : null}
     </SmartLink>
   )
 }

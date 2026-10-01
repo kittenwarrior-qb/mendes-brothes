@@ -36,7 +36,7 @@ export const ReviewCard: React.FC<{ t: Testimonial }> = ({ t }) => (
 )
 
 export const TestimonialsBlockComponent: React.FC<Props & { id?: string }> = async (props) => {
-  const { heading, lede, source, limit, showRating, settings, id } = props
+  const { eyebrow, heading, lede, source, limit, showRating, settings, id } = props
   const payload = await getPayload({ config: configPromise })
 
   const items =
@@ -73,7 +73,7 @@ export const TestimonialsBlockComponent: React.FC<Props & { id?: string }> = asy
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede}>
+        <SectionHead eyebrow={eyebrow} heading={heading} id={titleId} lede={lede}>
           {summary}
         </SectionHead>
         <div className="reviews">

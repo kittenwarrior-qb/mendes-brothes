@@ -15,6 +15,7 @@ export default async function ServicesPage() {
   return (
     <>
       <PageHeroView
+        eyebrow={cfg?.eyebrow}
         crumbs={[
           { name: 'Home', path: '/' },
           { name: plainText(cfg?.heading) || 'Services', path: '/services' },

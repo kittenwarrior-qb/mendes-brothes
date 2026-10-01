@@ -6,6 +6,7 @@ import { Icon } from '@/components/site/Icon'
 import { Section, SectionHead } from '@/components/site/Section'
 
 export const ChecklistBlock: React.FC<Props & { id?: string }> = ({
+  eyebrow,
   heading,
   lede,
   items,
@@ -16,7 +17,7 @@ export const ChecklistBlock: React.FC<Props & { id?: string }> = ({
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} />
+        <SectionHead eyebrow={eyebrow} heading={heading} id={titleId} lede={lede} />
         <ul className="checks">
           {items?.map((it) => (
             <li key={it.id ?? it.text}>

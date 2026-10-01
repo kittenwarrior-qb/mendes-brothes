@@ -33,6 +33,15 @@ export const FeaturedProjects: Block = {
       ],
     },
     {
+      name: 'layout',
+      type: 'select',
+      defaultValue: 'feature',
+      options: [
+        { label: 'First project large, others beside it', value: 'feature' },
+        { label: 'Even grid', value: 'grid' },
+      ],
+    },
+    {
       name: 'projects',
       type: 'relationship',
       relationTo: 'projects',

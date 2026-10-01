@@ -127,8 +127,8 @@ export default async function ProjectPage({ params }: Args) {
     <article>
       <PayloadRedirects disableNotFound url={url} />
 
-      <section className="phero phero-simple sec">
-        <div className="wrap">
+      <section className="phero phero-simple hero-dark sec">
+        <div className="wrap phero-inner">
           <Breadcrumbs
             items={[
               { name: 'Home', path: '/' },

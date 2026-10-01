@@ -6,10 +6,11 @@ import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { Highlight } from '@/components/site/Highlight'
 import { Img } from '@/components/site/Img'
-import { Section } from '@/components/site/Section'
+import { Eyebrow, Section } from '@/components/site/Section'
 import { cn } from '@/utilities/ui'
 
 export const SplitBlock: React.FC<Props> = ({
+  eyebrow,
   heading,
   lede,
   body,
@@ -22,6 +23,7 @@ export const SplitBlock: React.FC<Props> = ({
   <Section settings={settings}>
     <div className={cn('wrap split', imagePosition === 'left' && 'img-left')}>
       <div className="reveal">
+        <Eyebrow>{eyebrow}</Eyebrow>
         {heading ? (
           <h2>
             <Highlight text={heading} />

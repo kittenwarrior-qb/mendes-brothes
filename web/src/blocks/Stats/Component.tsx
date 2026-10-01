@@ -5,6 +5,7 @@ import type { StatsBlock as Props } from '@/payload-types'
 import { Section, SectionHead } from '@/components/site/Section'
 
 export const StatsBlockComponent: React.FC<Props & { id?: string }> = ({
+  eyebrow,
   heading,
   lede,
   items,
@@ -19,7 +20,7 @@ export const StatsBlockComponent: React.FC<Props & { id?: string }> = ({
       settings={settings}
     >
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} />
+        <SectionHead eyebrow={eyebrow} heading={heading} id={titleId} lede={lede} />
         <div className="stats">
           {items?.map((s) => (
             <div className="reveal" key={s.id ?? s.label}>

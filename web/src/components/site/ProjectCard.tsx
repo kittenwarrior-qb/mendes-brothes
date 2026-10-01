@@ -6,6 +6,7 @@ import type { Project, Service, ServiceArea } from '@/payload-types'
 import { asDoc, asDocs, formatAcres } from '@/utilities/site'
 
 import { Img } from './Img'
+import { Arrow } from './Section'
 
 const PinIcon = () => (
   <svg aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
@@ -51,10 +52,13 @@ export const ProjectMeta: React.FC<{ project: Project }> = ({ project }) => {
   )
 }
 
-export const ProjectCard: React.FC<{ project: Project; priority?: boolean }> = ({
-  project,
-  priority,
-}) => {
+/** Poster-style project card: the photo fills the card, details sit on a dark gradient. */
+export const ProjectCard: React.FC<{
+  project: Project
+  priority?: boolean
+  /** `sizes` hint for the image when the card is rendered larger than a grid cell. */
+  sizes?: string
+}> = ({ project, priority, sizes }) => {
   const services = asDocs<Service>(project.services)
   return (
     <Link className="pcard reveal" href={`/projects/${project.slug}`}>
@@ -63,10 +67,13 @@ export const ProjectCard: React.FC<{ project: Project; priority?: boolean }> = (
           fill
           media={project.cover}
           priority={priority}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+          sizes={sizes ?? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 420px'}
         />
-        {services[0] ? <span className="pbadge">{services[0].title}</span> : null}
       </div>
+      {services[0] ? <span className="pbadge">{services[0].title}</span> : null}
+      <span aria-hidden="true" className="pgo">
+        <Arrow />
+      </span>
       <div className="pbody">
         <h3>{project.title}</h3>
         <ProjectMeta project={project} />

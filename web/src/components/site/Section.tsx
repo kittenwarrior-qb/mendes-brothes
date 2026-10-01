@@ -44,18 +44,39 @@ export const Section: React.FC<{
   )
 }
 
-/** "Heading + intro" row with an optional button on the right (Mẫu 1 `.sec-head`). */
+export const Arrow: React.FC = () => (
+  <svg
+    aria-hidden="true"
+    className="arrow"
+    fill="none"
+    stroke="currentColor"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    strokeWidth="2"
+    viewBox="0 0 24 24"
+  >
+    <path d="M4 12h15M13 6l6 6-6 6" />
+  </svg>
+)
+
+/** Small uppercase label above a heading. */
+export const Eyebrow: React.FC<{ children?: React.ReactNode }> = ({ children }) =>
+  children ? <p className="eyebrow">{children}</p> : null
+
+/** Label + heading + intro, with an optional link on the right. */
 export const SectionHead: React.FC<{
   id?: string
+  eyebrow?: string | null
   heading?: string | null
   lede?: string | null
   link?: { label?: string | null; url?: string | null } | null
   children?: React.ReactNode
-}> = ({ id, heading, lede, link, children }) => {
-  if (!heading && !lede && !link?.label && !children) return null
+}> = ({ id, eyebrow, heading, lede, link, children }) => {
+  if (!eyebrow && !heading && !lede && !link?.label && !children) return null
   return (
     <div className="sec-head">
-      <div>
+      <div className="sec-head-main">
+        <Eyebrow>{eyebrow}</Eyebrow>
         {heading ? (
           <h2 id={id}>
             <Highlight text={heading} />
@@ -66,6 +87,7 @@ export const SectionHead: React.FC<{
       {link?.label && link.url ? (
         <SmartLink className="btn btn-outline" href={link.url}>
           {link.label}
+          <Arrow />
         </SmartLink>
       ) : null}
       {children}

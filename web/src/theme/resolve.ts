@@ -47,7 +47,7 @@ export const paletteTokens = (theme?: Partial<Theme> | null): ThemeTokens => {
     }
   }
   const key: PresetKey =
-    theme?.preset && theme.preset in presets ? (theme.preset as PresetKey) : 'classic'
+    theme?.preset && theme.preset in presets ? (theme.preset as PresetKey) : 'limestone'
   return presets[key].tokens
 }
 
@@ -58,7 +58,7 @@ export const resolveTheme = (theme?: Partial<Theme> | null): ResolvedTheme => {
       ? AUTO_PALETTE
       : theme?.preset && theme.preset in presets
         ? (theme.preset as PresetKey)
-        : 'classic'
+        : 'limestone'
   const base = paletteTokens(theme)
 
   const colors = { ...base.colors }
@@ -95,7 +95,7 @@ const radii = {
   rounded: { r: '10px', lg: '18px' },
 }
 const buttonRadius = { square: '2px', rounded: '8px', pill: '999px' }
-const containers = { narrow: '1120px', default: '1240px', wide: '1400px' }
+const containers = { narrow: '1120px', default: '1280px', wide: '1440px' }
 const cards = {
   bordered: {
     border: '1px solid var(--c-line)',
@@ -148,6 +148,8 @@ export const themeToCss = (t: ResolvedTheme): string => {
     '--c-deep-on-tint': deepOnTint,
     '--c-on-btn': onBtn,
     '--c-on-white': onWhite,
+    // brand colour for text/icons on dark bands (lightened if the brand colour is too dark)
+    '--c-primary-on-dark': strict ? ensureContrast(c.primary, c.dark, 4.6) : c.primary,
     '--c-bg': c.background,
     '--c-alt': c.alt,
     '--c-tint': c.tint,

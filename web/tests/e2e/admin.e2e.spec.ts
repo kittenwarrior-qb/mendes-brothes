@@ -27,9 +27,19 @@ test.describe('admin panel', () => {
     await expect(page.getByText('Colours, fonts & layout')).toBeVisible()
   })
 
-  test('theme settings expose colour pickers', async () => {
+  test('theme offers visual palettes and a brand-colour generator', async () => {
     await page.goto('/admin/globals/theme')
+    await expect(page.getByRole('radio', { name: /Sunset Limestone/ })).toBeVisible()
+    await page.getByRole('radio', { name: /Custom/ }).click()
     await expect(page.locator('input[type="color"]').first()).toBeVisible()
+    // leave the saved palette untouched
+    await page.getByRole('radio', { name: /Sunset Limestone/ }).click()
+  })
+
+  test('backups screen lists actions', async () => {
+    await page.goto('/admin/backups')
+    await expect(page.getByRole('button', { name: 'Back up now' })).toBeVisible()
+    await expect(page.getByRole('button', { name: /Upload a backup file/ })).toBeVisible()
   })
 
   test('projects list opens', async () => {

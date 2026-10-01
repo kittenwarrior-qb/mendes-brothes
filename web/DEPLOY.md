@@ -1,6 +1,6 @@
 # Deploy lên VPS (Docker + Caddy)
 
-Stack: **PostgreSQL + website (Node) + Caddy** (HTTPS tự động bằng Let's Encrypt). Đo thực tế: RAM ~250 MB khi chạy.
+Stack: **PostgreSQL + website (Node) + Caddy** (HTTPS tự động bằng Let's Encrypt). Database chạy ngay trong Docker, không cần thuê dịch vụ ngoài. Đo thực tế: RAM ~300 MB khi chạy.
 
 ## 1. Yêu cầu máy chủ
 
@@ -61,13 +61,19 @@ Script làm theo thứ tự: build image → khởi động lại app → **migr
 
 ## 6. Sao lưu
 
+**Cách chính: ngay trong admin** → *Backups* (xem `docs/FEATURES.md` mục C). Tạo, tải về, khôi phục, upload; tự động mỗi ngày, giữ 7 bản. File nằm trong Docker volume `mendez_backups`.
+
+Nên tải một bản về máy định kỳ, vì backup nằm cùng máy chủ với website.
+
+**Tuỳ chọn thêm — backup ở cấp máy chủ** (chạy bằng cron, lưu ra thư mục `deploy/backups/` để đồng bộ đi nơi khác bằng rclone…):
+
 ```bash
 crontab -e
 # thêm dòng:
 0 3 * * * /opt/mendez/web/deploy/backup.sh >> /var/log/mendez-backup.log 2>&1
 ```
 
-Script lưu database + toàn bộ ảnh vào `deploy/backups/` và giữ 14 ngày. Nên đồng bộ thư mục này ra ngoài VPS (rclone lên Google Drive/S3…). Lệnh khôi phục ghi ở cuối `deploy/backup.sh`.
+**Chuyển sang máy chủ mới:** deploy bản trống trên máy mới → đăng nhập admin → *Backups* → *Upload a backup file* → *Restore*.
 
 ## 7. Lệnh hữu ích
 

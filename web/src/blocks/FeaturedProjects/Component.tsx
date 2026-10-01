@@ -9,7 +9,7 @@ import { Section, SectionHead } from '@/components/site/Section'
 import { asDoc, asDocs } from '@/utilities/site'
 
 export const FeaturedProjectsBlock: React.FC<Props & { id?: string }> = async (props) => {
-  const { heading, lede, headerLink, source, limit, settings, id } = props
+  const { eyebrow, heading, lede, headerLink, source, limit, layout, settings, id } = props
   let projects: Project[]
 
   if (source === 'manual') {
@@ -36,10 +36,20 @@ export const FeaturedProjectsBlock: React.FC<Props & { id?: string }> = async (p
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} link={headerLink} />
-        <div className="proj-grid">
-          {projects.map((p) => (
-            <ProjectCard key={p.id} project={p} />
+        <SectionHead
+          eyebrow={eyebrow}
+          heading={heading}
+          id={titleId}
+          lede={lede}
+          link={headerLink}
+        />
+        <div className={layout === 'grid' ? 'proj-grid' : 'proj-grid proj-feature'}>
+          {projects.map((p, i) => (
+            <ProjectCard
+              key={p.id}
+              project={p}
+              sizes={layout !== 'grid' && i === 0 ? '(max-width: 900px) 100vw, 760px' : undefined}
+            />
           ))}
         </div>
       </div>

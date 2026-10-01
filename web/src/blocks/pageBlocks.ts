@@ -12,6 +12,7 @@ import { FeaturedProjects } from './FeaturedProjects/config'
 import { FormBlock } from './Form/config'
 import { Gallery } from './Gallery/config'
 import { HeroHome } from './HeroHome/config'
+import { Marquee } from './Marquee/config'
 import { MediaBlock } from './MediaBlock/config'
 import { PageHero } from './PageHero/config'
 import { ServiceAreasBlock } from './ServiceAreasBlock/config'
@@ -31,6 +32,7 @@ export const pageBlocks: Block[] = [
   Cards,
   Steps,
   Stats,
+  Marquee,
   EquipmentGrid,
   Checklist,
   TestimonialsBlock,

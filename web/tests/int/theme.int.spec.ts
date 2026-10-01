@@ -23,10 +23,10 @@ describe('contrast helpers', () => {
 })
 
 describe('resolveTheme', () => {
-  it('falls back to the classic preset', () => {
+  it('falls back to the recommended palette', () => {
     const t = resolveTheme(null)
-    expect(t.preset).toBe('classic')
-    expect(t.colors.primary).toBe(presets.classic.tokens.colors.primary)
+    expect(t.preset).toBe('limestone')
+    expect(t.colors.primary).toBe(presets.limestone.tokens.colors.primary)
   })
 
   it('applies valid overrides and ignores invalid ones', () => {

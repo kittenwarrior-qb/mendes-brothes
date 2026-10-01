@@ -1,12 +1,13 @@
 import type { Block } from 'payload'
 
-import { blockSettings, headingField, ledeField } from '@/fields/common'
+import { blockSettings, eyebrowField, headingField, ledeField } from '@/fields/common'
 
 export const ContactSection: Block = {
   slug: 'contactSection',
   interfaceName: 'ContactSectionBlock',
   labels: { singular: 'Contact + form', plural: 'Contact + form' },
   fields: [
+    eyebrowField(),
     headingField(),
     ledeField(),
     {

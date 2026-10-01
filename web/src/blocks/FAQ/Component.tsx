@@ -31,7 +31,7 @@ export const FaqList: React.FC<{ items: Faq[] }> = ({ items }) => (
 )
 
 export const FAQBlockComponent: React.FC<Props & { id?: string }> = async (props) => {
-  const { heading, lede, settings, id } = props
+  const { eyebrow, heading, lede, settings, id } = props
   let items = asDocs<Faq>(props.items)
   if (!items.length) {
     const payload = await getPayload({ config: configPromise })
@@ -50,7 +50,7 @@ export const FAQBlockComponent: React.FC<Props & { id?: string }> = async (props
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} />
+        <SectionHead eyebrow={eyebrow} heading={heading} id={titleId} lede={lede} />
         <FaqList items={items} />
       </div>
     </Section>

@@ -1,6 +1,6 @@
 import type { Block } from 'payload'
 
-import { blockSettings, headingField, ledeField } from '@/fields/common'
+import { blockSettings, eyebrowField, headingField, ledeField } from '@/fields/common'
 import { linkGroup } from '@/fields/linkGroup'
 
 export const Split: Block = {
@@ -8,6 +8,7 @@ export const Split: Block = {
   interfaceName: 'SplitBlock',
   labels: { singular: 'Text + image', plural: 'Text + image' },
   fields: [
+    eyebrowField(),
     headingField(),
     ledeField(),
     { name: 'body', type: 'richText' },

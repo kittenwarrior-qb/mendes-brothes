@@ -25,6 +25,7 @@ export const toLightboxImages = (
     .filter(Boolean) as LightboxImage[]
 
 export const GalleryBlockComponent: React.FC<Props & { id?: string }> = ({
+  eyebrow,
   heading,
   lede,
   images,
@@ -38,7 +39,7 @@ export const GalleryBlockComponent: React.FC<Props & { id?: string }> = ({
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} />
+        <SectionHead eyebrow={eyebrow} heading={heading} id={titleId} lede={lede} />
         <Lightbox columns={Number(columns) || 3} images={list} />
       </div>
     </Section>

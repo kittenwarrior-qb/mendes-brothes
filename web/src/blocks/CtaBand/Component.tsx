@@ -8,6 +8,7 @@ import { CtaCard } from '@/components/site/SiteCtaBand'
 import { getGlobal } from '@/utilities/getGlobals'
 
 export const CtaBandBlockComponent: React.FC<Props> = async ({
+  eyebrow,
   heading,
   lede,
   showPhone,
@@ -26,6 +27,7 @@ export const CtaBandBlockComponent: React.FC<Props> = async ({
         }
         buttonLabel={buttonLabel}
         buttonUrl={buttonUrl}
+        eyebrow={eyebrow}
         heading={heading}
         lede={lede}
         phone={site?.phone}

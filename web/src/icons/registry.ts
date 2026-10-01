@@ -64,6 +64,8 @@ export const icons = {
     body: '<path d="M2 11 12 3l10 8"/><path d="M5 9v12h14V9"/><path d="M5 14h14M5 17.5h14"/>',
   },
   // ---------- general UI ----------
+  arrow: { label: 'Arrow right', kind: 'line', body: '<path d="M4 12h15M13 6l6 6-6 6"/>' },
+  arrowUpRight: { label: 'Arrow up-right', kind: 'line', body: '<path d="M7 17 17 7M8 7h9v9"/>' },
   check: { label: 'Check mark', kind: 'line', body: '<path d="M4 12l5 5L20 6"/>' },
   phone: {
     label: 'Phone',

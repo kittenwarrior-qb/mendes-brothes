@@ -6,7 +6,7 @@ import { CMSLink } from '@/components/Link'
 import { Highlight } from '@/components/site/Highlight'
 import { Icon } from '@/components/site/Icon'
 import { Img } from '@/components/site/Img'
-import { Section } from '@/components/site/Section'
+import { Eyebrow, Section } from '@/components/site/Section'
 import { resolveTheme } from '@/theme/resolve'
 import { getGlobal } from '@/utilities/getGlobals'
 import { telHref } from '@/utilities/site'
@@ -15,6 +15,7 @@ export const HeroHomeBlock: React.FC<Props & { isFirst?: boolean }> = async (pro
   const {
     variant,
     showLogo,
+    eyebrow,
     heading,
     lede,
     links,
@@ -31,22 +32,20 @@ export const HeroHomeBlock: React.FC<Props & { isFirst?: boolean }> = async (pro
     getGlobal('site-settings', 1),
     getGlobal('theme', 0),
   ])
-  const full = variant === 'fullImage'
-  const darkBg = full || resolveTheme(themeGlobal).colorScheme === 'dark'
+  const split = variant === 'split'
+  const darkBg = !split || resolveTheme(themeGlobal).colorScheme === 'dark'
   const logo = darkBg ? site.logoOnDark || site.logo : site.logo
+  const Title = isFirst ? 'h1' : 'h2'
 
-  const text = (
-    <div>
-      {showLogo && logo ? <Img className="heroC-word" media={logo} priority sizes="360px" /> : null}
-      {isFirst ? (
-        <h1>
-          <Highlight text={heading} />
-        </h1>
-      ) : (
-        <h2 className="h1">
-          <Highlight text={heading} />
-        </h2>
-      )}
+  const copy = (
+    <div className="hero-copy">
+      {showLogo && logo ? (
+        <Img className="hero-logo" media={logo} priority={isFirst} sizes="280px" />
+      ) : null}
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <Title className="hero-title">
+        <Highlight text={heading} />
+      </Title>
       {lede ? <p className="lede">{lede}</p> : null}
       {links?.length ? (
         <div className="hero-actions">
@@ -55,65 +54,82 @@ export const HeroHomeBlock: React.FC<Props & { isFirst?: boolean }> = async (pro
           ))}
         </div>
       ) : null}
-      {trust?.length ? (
-        <div className="trust">
-          {trust.map((t) => (
-            <div key={t.id ?? t.title}>
-              <b>{t.title}</b>
-              {t.text ? <span>{t.text}</span> : null}
-            </div>
-          ))}
-        </div>
-      ) : null}
     </div>
   )
 
-  if (full) {
+  const callCard =
+    showCallCard && site.phone ? (
+      <a className="call-card" href={telHref(site.phone)}>
+        <span className="ico">
+          <Icon name="phone" />
+        </span>
+        <span>
+          <small>{callCardText}</small>
+          <b>{site.phone}</b>
+        </span>
+      </a>
+    ) : null
+
+  const trustRow = trust?.length ? (
+    <ul className="hero-trust">
+      {trust.map((t) => (
+        <li key={t.id ?? t.title}>
+          <b>{t.title}</b>
+          {t.text ? <span>{t.text}</span> : null}
+        </li>
+      ))}
+    </ul>
+  ) : null
+
+  if (split) {
+    const thumbList = Array.isArray(thumbs) ? thumbs.slice(0, 2) : []
     return (
-      <Section className="heroF" settings={{ ...settings, spacing: settings?.spacing ?? 'lg' }}>
-        <div className="bgimg">
-          <Img fill media={image} priority={isFirst} sizes="100vw" />
+      <Section className="hero-split" settings={{ ...settings, spacing: 'none' }}>
+        <div className="wrap hero-split-grid">
+          <div>
+            {copy}
+            {trustRow}
+          </div>
+          <div className="hero-split-media">
+            <Img
+              className="main"
+              media={image}
+              priority={isFirst}
+              sizes="(max-width: 980px) 92vw, 600px"
+            />
+            {showBadge && site.logoMark ? (
+              <Img className="hero-badge" media={site.logoMark} sizes="120px" />
+            ) : null}
+            {callCard}
+            {thumbList.length ? (
+              <div aria-hidden="true" className="hero-thumbs">
+                {thumbList.map((t, i) => (
+                  <Img key={i} media={t} sizes="120px" />
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
-        <div className="wrap">{text}</div>
       </Section>
     )
   }
 
-  const thumbList = Array.isArray(thumbs) ? thumbs.slice(0, 2) : []
+  // Cinematic: full-bleed photo, giant headline, trust strip pinned to the bottom edge.
   return (
-    <Section className="heroC" settings={{ ...settings, spacing: 'none' }}>
-      <div className="wrap heroC-grid">
-        {text}
-        <div className="heroC-media">
-          <Img
-            className="main"
-            media={image}
-            priority={isFirst}
-            sizes="(max-width: 980px) 92vw, 560px"
-          />
+    <Section className="hero hero-dark" settings={{ ...settings, spacing: 'none' }}>
+      <div className="hero-bg">
+        <Img fill media={image} priority={isFirst} sizes="100vw" />
+      </div>
+      <div className="wrap hero-inner">
+        {copy}
+        <div className="hero-side">
           {showBadge && site.logoMark ? (
-            <Img className="heroC-badge" media={site.logoMark} sizes="128px" />
+            <Img className="hero-badge" media={site.logoMark} sizes="120px" />
           ) : null}
-          {showCallCard && site.phone ? (
-            <div className="heroC-card">
-              <span className="ico">
-                <Icon name="phone" />
-              </span>
-              <div>
-                <b>{callCardText}</b>
-                <a href={telHref(site.phone)}>{site.phone}</a>
-              </div>
-            </div>
-          ) : null}
-          {thumbList.length ? (
-            <div aria-hidden="true" className="heroC-thumbs">
-              {thumbList.map((t, i) => (
-                <Img key={i} media={t} sizes="110px" />
-              ))}
-            </div>
-          ) : null}
+          {callCard}
         </div>
       </div>
+      {trustRow ? <div className="wrap">{trustRow}</div> : null}
     </Section>
   )
 }

@@ -8,6 +8,7 @@ import type { ServiceAreasBlock as Props } from '@/payload-types'
 import { Section, SectionHead } from '@/components/site/Section'
 
 export const ServiceAreasBlockComponent: React.FC<Props & { id?: string }> = async ({
+  eyebrow,
   heading,
   lede,
   linkToPages,
@@ -28,7 +29,7 @@ export const ServiceAreasBlockComponent: React.FC<Props & { id?: string }> = asy
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} />
+        <SectionHead eyebrow={eyebrow} heading={heading} id={titleId} lede={lede} />
         <ul className="towns">
           {docs.map((a) => (
             <li key={a.id}>

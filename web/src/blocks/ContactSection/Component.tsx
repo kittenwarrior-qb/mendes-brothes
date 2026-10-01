@@ -7,7 +7,7 @@ import type { ContactSectionBlock as Props } from '@/payload-types'
 import { SiteFormServer } from '@/blocks/Form/SiteFormServer'
 import { Highlight } from '@/components/site/Highlight'
 import { Img } from '@/components/site/Img'
-import { Section } from '@/components/site/Section'
+import { Eyebrow, Section } from '@/components/site/Section'
 import { getGlobal } from '@/utilities/getGlobals'
 import { fullAddress, mapLink, telHref } from '@/utilities/site'
 import { cn } from '@/utilities/ui'
@@ -15,6 +15,7 @@ import { cn } from '@/utilities/ui'
 import { MapEmbed } from './MapEmbed'
 
 export const ContactSectionBlock: React.FC<Props> = async ({
+  eyebrow,
   heading,
   lede,
   form,
@@ -31,9 +32,10 @@ export const ContactSectionBlock: React.FC<Props> = async ({
   return (
     <Section settings={settings}>
       <div className="wrap">
-        {heading || lede ? (
+        {eyebrow || heading || lede ? (
           <div className="sec-head">
-            <div>
+            <div className="sec-head-main">
+              <Eyebrow>{eyebrow}</Eyebrow>
               {heading ? (
                 <h2>
                   <Highlight text={heading} />

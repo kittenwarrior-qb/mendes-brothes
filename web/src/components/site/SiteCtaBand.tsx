@@ -4,10 +4,12 @@ import { getGlobal } from '@/utilities/getGlobals'
 import { telHref } from '@/utilities/site'
 
 import { Highlight } from './Highlight'
+import { Arrow, Eyebrow } from './Section'
 import { SmartLink } from './SmartLink'
 
 /** Generic CTA card used by the site-wide band (Site settings) and the CTA block. */
 export const CtaCard: React.FC<{
+  eyebrow?: string | null
   heading?: string | null
   lede?: string | null
   phone?: string | null
@@ -15,11 +17,21 @@ export const CtaCard: React.FC<{
   buttonUrl?: string | null
   style?: 'gradient' | 'dark' | 'image' | null
   background?: React.ReactNode
-}> = ({ heading, lede, phone, buttonLabel, buttonUrl, style = 'gradient', background }) => (
+}> = ({
+  eyebrow,
+  heading,
+  lede,
+  phone,
+  buttonLabel,
+  buttonUrl,
+  style = 'gradient',
+  background,
+}) => (
   <div className="wrap">
     <div className={`cta-inner ${style || 'gradient'}`}>
       {background ? <div className="cta-bg">{background}</div> : null}
       <div>
+        <Eyebrow>{eyebrow}</Eyebrow>
         <h2>
           <Highlight text={heading} />
         </h2>
@@ -34,6 +46,7 @@ export const CtaCard: React.FC<{
         {buttonLabel && buttonUrl ? (
           <SmartLink className="btn btn-white" href={buttonUrl}>
             {buttonLabel}
+            <Arrow />
           </SmartLink>
         ) : null}
       </div>

@@ -71,7 +71,7 @@ export const Theme: GlobalConfig = {
       name: 'preset',
       label: 'Colour palette',
       type: 'select',
-      defaultValue: 'classic',
+      defaultValue: 'limestone',
       required: true,
       options: presetOptions,
       admin: {
@@ -213,8 +213,8 @@ export const Theme: GlobalConfig = {
               'Content width',
               [
                 { label: 'Narrow (1120px)', value: 'narrow' },
-                { label: 'Default (1240px)', value: 'default' },
-                { label: 'Wide (1400px)', value: 'wide' },
+                { label: 'Default (1280px)', value: 'default' },
+                { label: 'Wide (1440px)', value: 'wide' },
               ],
               '33%',
             ),

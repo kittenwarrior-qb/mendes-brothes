@@ -6,12 +6,17 @@ import { CMSLink } from '@/components/Link'
 import { Breadcrumbs, type Crumb } from '@/components/site/Breadcrumbs'
 import { Highlight } from '@/components/site/Highlight'
 import { Img } from '@/components/site/Img'
-import { Section } from '@/components/site/Section'
+import { Eyebrow, Section } from '@/components/site/Section'
 import { cn } from '@/utilities/ui'
 
-/** Inner page hero. Also used directly by automatic pages (projects, services…). */
+/**
+ * Inner page hero: a dark band with an oversized title. With a photo it either
+ * fades in from the right ("split") or fills the band ("image").
+ * Also used directly by automatic pages (projects, services, news…).
+ */
 export const PageHeroView: React.FC<{
   variant?: 'split' | 'simple' | 'image' | null
+  eyebrow?: string | null
   heading?: string | null
   lede?: string | null
   image?: unknown
@@ -19,30 +24,38 @@ export const PageHeroView: React.FC<{
   actions?: React.ReactNode
   settings?: Props['settings']
   isFirst?: boolean
-}> = ({ variant, heading, lede, image, crumbs, actions, settings, isFirst = true }) => {
-  const v = !image && variant !== 'simple' ? 'simple' : variant || 'split'
+}> = ({ variant, eyebrow, heading, lede, image, crumbs, actions, settings, isFirst = true }) => {
+  const v = !image
+    ? 'simple'
+    : variant === 'image'
+      ? 'image'
+      : variant === 'simple'
+        ? 'simple'
+        : 'split'
   const Title = isFirst ? 'h1' : 'h2'
   return (
-    <Section className={cn('phero', `phero-${v}`)} settings={{ ...settings, spacing: 'none' }}>
-      {v === 'image' ? (
+    <Section
+      className={cn('phero hero-dark', `phero-${v}`)}
+      settings={{ ...settings, spacing: 'none' }}
+    >
+      {v !== 'simple' ? (
         <div className="phero-bg">
-          <Img fill media={image} priority={isFirst} sizes="100vw" />
+          <Img
+            fill
+            media={image}
+            priority={isFirst}
+            sizes={v === 'image' ? '100vw' : '(max-width: 820px) 100vw, 60vw'}
+          />
         </div>
       ) : null}
-      <div className="wrap phero-grid">
-        <div>
-          {crumbs ? <Breadcrumbs items={crumbs} /> : null}
-          <Title className={isFirst ? undefined : 'h1'}>
-            <Highlight text={heading} />
-          </Title>
-          {lede ? <p className="lede">{lede}</p> : null}
-          {actions ? <div className="hero-actions">{actions}</div> : null}
-        </div>
-        {v === 'split' ? (
-          <div className="phero-img">
-            <Img media={image} priority={isFirst} sizes="(max-width: 820px) 92vw, 460px" />
-          </div>
-        ) : null}
+      <div className="wrap phero-inner">
+        {crumbs ? <Breadcrumbs items={crumbs} /> : null}
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <Title>
+          <Highlight text={heading} />
+        </Title>
+        {lede ? <p className="lede">{lede}</p> : null}
+        {actions ? <div className="hero-actions">{actions}</div> : null}
       </div>
     </Section>
   )
@@ -51,6 +64,7 @@ export const PageHeroView: React.FC<{
 export const PageHeroBlock: React.FC<Props & { isFirst?: boolean; crumbs?: Crumb[] }> = ({
   variant,
   showBreadcrumbs,
+  eyebrow,
   heading,
   lede,
   links,
@@ -62,6 +76,7 @@ export const PageHeroBlock: React.FC<Props & { isFirst?: boolean; crumbs?: Crumb
   <PageHeroView
     actions={links?.length ? links.map(({ link }, i) => <CMSLink key={i} {...link} />) : undefined}
     crumbs={showBreadcrumbs !== false ? crumbs : undefined}
+    eyebrow={eyebrow}
     heading={heading}
     image={image}
     isFirst={isFirst}

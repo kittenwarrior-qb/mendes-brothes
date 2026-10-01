@@ -93,6 +93,7 @@ export default async function ProjectsPage({ searchParams }: Args) {
   return (
     <>
       <PageHeroView
+        eyebrow={cfg?.eyebrow}
         crumbs={[
           { name: 'Home', path: '/' },
           { name: plainText(cfg?.heading) || 'Projects', path: '/projects' },

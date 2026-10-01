@@ -129,6 +129,10 @@ export async function Footer({ theme }: { theme: ResolvedTheme }) {
           {footer.bottomText ? <span>{footer.bottomText}</span> : null}
         </div>
       </div>
+      {/* oversized wordmark: decorative, clipped by the footer edge */}
+      <div aria-hidden="true" className="f-word">
+        {settings.shortName || settings.companyName}
+      </div>
     </footer>
   )
 }

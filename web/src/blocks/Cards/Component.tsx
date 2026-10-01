@@ -6,6 +6,7 @@ import { Icon } from '@/components/site/Icon'
 import { Section, SectionHead } from '@/components/site/Section'
 
 export const CardsBlock: React.FC<Props & { id?: string }> = ({
+  eyebrow,
   heading,
   lede,
   headerLink,
@@ -20,7 +21,13 @@ export const CardsBlock: React.FC<Props & { id?: string }> = ({
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} link={headerLink} />
+        <SectionHead
+          eyebrow={eyebrow}
+          heading={heading}
+          id={titleId}
+          lede={lede}
+          link={headerLink}
+        />
         <div className="cards" style={{ ['--cols' as string]: cols }}>
           {items?.map((item) =>
             variant === 'row' ? (

@@ -99,9 +99,19 @@ export const blockSettings: GroupField = {
   ],
 }
 
-/** Section heading + intro + optional header button used by most blocks. */
+/** Small uppercase label shown above a heading, e.g. "What we do". */
+export const eyebrowField = (overrides: Partial<TextField> = {}): TextField =>
+  ({
+    name: 'eyebrow',
+    label: 'Label above heading',
+    type: 'text',
+    admin: { description: 'Optional short label, e.g. "Our services".' },
+    ...overrides,
+  }) as TextField
+
+/** Section label + heading + intro + optional header button used by most blocks. */
 export const sectionHeaderFields = (opts: { button?: boolean } = {}): Field[] => {
-  const fields: Field[] = [headingField(), ledeField()]
+  const fields: Field[] = [eyebrowField(), headingField(), ledeField()]
   if (opts.button) {
     fields.push({
       name: 'headerLink',

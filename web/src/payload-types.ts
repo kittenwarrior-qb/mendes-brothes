@@ -192,6 +192,7 @@ export interface Page {
     | CardsBlock
     | StepsBlock
     | StatsBlock
+    | MarqueeBlock
     | EquipmentGridBlock
     | ChecklistBlock
     | TestimonialsBlock
@@ -229,8 +230,12 @@ export interface Page {
  * via the `definition` "HeroHomeBlock".
  */
 export interface HeroHomeBlock {
-  variant?: ('split' | 'fullImage') | null;
+  variant?: ('fullImage' | 'split') | null;
   showLogo?: boolean | null;
+  /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
   /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
@@ -503,6 +508,8 @@ export interface Service {
         | 'clean'
         | 'pavers'
         | 'roof'
+        | 'arrow'
+        | 'arrowUpRight'
         | 'check'
         | 'phone'
         | 'pin'
@@ -771,6 +778,10 @@ export interface PageHeroBlock {
   variant?: ('split' | 'simple' | 'image') | null;
   showBreadcrumbs?: boolean | null;
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading: string;
@@ -834,6 +845,10 @@ export interface PageHeroBlock {
  */
 export interface ServicesGridBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -875,6 +890,10 @@ export interface ServicesGridBlock {
  */
 export interface FeaturedProjectsBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -888,6 +907,7 @@ export interface FeaturedProjectsBlock {
   };
   source?: ('latest' | 'featured' | 'manual') | null;
   limit?: number | null;
+  layout?: ('feature' | 'grid') | null;
   projects?: (number | Project)[] | null;
   filterService?: (number | null) | Service;
   /**
@@ -911,6 +931,10 @@ export interface FeaturedProjectsBlock {
  * via the `definition` "SplitBlock".
  */
 export interface SplitBlock {
+  /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
   /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
@@ -995,6 +1019,10 @@ export interface SplitBlock {
  */
 export interface CardsBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -1022,6 +1050,8 @@ export interface CardsBlock {
           | 'clean'
           | 'pavers'
           | 'roof'
+          | 'arrow'
+          | 'arrowUpRight'
           | 'check'
           | 'phone'
           | 'pin'
@@ -1068,6 +1098,10 @@ export interface CardsBlock {
  */
 export interface StepsBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -1099,6 +1133,10 @@ export interface StepsBlock {
  */
 export interface StatsBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -1126,9 +1164,38 @@ export interface StatsBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MarqueeBlock".
+ */
+export interface MarqueeBlock {
+  source?: ('services' | 'custom') | null;
+  items?: string[] | null;
+  style?: ('brand' | 'dark' | 'outline') | null;
+  speed?: ('slow' | 'normal' | 'fast') | null;
+  /**
+   * Background, spacing and visibility of this section.
+   */
+  settings?: {
+    background?: ('default' | 'alt' | 'tint' | 'dark') | null;
+    spacing?: ('none' | 'sm' | 'md' | 'lg') | null;
+    hideOn?: ('none' | 'mobile' | 'desktop' | 'all') | null;
+    /**
+     * Optional. Lets menus link straight to this section, e.g. "services" → /#services.
+     */
+    anchor?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'marquee';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "EquipmentGridBlock".
  */
 export interface EquipmentGridBlock {
+  /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
   /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
@@ -1161,6 +1228,10 @@ export interface EquipmentGridBlock {
  */
 export interface ChecklistBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -1190,6 +1261,10 @@ export interface ChecklistBlock {
  * via the `definition` "TestimonialsBlock".
  */
 export interface TestimonialsBlock {
+  /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
   /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
@@ -1221,6 +1296,10 @@ export interface TestimonialsBlock {
  */
 export interface FAQBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -1251,6 +1330,10 @@ export interface FAQBlock {
  */
 export interface ServiceAreasBlock {
   /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
+  /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
   heading?: string | null;
@@ -1277,6 +1360,10 @@ export interface ServiceAreasBlock {
  * via the `definition` "GalleryBlock".
  */
 export interface GalleryBlock {
+  /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
   /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
@@ -1305,6 +1392,10 @@ export interface GalleryBlock {
  * via the `definition` "ContactSectionBlock".
  */
 export interface ContactSectionBlock {
+  /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
   /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
@@ -1503,6 +1594,10 @@ export interface Form {
  * via the `definition` "CtaBandBlock".
  */
 export interface CtaBandBlock {
+  /**
+   * Optional short label, e.g. "Our services".
+   */
+  eyebrow?: string | null;
   /**
    * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
    */
@@ -2001,6 +2096,7 @@ export interface PagesSelect<T extends boolean = true> {
         cards?: T | CardsBlockSelect<T>;
         steps?: T | StepsBlockSelect<T>;
         stats?: T | StatsBlockSelect<T>;
+        marquee?: T | MarqueeBlockSelect<T>;
         equipmentGrid?: T | EquipmentGridBlockSelect<T>;
         checklist?: T | ChecklistBlockSelect<T>;
         testimonials?: T | TestimonialsBlockSelect<T>;
@@ -2036,6 +2132,7 @@ export interface PagesSelect<T extends boolean = true> {
 export interface HeroHomeBlockSelect<T extends boolean = true> {
   variant?: T;
   showLogo?: T;
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   links?:
@@ -2083,6 +2180,7 @@ export interface HeroHomeBlockSelect<T extends boolean = true> {
 export interface PageHeroBlockSelect<T extends boolean = true> {
   variant?: T;
   showBreadcrumbs?: T;
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   links?:
@@ -2117,6 +2215,7 @@ export interface PageHeroBlockSelect<T extends boolean = true> {
  * via the `definition` "ServicesGridBlock_select".
  */
 export interface ServicesGridBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   headerLink?:
@@ -2146,6 +2245,7 @@ export interface ServicesGridBlockSelect<T extends boolean = true> {
  * via the `definition` "FeaturedProjectsBlock_select".
  */
 export interface FeaturedProjectsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   headerLink?:
@@ -2156,6 +2256,7 @@ export interface FeaturedProjectsBlockSelect<T extends boolean = true> {
       };
   source?: T;
   limit?: T;
+  layout?: T;
   projects?: T;
   filterService?: T;
   settings?:
@@ -2174,6 +2275,7 @@ export interface FeaturedProjectsBlockSelect<T extends boolean = true> {
  * via the `definition` "SplitBlock_select".
  */
 export interface SplitBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   body?: T;
@@ -2216,6 +2318,7 @@ export interface SplitBlockSelect<T extends boolean = true> {
  * via the `definition` "CardsBlock_select".
  */
 export interface CardsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   headerLink?:
@@ -2250,6 +2353,7 @@ export interface CardsBlockSelect<T extends boolean = true> {
  * via the `definition` "StepsBlock_select".
  */
 export interface StepsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   steps?:
@@ -2275,6 +2379,7 @@ export interface StepsBlockSelect<T extends boolean = true> {
  * via the `definition` "StatsBlock_select".
  */
 export interface StatsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   items?:
@@ -2297,9 +2402,30 @@ export interface StatsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MarqueeBlock_select".
+ */
+export interface MarqueeBlockSelect<T extends boolean = true> {
+  source?: T;
+  items?: T;
+  style?: T;
+  speed?: T;
+  settings?:
+    | T
+    | {
+        background?: T;
+        spacing?: T;
+        hideOn?: T;
+        anchor?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "EquipmentGridBlock_select".
  */
 export interface EquipmentGridBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   categories?: T;
@@ -2320,6 +2446,7 @@ export interface EquipmentGridBlockSelect<T extends boolean = true> {
  * via the `definition` "ChecklistBlock_select".
  */
 export interface ChecklistBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   items?:
@@ -2344,6 +2471,7 @@ export interface ChecklistBlockSelect<T extends boolean = true> {
  * via the `definition` "TestimonialsBlock_select".
  */
 export interface TestimonialsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   source?: T;
@@ -2366,6 +2494,7 @@ export interface TestimonialsBlockSelect<T extends boolean = true> {
  * via the `definition` "FAQBlock_select".
  */
 export interface FAQBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   items?: T;
@@ -2385,6 +2514,7 @@ export interface FAQBlockSelect<T extends boolean = true> {
  * via the `definition` "ServiceAreasBlock_select".
  */
 export interface ServiceAreasBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   linkToPages?: T;
@@ -2404,6 +2534,7 @@ export interface ServiceAreasBlockSelect<T extends boolean = true> {
  * via the `definition` "GalleryBlock_select".
  */
 export interface GalleryBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   images?: T;
@@ -2424,6 +2555,7 @@ export interface GalleryBlockSelect<T extends boolean = true> {
  * via the `definition` "ContactSectionBlock_select".
  */
 export interface ContactSectionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   form?: T;
@@ -2446,6 +2578,7 @@ export interface ContactSectionBlockSelect<T extends boolean = true> {
  * via the `definition` "CtaBandBlock_select".
  */
 export interface CtaBandBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
   heading?: T;
   lede?: T;
   showPhone?: T;
@@ -3468,6 +3601,7 @@ export interface Footer {
 export interface ListingPage {
   id: number;
   projects?: {
+    eyebrow?: string | null;
     /**
      * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
      */
@@ -3490,6 +3624,7 @@ export interface ListingPage {
     detailCtaLabel?: string | null;
   };
   services?: {
+    eyebrow?: string | null;
     /**
      * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
      */
@@ -3498,6 +3633,7 @@ export interface ListingPage {
     image?: (number | null) | Media;
   };
   posts?: {
+    eyebrow?: string | null;
     /**
      * Wrap words in *asterisks* to show them in the brand colour, e.g. "Who *we are*".
      */
@@ -3730,6 +3866,7 @@ export interface ListingPagesSelect<T extends boolean = true> {
   projects?:
     | T
     | {
+        eyebrow?: T;
         heading?: T;
         lede?: T;
         image?: T;
@@ -3748,6 +3885,7 @@ export interface ListingPagesSelect<T extends boolean = true> {
   services?:
     | T
     | {
+        eyebrow?: T;
         heading?: T;
         lede?: T;
         image?: T;
@@ -3755,6 +3893,7 @@ export interface ListingPagesSelect<T extends boolean = true> {
   posts?:
     | T
     | {
+        eyebrow?: T;
         heading?: T;
         lede?: T;
         image?: T;

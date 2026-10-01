@@ -53,8 +53,8 @@ export default async function PostPage({ params: paramsPromise }: Args) {
   return (
     <article>
       <PayloadRedirects disableNotFound url={url} />
-      <section className="phero phero-simple sec">
-        <div className="wrap" style={{ maxWidth: 900 }}>
+      <section className="phero phero-simple hero-dark sec">
+        <div className="wrap phero-inner">
           <Breadcrumbs
             items={[
               { name: 'Home', path: '/' },

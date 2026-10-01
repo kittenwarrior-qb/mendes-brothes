@@ -15,6 +15,7 @@ import { FeaturedProjectsBlock } from '@/blocks/FeaturedProjects/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { GalleryBlockComponent } from '@/blocks/Gallery/Component'
 import { HeroHomeBlock } from '@/blocks/HeroHome/Component'
+import { MarqueeBlock } from '@/blocks/Marquee/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { PageHeroBlock } from '@/blocks/PageHero/Component'
 import { ServiceAreasBlockComponent } from '@/blocks/ServiceAreasBlock/Component'
@@ -36,6 +37,7 @@ const blockComponents: Record<AnyBlock['blockType'], React.FC<any>> = {
   cards: CardsBlock,
   steps: StepsBlock,
   stats: StatsBlockComponent,
+  marquee: MarqueeBlock,
   equipmentGrid: EquipmentGridBlock,
   checklist: ChecklistBlock,
   testimonials: TestimonialsBlockComponent,

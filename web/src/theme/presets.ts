@@ -213,17 +213,17 @@ export const generatePalette = (
 
 /* ───────────────────────── curated palettes ───────────────────────── */
 
-/** Style shared by every palette: the approved "Mẫu 1" look. */
-const mau1Style = {
-  fontDisplay: 'russo',
-  fontBody: 'montserrat',
+/** Style shared by every palette: the "Industrial Editorial" layout. */
+const baseStyle = {
+  fontDisplay: 'barlowCondensed',
+  fontBody: 'inter',
   headingCase: 'uppercase',
-  radius: 'rounded',
-  buttonShape: 'pill',
+  radius: 'soft',
+  buttonShape: 'rounded',
   container: 'default',
   cardStyle: 'bordered',
   headerStyle: 'light',
-  footerStyle: 'light',
+  footerStyle: 'dark',
   colorScheme: 'light',
 } as const satisfies Omit<ThemeTokens, 'colors'>
 
@@ -232,9 +232,9 @@ type Palette = { label: string; description: string; tokens: ThemeTokens }
 export const presets = {
   classic: {
     label: 'Classic Orange',
-    description: 'Mẫu 1 as approved: pure white, logo orange, charcoal.',
+    description: 'Pure white, logo orange and charcoal — the colours of the first approved demo.',
     tokens: {
-      ...mau1Style,
+      ...baseStyle,
       colors: {
         primary: '#D96F25',
         primaryHover: '#C35E1B',
@@ -255,10 +255,9 @@ export const presets = {
   },
   limestone: {
     label: 'Sunset Limestone',
-    description:
-      'Warm paper-white neutrals with graphite ink; orange as the accent. Premium 2026 look.',
+    description: 'Recommended. Warm paper-white neutrals with graphite ink; orange as the accent.',
     tokens: {
-      ...mau1Style,
+      ...baseStyle,
       footerStyle: 'dark',
       colors: {
         primary: '#D96F25',
@@ -282,7 +281,7 @@ export const presets = {
     label: 'Graphite & Ember',
     description: 'Dark industrial: warm graphite background, glowing orange. Makes photos pop.',
     tokens: {
-      ...mau1Style,
+      ...baseStyle,
       headerStyle: 'dark',
       footerStyle: 'dark',
       cardStyle: 'flat',
@@ -310,7 +309,7 @@ export const presets = {
     description:
       'Navy ink with orange — complementary colours that read as dependable and corporate.',
     tokens: {
-      ...mau1Style,
+      ...baseStyle,
       footerStyle: 'dark',
       colors: {
         primary: '#D96F25',
@@ -334,7 +333,7 @@ export const presets = {
     label: 'Forest & Clay',
     description: 'Deep green ink with clay orange — suits land clearing and landscaping work.',
     tokens: {
-      ...mau1Style,
+      ...baseStyle,
       footerStyle: 'dark',
       colors: {
         primary: '#C8641F',
@@ -359,7 +358,7 @@ export const presets = {
     description:
       'Machine-yellow amber on black, like the equipment itself. Bold and high-contrast.',
     tokens: {
-      ...mau1Style,
+      ...baseStyle,
       headerStyle: 'dark',
       footerStyle: 'dark',
       colors: {
@@ -392,4 +391,4 @@ export const presetOptions = [
   { label: 'Custom — from your brand colour', value: AUTO_PALETTE },
 ]
 
-export const defaultStyle = mau1Style
+export const defaultStyle = baseStyle

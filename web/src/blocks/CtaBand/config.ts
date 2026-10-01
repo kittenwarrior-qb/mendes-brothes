@@ -1,12 +1,13 @@
 import type { Block } from 'payload'
 
-import { blockSettings, headingField, ledeField } from '@/fields/common'
+import { blockSettings, eyebrowField, headingField, ledeField } from '@/fields/common'
 
 export const CtaBand: Block = {
   slug: 'ctaBand',
   interfaceName: 'CtaBandBlock',
   labels: { singular: 'Call-to-action band', plural: 'Call-to-action bands' },
   fields: [
+    eyebrowField(),
     headingField({ required: true }),
     ledeField(),
     {

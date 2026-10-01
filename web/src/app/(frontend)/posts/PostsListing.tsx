@@ -40,6 +40,7 @@ export async function PostsListing({ page }: { page: number }) {
   return (
     <>
       <PageHeroView
+        eyebrow={cfg?.eyebrow}
         crumbs={[
           { name: 'Home', path: '/' },
           { name: plainText(cfg?.heading) || 'News', path: '/posts' },

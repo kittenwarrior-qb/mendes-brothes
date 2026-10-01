@@ -6,16 +6,24 @@ import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { asMedia, telHref } from '@/utilities/site'
 import type { ResolvedTheme } from '@/theme/resolve'
 
-import { HeaderClient, type NavItem } from './Component.client'
+import { HeaderClient, type LogoImage, type NavItem } from './Component.client'
+
+const toLogo = (m: unknown): LogoImage | undefined => {
+  const media = asMedia(m)
+  return media?.url
+    ? {
+        src: getMediaUrl(media.url, media.updatedAt),
+        width: media.width ?? 468,
+        height: media.height ?? 190,
+      }
+    : undefined
+}
 
 export async function Header({ theme }: { theme: ResolvedTheme }) {
   const [header, settings] = await Promise.all([
     getGlobal('header', 1),
     getGlobal('site-settings', 1),
   ])
-
-  const onDark = theme.headerStyle !== 'light' || theme.colorScheme === 'dark'
-  const logo = asMedia(onDark ? settings.logoOnDark || settings.logo : settings.logo)
 
   const toItem = (
     link: Parameters<typeof resolveLinkHref>[0] & {
@@ -36,20 +44,17 @@ export async function Header({ theme }: { theme: ResolvedTheme }) {
     })
     .filter(Boolean) as NavItem[]
 
+  // A dark page palette or a dark/brand header always needs the light-on-dark logo.
+  const alwaysDark = theme.headerStyle !== 'light' || theme.colorScheme === 'dark'
+
   return (
     <HeaderClient
+      alwaysDark={alwaysDark}
       ctaLabel={header.ctaLabel ?? undefined}
       ctaUrl={header.ctaUrl ?? undefined}
-      logo={
-        logo?.url
-          ? {
-              src: getMediaUrl(logo.url, logo.updatedAt),
-              width: logo.width ?? 468,
-              height: logo.height ?? 190,
-            }
-          : undefined
-      }
+      logo={toLogo(settings.logo)}
       logoHeight={settings.logoHeight ?? 44}
+      logoOnDark={toLogo(settings.logoOnDark) ?? toLogo(settings.logo)}
       name={settings.companyName}
       nav={nav}
       phone={header.showPhone !== false ? (settings.phone ?? undefined) : undefined}

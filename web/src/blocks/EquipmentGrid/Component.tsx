@@ -12,6 +12,7 @@ import { Section, SectionHead } from '@/components/site/Section'
 import { FleetFilter } from './FleetFilter'
 
 export const EquipmentGridBlock: React.FC<Props & { id?: string }> = async ({
+  eyebrow,
   heading,
   lede,
   categories,
@@ -38,7 +39,7 @@ export const EquipmentGridBlock: React.FC<Props & { id?: string }> = async ({
   return (
     <Section labelledBy={heading ? titleId : undefined} settings={settings}>
       <div className="wrap">
-        <SectionHead heading={heading} id={titleId} lede={lede} />
+        <SectionHead eyebrow={eyebrow} heading={heading} id={titleId} lede={lede} />
         {showFilter && usedCats.length > 1 ? (
           <FleetFilter categories={usedCats} listId={listId} />
         ) : null}

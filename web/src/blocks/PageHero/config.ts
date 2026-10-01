@@ -1,6 +1,6 @@
 import type { Block } from 'payload'
 
-import { blockSettings, headingField, ledeField } from '@/fields/common'
+import { blockSettings, eyebrowField, headingField, ledeField } from '@/fields/common'
 import { linkGroup } from '@/fields/linkGroup'
 
 export const PageHero: Block = {
@@ -19,6 +19,7 @@ export const PageHero: Block = {
       ],
     },
     { name: 'showBreadcrumbs', type: 'checkbox', defaultValue: true },
+    eyebrowField(),
     headingField({ required: true }),
     ledeField(),
     linkGroup({ appearances: ['default', 'outline'], overrides: { maxRows: 2 } }),

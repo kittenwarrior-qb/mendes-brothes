@@ -4,7 +4,7 @@
 
 ## ✅ Tiến độ (cập nhật 2026-10-01)
 
-**Quyết định đã chốt:** tên dùng đúng như logo **"Mendez Brothes"** · deploy **phương án B** (VPS + Docker Compose + Caddy) · giao diện bám Mẫu 1.
+**Quyết định đã chốt:** tên dùng đúng như logo **"Mendez Brothes"** · deploy **phương án B** (VPS + Docker Compose + Caddy, database nằm trong Docker, không dùng bên thứ ba) · giao diện "Industrial Editorial" thay Mẫu 1 · màu chưa chốt nên admin tự chỉnh được.
 
 | Phase | Trạng thái | Ghi chú |
 |---|---|---|
@@ -14,10 +14,11 @@
 | 3 Blocks & trang | ✅ | 20 block kéo-thả; Home/About/Capabilities/Contact; Services, Areas (SEO địa phương), News, Search, 404 |
 | 4 Projects & lọc | ✅ | Lọc theo dịch vụ / diện tích / thị trấn / năm / loại khách + tìm kiếm + sắp xếp + phân trang, state trên URL; trang chi tiết có gallery lightbox + before/after |
 | 5 Form, SEO, QA, deploy | ✅ | Form báo giá + honeypot + rate-limit + mini-CRM; JSON-LD, sitemap, robots; 17 unit + 11 e2e test; Docker + Caddy đã chạy thử toàn stack |
-| 6 Polish giao diện | ⏳ | Chờ duyệt bản RAW |
-| 7 Demo mới | ⏳ | 2 preset mới đã có ở mức token, cần thiết kế layout riêng |
+| 6 Giao diện 2026 | ✅ | Thay toàn bộ bố cục Mẫu 1 bằng phong cách "Industrial Editorial" (xem `docs/DESIGN.md`) |
+| 7 Demo mới | ❌ bỏ | Thay bằng 6 bảng màu + tự sinh bảng màu từ 1 màu thương hiệu |
+| + Backup trong admin | ✅ | Tạo / tải về / khôi phục / upload / lịch tự động |
 
-**Đo thực tế (bản production):** Lighthouse desktop **100/100/100/100**; mobile (giả lập 4G chậm) Performance 82–93, Accessibility/Best Practices/SEO **100**, CLS 0. RAM khi chạy ~250 MB.
+**Đo thực tế (bản production, giao diện mới):** Lighthouse desktop **100/100/100/100**; mobile (giả lập 4G chậm) Performance 85–91, Accessibility/Best Practices/SEO **100**, CLS 0. RAM khi chạy ~300 MB. 39 unit test + 12 test e2e pass.
 
 **Khác so với plan ban đầu:** font tự host thay vì `next/font` (build không cần internet) · bỏ AdminBar của template (tiết kiệm ~60 KB JS cho mỗi khách) · ảnh lưu trên volume của VPS thay vì R2 · tạm chưa làm: song ngữ EN/ES cho website, form nhiều bước có upload ảnh, Turnstile, xuất CSV lead, ảnh OG tự sinh.
 

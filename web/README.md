@@ -1,7 +1,7 @@
 # Mendez Brothes — Website + CMS
 
 Payload CMS 3 + Next.js 16 (App Router), PostgreSQL. Một app duy nhất: website công khai + trang quản trị `/admin`.
-Giao diện bám theo **Mẫu 1** (`../index.html`). Deploy: xem [DEPLOY.md](DEPLOY.md).
+Giao diện: phong cách "Industrial Editorial" (xem [../docs/DESIGN.md](../docs/DESIGN.md)). Chức năng: [../docs/FEATURES.md](../docs/FEATURES.md). Deploy: [DEPLOY.md](DEPLOY.md).
 
 ## Chạy local
 
@@ -33,13 +33,14 @@ pnpm dev                                             # http://localhost:3000  ·
 ```
 src/
 ├─ app/(frontend)/        # website: layout, [slug] (Pages), projects (+bộ lọc), services, areas, posts, search, sitemap
-│  ├─ site.css            # CSS của Mẫu 1, toàn bộ màu/font/bo góc là biến CSS từ global Theme
+│  ├─ site.css            # toàn bộ CSS của site; màu/font/bo góc là biến CSS sinh từ global Theme
 │  └─ next/revalidate     # POST + header x-revalidate-secret=$CRON_SECRET → làm mới mọi trang
 ├─ app/(payload)/         # admin + REST/GraphQL API
 ├─ collections/           # Pages, Projects, Services, Equipment, ServiceAreas, Testimonials, FAQs, Posts, Media, Users
-├─ globals/               # SiteSettings, Theme, ListingPages (+ Header/, Footer/)
+├─ globals/               # SiteSettings, Theme, ListingPages, BackupSettings (+ Header/, Footer/)
 ├─ blocks/                # mỗi block = config.ts (admin) + Component.tsx (web); danh sách ở pageBlocks.ts
-├─ theme/                 # presets.ts (3 preset + công cụ tương phản), resolve.ts (→ biến CSS), fonts
+├─ theme/                 # presets.ts (6 bảng màu + sinh bảng màu từ 1 màu + tương phản), resolve.ts (→ biến CSS), fonts
+├─ backup/                # tạo/khôi phục backup (.tar = pg_dump + media), API, lịch tự động
 ├─ icons/registry.ts      # thư viện icon SVG (dịch vụ / máy móc / công nghệ) cho admin chọn
 ├─ components/site/       # Section, Img, ProjectCard, Lightbox, BeforeAfter, JsonLd…
 ├─ seed/                  # dữ liệu demo (data.ts) + script (run.ts); ảnh ở /seed-assets
@@ -49,7 +50,9 @@ src/
 ## Các quyết định chính
 
 - **Cache**: mọi trang được render tĩnh/ISR. Hễ có thay đổi nội dung (collection hay global nào), hook `revalidateSite` làm mới **toàn bộ site**. Site nhỏ nên cách này đơn giản và không bao giờ hiển thị dữ liệu cũ.
-- **Theme**: global `Theme` = preset + ghi đè. `resolve.ts` sinh `:root{--c-…}` và render ở server, không cần JS. Bật "Auto-fix contrast" thì màu chữ/nút tự đạt WCAG AA.
+- **Theme**: global `Theme` = bảng màu (có sẵn hoặc tự sinh từ 1 màu) + ghi đè. `resolve.ts` sinh `:root{--c-…}` và render ở server, không cần JS. Theme có bản nháp: Live Preview hiển thị bản nháp, khách chỉ thấy bản đã Publish. Chế độ tương phản đảm bảo chữ/nút đạt WCAG AA.
+- **Backup**: cần `pg_dump`/`pg_restore` trong PATH (image Docker đã có; máy dev cài PostgreSQL client). Thư mục: `BACKUP_DIR` (mặc định `./backups`).
+- **Migration**: `migrate:create` sẽ hỏi tương tác nếu một bảng vừa thêm vừa xoá cột. Khi đó tách làm hai bước: thêm trước, xoá sau.
 - **Font**: tự host trong `public/fonts` (không gọi Google Fonts). Trang chỉ preload đúng 2 font theme đang dùng.
 - **Form**: Form Builder plugin + honeypot (`company_website`) + giới hạn 5 lần / 10 phút / IP. Lead nằm ở mục *Leads*, có trạng thái New → Won/Lost.
 - **Ảnh**: upload tự resize (tối đa 2400px) và chuyển sang WebP. `next/image` phục vụ đúng kích thước cho từng màn hình.
