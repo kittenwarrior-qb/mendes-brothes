@@ -25,7 +25,25 @@ test.describe('admin panel', () => {
     await page.goto('/admin')
     await expect(page.getByText(/quote requests?$/).first()).toBeVisible()
     await expect(page.getByRole('link', { name: /Add a finished project/ })).toBeVisible()
-    await expect(page.getByRole('link', { name: /Colours & fonts Pick/ })).toBeVisible()
+  })
+
+  test('menu is short and settings live on one screen', async () => {
+    await page.goto('/admin')
+    const menu = page.locator('aside.nav')
+    for (const name of [
+      'Home',
+      'Quote requests',
+      'Pages',
+      'Projects',
+      'Photos',
+      'Settings',
+      'Help',
+    ]) {
+      await expect(menu.getByRole('link', { name, exact: true })).toBeAttached()
+    }
+    await page.goto('/admin/settings')
+    await expect(page.getByRole('link', { name: /Colours & fonts/ })).toBeVisible()
+    await expect(page.getByRole('link', { name: /Backups Download/ })).toBeVisible()
   })
 
   test('help page lists the how-to guides', async () => {

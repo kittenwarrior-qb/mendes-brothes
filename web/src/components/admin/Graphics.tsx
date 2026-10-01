@@ -1,22 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
 
+import { Icon } from './icons'
+
+/** Login screen logo. */
 export const AdminLogo: React.FC = () => (
   <img
     src="/brand/logo-word.webp"
-    alt="Website admin"
+    alt="Mendez Brothes — website admin"
     width={234}
     height={95}
-    style={{ height: 72, width: 'auto' }}
+    style={{ height: 84, width: 'auto' }}
   />
 )
 
-export const AdminIcon: React.FC = () => (
-  <img
-    src="/brand/logo-badge.webp"
-    alt=""
-    width={28}
-    height={28}
-    style={{ width: 28, height: 28 }}
-  />
-)
+/** "Back to Home" button at the start of the breadcrumb (the logo itself lives in the sidebar). */
+export const AdminIcon: React.FC = () => <Icon name="home" size={18} />

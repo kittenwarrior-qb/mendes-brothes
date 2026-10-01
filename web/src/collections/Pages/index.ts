@@ -25,7 +25,7 @@ export const Pages: CollectionConfig<'pages'> = {
   admin: {
     group: 'Website',
     hideAPIURL: true,
-    defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
+    defaultColumns: ['title', '_status', 'updatedAt'],
     description: 'Your pages. Open one to change its text and photos.',
     livePreview: {
       url: ({ data, req }) =>

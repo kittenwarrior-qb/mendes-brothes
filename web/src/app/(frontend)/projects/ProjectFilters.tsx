@@ -81,24 +81,39 @@ export const ProjectFilters: React.FC<{
     <div className={cn(pending && 'is-loading')} aria-busy={pending}>
       <div className="filters">
         <div className="wrap">
+          {show('service') && options.services.length ? (
+            <div aria-label="Service" className="chips" role="group">
+              {[{ value: '', label: 'All work' }, ...options.services].map((s) => (
+                <button
+                  aria-pressed={values.service === s.value}
+                  className="chip"
+                  key={s.value || 'all'}
+                  onClick={() => push({ service: s.value })}
+                  type="button"
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+          ) : null}
           <form className="frow" onSubmit={(e) => e.preventDefault()} role="search">
+            {select('area', 'Town', options.areas, 'All towns')}
+            {select('size', 'Lot size', options.sizes, 'Any size')}
+            {select('year', 'Year', options.years, 'Any year')}
+            {select('type', 'Client', options.types, 'All clients')}
+            {select('sort', 'Sort by', options.sorts, '')}
             {show('q') ? (
               <div className="field grow">
                 <label htmlFor="f-q">Search</label>
                 <input
                   id="f-q"
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder="Project name, town or detail"
+                  placeholder="Project name or detail"
                   type="search"
                   value={q}
                 />
               </div>
             ) : null}
-            {select('service', 'Service', options.services, 'All services')}
-            {select('area', 'Town', options.areas, 'All towns')}
-            {select('year', 'Year', options.years, 'Any year')}
-            {select('type', 'Client', options.types, 'All clients')}
-            {select('sort', 'Sort by', options.sorts, '')}
             {hasFilters ? (
               <button
                 className="linkbtn"
@@ -112,21 +127,6 @@ export const ProjectFilters: React.FC<{
               </button>
             ) : null}
           </form>
-          {show('size') && options.sizes.length ? (
-            <div aria-label="Lot size" className="chips" role="group">
-              {[{ value: '', label: 'Any lot size' }, ...options.sizes].map((s) => (
-                <button
-                  aria-pressed={values.size === s.value}
-                  className="chip"
-                  key={s.value || 'any'}
-                  onClick={() => push({ size: s.value })}
-                  type="button"
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-          ) : null}
         </div>
       </div>
       {children}

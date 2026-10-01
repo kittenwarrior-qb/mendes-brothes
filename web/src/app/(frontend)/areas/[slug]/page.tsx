@@ -8,8 +8,8 @@ import React, { cache } from 'react'
 
 import { PageHeroView } from '@/blocks/PageHero/Component'
 import { getAllServices } from '@/blocks/ServicesGrid/Component'
-import { Icon } from '@/components/site/Icon'
 import { ProjectCard } from '@/components/site/ProjectCard'
+import { Arrow, SectionHead } from '@/components/site/Section'
 import { SiteCtaBand } from '@/components/site/SiteCtaBand'
 import { generateMeta } from '@/utilities/generateMeta'
 
@@ -83,19 +83,15 @@ export default async function AreaPage({ params }: Args) {
       />
       <section className="sec pad-md">
         <div className="wrap">
-          <div className="sec-head">
-            <h2>
-              Services in <span className="o">{area.name}</span>
-            </h2>
-          </div>
+          <SectionHead eyebrow="Services" heading={`What we do in *${area.name}*`} />
           <ul className="s-list">
-            {services.map((s) => (
+            {services.map((s, i) => (
               <li key={s.id}>
                 <Link href={`/services/${s.slug}`}>
-                  <span className="ico">
-                    <Icon name={s.icon} />
-                  </span>
+                  <span className="num">{String(i + 1).padStart(2, '0')}</span>
                   <span className="svc-name">{s.title}</span>
+                  <span className="desc">{s.shortDescription}</span>
+                  <Arrow />
                 </Link>
               </li>
             ))}
@@ -103,16 +99,13 @@ export default async function AreaPage({ params }: Args) {
         </div>
       </section>
       {projects.docs.length ? (
-        <section className="sec pad-md bg-tint">
+        <section className="sec pad-md">
           <div className="wrap">
-            <div className="sec-head">
-              <h2>
-                Projects in <span className="o">{area.name}</span>
-              </h2>
-              <Link className="btn btn-outline" href={`/projects?area=${area.slug}`}>
-                View all
-              </Link>
-            </div>
+            <SectionHead
+              eyebrow="Projects"
+              heading={`Finished work in *${area.name}*`}
+              link={{ label: 'View all', url: `/projects?area=${area.slug}` }}
+            />
             <div className="proj-grid">
               {projects.docs.map((p) => (
                 <ProjectCard key={p.id} project={p} />

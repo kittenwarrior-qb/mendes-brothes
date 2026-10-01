@@ -41,15 +41,15 @@ export const SplitBlock: React.FC<Props> = ({
           </div>
         ) : null}
       </div>
-      <div className="split-img reveal">
-        <Img media={image} sizes="(max-width: 900px) 92vw, 560px" />
+      <figure className="split-img reveal">
+        <Img media={image} sizes="(max-width: 900px) 92vw, 620px" />
         {stamp?.title || stamp?.text ? (
-          <div className="stamp">
+          <figcaption className="stamp">
             {stamp.title ? <b>{stamp.title}</b> : null}
             {stamp.text}
-          </div>
+          </figcaption>
         ) : null}
-      </div>
+      </figure>
     </div>
   </Section>
 )

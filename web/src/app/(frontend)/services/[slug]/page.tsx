@@ -14,6 +14,7 @@ import RichText from '@/components/RichText'
 import { Icon } from '@/components/site/Icon'
 import { absoluteUrl, JsonLd } from '@/components/site/JsonLd'
 import { ProjectCard } from '@/components/site/ProjectCard'
+import { Arrow, SectionHead } from '@/components/site/Section'
 import { SiteCtaBand } from '@/components/site/SiteCtaBand'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getGlobal } from '@/utilities/getGlobals'
@@ -73,7 +74,7 @@ export default async function ServicePage({ params }: Args) {
       sort: 'order',
       limit: 20,
       depth: 0,
-      select: { title: true, slug: true, icon: true },
+      select: { title: true, slug: true, shortDescription: true },
     }),
   ])
   const faqs = asDocs<Faq>(service.faqs)
@@ -120,7 +121,7 @@ export default async function ServicePage({ params }: Args) {
             {service.highlights?.length ? (
               <aside className="facts">
                 <h3 style={{ fontSize: '1rem', marginBottom: 8 }}>What&apos;s included</h3>
-                <ul className="checks" style={{ gridTemplateColumns: '1fr' }}>
+                <ul className="checks">
                   {service.highlights.map((h) => (
                     <li key={h.id ?? h.text}>
                       <Icon name="check" strokeWidth={2.6} />
@@ -138,16 +139,13 @@ export default async function ServicePage({ params }: Args) {
       ) : null}
 
       {projects.docs.length ? (
-        <section className="sec pad-md bg-tint">
+        <section className="sec pad-md">
           <div className="wrap">
-            <div className="sec-head">
-              <h2>
-                Recent <span className="o">{service.title}</span> jobs
-              </h2>
-              <Link className="btn btn-outline" href={`/projects?service=${service.slug}`}>
-                View all
-              </Link>
-            </div>
+            <SectionHead
+              eyebrow="Projects"
+              heading={`Recent *${service.title.toLowerCase()}* jobs`}
+              link={{ label: 'View all', url: `/projects?service=${service.slug}` }}
+            />
             <div className="proj-grid">
               {projects.docs.map((p) => (
                 <ProjectCard key={p.id} project={p} />
@@ -160,32 +158,24 @@ export default async function ServicePage({ params }: Args) {
       {faqs.length ? (
         <section className="sec pad-md">
           <div className="wrap">
-            <div className="sec-head">
-              <h2>
-                Common <span className="o">questions</span>
-              </h2>
-            </div>
+            <SectionHead eyebrow="FAQ" heading="Common *questions*" />
             <FaqList items={faqs} />
           </div>
         </section>
       ) : null}
 
       {others.docs.length ? (
-        <section className="sec pad-md bg-alt">
+        <section className="sec pad-md">
           <div className="wrap">
-            <div className="sec-head">
-              <h2>
-                Other <span className="o">services</span>
-              </h2>
-            </div>
+            <SectionHead eyebrow="More" heading="Other *services*" />
             <ul className="s-list">
-              {others.docs.map((s) => (
+              {others.docs.map((s, i) => (
                 <li key={s.id}>
                   <Link href={`/services/${s.slug}`}>
-                    <span className="ico">
-                      <Icon name={s.icon} />
-                    </span>
+                    <span className="num">{String(i + 1).padStart(2, '0')}</span>
                     <span className="svc-name">{s.title}</span>
+                    <span className="desc">{s.shortDescription}</span>
+                    <Arrow />
                   </Link>
                 </li>
               ))}

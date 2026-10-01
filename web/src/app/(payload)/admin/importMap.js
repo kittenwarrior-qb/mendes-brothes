@@ -28,11 +28,12 @@ import { PalettePicker as PalettePicker_12da7de5e5229e7dbbf9f9b5f1f0b3fc } from 
 import { ColorField as ColorField_2d3b6dcbebce75fc2ef5ac094f4218f0 } from '@/components/admin/ColorField'
 import { RowLabel as RowLabel_ec255a65fa6fa8d1faeb09cf35284224 } from '@/Header/RowLabel'
 import { RowLabel as RowLabel_1f6ff6ff633e3695d348f4f3c58f1466 } from '@/Footer/RowLabel'
+import { Nav as Nav_7f624ab41ec8c18638fc597972dde484 } from '@/components/admin/nav/Nav'
 import { AdminIcon as AdminIcon_e60daefd9ca0ae7722c67ce9a39e1dd6 } from '@/components/admin/Graphics'
 import { AdminLogo as AdminLogo_e60daefd9ca0ae7722c67ce9a39e1dd6 } from '@/components/admin/Graphics'
-import { BackupNavLink as BackupNavLink_e5c08e3b5735edf4a1fb32143737382a } from '@/components/admin/backups/NavLink'
 import { Dashboard as Dashboard_0e7b23c75ea046975e1784ba01f82886 } from '@/components/admin/Dashboard'
 import { HelpView as HelpView_b49611ccd828469519fd79e264a9eb51 } from '@/components/admin/HelpView'
+import { SettingsView as SettingsView_aed186f427612c880d8a28f694f189dc } from '@/components/admin/SettingsView'
 import { BackupsView as BackupsView_1b65dd523e815e46ea1e994c992b727b } from '@/components/admin/backups/BackupsView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -68,11 +69,12 @@ export const importMap = {
   "@/components/admin/ColorField#ColorField": ColorField_2d3b6dcbebce75fc2ef5ac094f4218f0,
   "@/Header/RowLabel#RowLabel": RowLabel_ec255a65fa6fa8d1faeb09cf35284224,
   "@/Footer/RowLabel#RowLabel": RowLabel_1f6ff6ff633e3695d348f4f3c58f1466,
+  "@/components/admin/nav/Nav#Nav": Nav_7f624ab41ec8c18638fc597972dde484,
   "@/components/admin/Graphics#AdminIcon": AdminIcon_e60daefd9ca0ae7722c67ce9a39e1dd6,
   "@/components/admin/Graphics#AdminLogo": AdminLogo_e60daefd9ca0ae7722c67ce9a39e1dd6,
-  "@/components/admin/backups/NavLink#BackupNavLink": BackupNavLink_e5c08e3b5735edf4a1fb32143737382a,
   "@/components/admin/Dashboard#Dashboard": Dashboard_0e7b23c75ea046975e1784ba01f82886,
   "@/components/admin/HelpView#HelpView": HelpView_b49611ccd828469519fd79e264a9eb51,
+  "@/components/admin/SettingsView#SettingsView": SettingsView_aed186f427612c880d8a28f694f189dc,
   "@/components/admin/backups/BackupsView#BackupsView": BackupsView_1b65dd523e815e46ea1e994c992b727b,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

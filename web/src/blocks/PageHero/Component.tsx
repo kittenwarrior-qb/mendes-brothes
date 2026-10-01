@@ -10,8 +10,8 @@ import { Eyebrow, Section } from '@/components/site/Section'
 import { cn } from '@/utilities/ui'
 
 /**
- * Inner page hero: a dark band with an oversized title. With a photo it either
- * fades in from the right ("split") or fills the band ("image").
+ * Inner page hero: an oversized title on the page background ("simple"), the same with a
+ * framed photo beside it ("split"), or a photo filling the band with the text on it ("image").
  * Also used directly by automatic pages (projects, services, news…).
  */
 export const PageHeroView: React.FC<{
@@ -35,27 +35,29 @@ export const PageHeroView: React.FC<{
   const Title = isFirst ? 'h1' : 'h2'
   return (
     <Section
-      className={cn('phero hero-dark', `phero-${v}`)}
+      className={cn('phero', `phero-${v}`, v === 'image' && 'hero-dark')}
       settings={{ ...settings, spacing: 'none' }}
     >
-      {v !== 'simple' ? (
+      {v === 'image' ? (
         <div className="phero-bg">
-          <Img
-            fill
-            media={image}
-            priority={isFirst}
-            sizes={v === 'image' ? '100vw' : '(max-width: 820px) 100vw, 60vw'}
-          />
+          <Img fill media={image} priority={isFirst} sizes="100vw" />
         </div>
       ) : null}
       <div className="wrap phero-inner">
-        {crumbs ? <Breadcrumbs items={crumbs} /> : null}
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <Title>
-          <Highlight text={heading} />
-        </Title>
-        {lede ? <p className="lede">{lede}</p> : null}
-        {actions ? <div className="hero-actions">{actions}</div> : null}
+        <div>
+          {crumbs ? <Breadcrumbs items={crumbs} /> : null}
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <Title>
+            <Highlight text={heading} />
+          </Title>
+          {lede ? <p className="lede">{lede}</p> : null}
+          {actions ? <div className="hero-actions">{actions}</div> : null}
+        </div>
+        {v === 'split' ? (
+          <div className="phero-media">
+            <Img fill media={image} priority={isFirst} sizes="(max-width: 860px) 92vw, 560px" />
+          </div>
+        ) : null}
       </div>
     </Section>
   )

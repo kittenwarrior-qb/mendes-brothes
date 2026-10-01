@@ -13,7 +13,7 @@ test.describe('public site', () => {
     await expect(page).toHaveTitle(/Mendez Brothes/)
     await expect(page.locator('h1')).toHaveCount(1)
     await expect(page.locator('.hero-title')).toBeVisible()
-    await expect(page.locator('.bento .b-tile').first()).toBeVisible()
+    await expect(page.locator('.s-list a').first()).toBeVisible()
     await expect(page.locator('.pcard').first()).toBeVisible()
     expect(errors).toEqual([])
   })
@@ -37,14 +37,14 @@ test.describe('public site', () => {
     const total = await page.locator('.pcard').count()
     expect(total).toBeGreaterThan(3)
 
-    await page.locator('#f-service').selectOption('excavation')
+    await page.getByRole('button', { name: 'Excavation', exact: true }).click()
     await expect(page).toHaveURL(/service=excavation/)
     await expect(page.locator('.result-bar strong')).not.toHaveText(String(total))
     const filtered = await page.locator('.pcard').count()
     expect(filtered).toBeGreaterThan(0)
     expect(filtered).toBeLessThan(total)
 
-    await page.getByRole('button', { name: 'Over 5 acres' }).click()
+    await page.locator('#f-size').selectOption({ label: 'Over 5 acres' })
     await expect(page).toHaveURL(/size=/)
 
     await page.getByRole('button', { name: 'Clear filters' }).first().click()

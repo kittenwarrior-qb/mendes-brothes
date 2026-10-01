@@ -67,6 +67,11 @@ export const ServicesGridBlock: React.FC<Props & { id?: string }> = async (props
                   <span className="svc-name">{s.title}</span>
                   <span className="desc">{s.shortDescription}</span>
                   <Arrow />
+                  {s.image ? (
+                    <span aria-hidden="true" className="s-preview">
+                      <Img alt="" fill media={s.image} sizes="300px" />
+                    </span>
+                  ) : null}
                 </Link>
               </li>
             ))}

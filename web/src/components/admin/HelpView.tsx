@@ -125,32 +125,23 @@ export const HelpView: React.FC<AdminViewServerProps> = ({
       user={req.user || undefined}
       visibleEntities={visibleEntities}
     >
-      <Gutter>
-        <h1 style={{ margin: '0 0 6px' }}>How do I…?</h1>
-        <p style={{ margin: '0 0 22px', color: 'var(--theme-elevation-600)' }}>
-          Short step-by-step guides. Nothing here can break the website — every change can be
-          undone.
-        </p>
-        <div style={{ maxWidth: 820 }}>
+      <Gutter className="mb-dash">
+        <div className="mb-dash__head">
+          <div>
+            <h1>How do I…?</h1>
+            <p className="mb-muted">
+              Short step-by-step guides. Nothing here can break the website — every change can be
+              undone.
+            </p>
+          </div>
+        </div>
+        <div className="mb-help">
           {guides
             .filter((g) => manager || !g.managerOnly)
             .map((g, i) => (
-              <details
-                key={g.q}
-                open={i === 0}
-                style={{
-                  border: '1px solid var(--theme-elevation-150)',
-                  borderRadius: 10,
-                  marginBottom: 10,
-                  background: 'var(--theme-elevation-0)',
-                }}
-              >
-                <summary
-                  style={{ cursor: 'pointer', padding: '16px 18px', fontWeight: 700, fontSize: 16 }}
-                >
-                  {g.q}
-                </summary>
-                <ol style={{ margin: 0, padding: '0 22px 18px 40px', lineHeight: 1.7 }}>
+              <details key={g.q} open={i === 0}>
+                <summary>{g.q}</summary>
+                <ol>
                   {g.steps.map((s, n) => (
                     <li key={n}>{s}</li>
                   ))}

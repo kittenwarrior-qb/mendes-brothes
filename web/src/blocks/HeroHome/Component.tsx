@@ -114,20 +114,38 @@ export const HeroHomeBlock: React.FC<Props & { isFirst?: boolean }> = async (pro
     )
   }
 
-  // Cinematic: full-bleed photo, giant headline, trust strip pinned to the bottom edge.
+  // Cinematic: full-bleed photo, one very large line, then the intro and actions on a single row.
   return (
     <Section className="hero hero-dark" settings={{ ...settings, spacing: 'none' }}>
       <div className="hero-bg">
         <Img fill media={image} priority={isFirst} sizes="100vw" />
       </div>
       <div className="wrap hero-inner">
-        {copy}
-        <div className="hero-side">
-          {showBadge && site.logoMark ? (
-            <Img className="hero-badge" media={site.logoMark} sizes="120px" />
+        {showLogo && logo ? (
+          <Img className="hero-logo" media={logo} priority={isFirst} sizes="280px" />
+        ) : null}
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <Title className="hero-title">
+          <Highlight text={heading} />
+        </Title>
+        <div className="hero-foot">
+          {lede ? <p className="lede">{lede}</p> : null}
+          {links?.length ? (
+            <div className="hero-actions">
+              {links.map(({ link }, i) => (
+                <CMSLink key={i} {...link} />
+              ))}
+            </div>
           ) : null}
-          {callCard}
         </div>
+        {(showBadge && site.logoMark) || callCard ? (
+          <div className="hero-side">
+            {showBadge && site.logoMark ? (
+              <Img className="hero-badge" media={site.logoMark} sizes="120px" />
+            ) : null}
+            {callCard}
+          </div>
+        ) : null}
       </div>
       {trustRow ? <div className="wrap">{trustRow}</div> : null}
     </Section>

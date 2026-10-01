@@ -56,7 +56,7 @@ export const ArchiveBlock: React.FC<
     <section className="sec pad-md" id={`block-${id}`}>
       <div className="wrap">
         {introContent && (
-          <div className="sec-head">
+          <div style={{ marginBottom: 40 }}>
             <RichText
               className="prose-site"
               data={introContent}

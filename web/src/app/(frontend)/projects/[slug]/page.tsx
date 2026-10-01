@@ -18,6 +18,7 @@ import { Breadcrumbs } from '@/components/site/Breadcrumbs'
 import { Img } from '@/components/site/Img'
 import { Lightbox } from '@/components/site/Lightbox'
 import { ProjectCard } from '@/components/site/ProjectCard'
+import { Arrow, SectionHead } from '@/components/site/Section'
 import { SiteCtaBand } from '@/components/site/SiteCtaBand'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getGlobal } from '@/utilities/getGlobals'
@@ -124,11 +125,11 @@ export default async function ProjectPage({ params }: Args) {
   ]
 
   return (
-    <article>
+    <article className="case">
       <PayloadRedirects disableNotFound url={url} />
 
-      <section className="phero phero-simple hero-dark sec">
-        <div className="wrap phero-inner">
+      <section className="phero phero-simple sec">
+        <div className="wrap">
           <Breadcrumbs
             items={[
               { name: 'Home', path: '/' },
@@ -138,55 +139,15 @@ export default async function ProjectPage({ params }: Args) {
           />
           <h1>{project.title}</h1>
           <p className="lede">{project.summary}</p>
-          {services.length ? (
-            <div className="tags" style={{ marginTop: 18 }}>
-              {services.map((s) => (
-                <Link className="tag" href={`/projects?service=${s.slug}`} key={s.id}>
-                  {s.title}
-                </Link>
-              ))}
-            </div>
-          ) : null}
         </div>
       </section>
 
-      <section className="sec pad-md">
-        <div className="wrap detail-grid">
-          <div>
-            <div className="cover-img">
-              <Img media={project.cover} priority sizes="(max-width: 960px) 100vw, 860px" />
-            </div>
-            {before && after ? (
-              <>
-                <h2 className="sub-title">Before &amp; after</h2>
-                <BeforeAfter after={after} before={before} />
-              </>
-            ) : null}
-            {project.body ? (
-              <>
-                <h2 className="sub-title">The job</h2>
-                <RichText
-                  className="prose-site"
-                  data={project.body}
-                  enableGutter={false}
-                  enableProse={false}
-                />
-              </>
-            ) : null}
-            {gallery.length ? (
-              <>
-                <h2 className="sub-title">Photos</h2>
-                <Lightbox columns={3} images={gallery} />
-              </>
-            ) : null}
-            {testimonial ? (
-              <>
-                <h2 className="sub-title">What the client said</h2>
-                <ReviewCard t={testimonial} />
-              </>
-            ) : null}
+      <section className="sec pad-md" style={{ paddingTop: 0 }}>
+        <div className="wrap">
+          <div className="case-cover">
+            <Img fill media={project.cover} priority sizes="(max-width: 1400px) 96vw, 1320px" />
           </div>
-          <aside className="facts">
+          <div className="facts">
             <dl>
               {facts
                 .filter(([, v]) => v)
@@ -197,44 +158,87 @@ export default async function ProjectPage({ params }: Args) {
                   </div>
                 ))}
             </dl>
-            {equipment.length || project.extraEquipment?.length ? (
-              <>
-                <h3 style={{ marginTop: 18, fontSize: '1rem' }}>Equipment used</h3>
-                <div className="tags">
-                  {equipment.map((e) => (
-                    <span className="tag g" key={e.id}>
-                      {e.name}
-                    </span>
-                  ))}
-                  {project.extraEquipment?.map((e) => (
-                    <span className="tag g" key={e}>
-                      {e}
-                    </span>
-                  ))}
-                </div>
-              </>
-            ) : null}
+          </div>
+
+          {project.body ? (
+            <div className="chapter">
+              <h2>The job</h2>
+              <RichText
+                className="prose-site"
+                data={project.body}
+                enableGutter={false}
+                enableProse={false}
+              />
+            </div>
+          ) : null}
+          {before && after ? (
+            <div className="chapter">
+              <h2>Before &amp; after</h2>
+              <BeforeAfter after={after} before={before} />
+            </div>
+          ) : null}
+          {gallery.length ? (
+            <div className="chapter">
+              <h2>Photos</h2>
+              <Lightbox columns={2} images={gallery} />
+            </div>
+          ) : null}
+          {services.length || equipment.length || project.extraEquipment?.length ? (
+            <div className="chapter">
+              <h2>Services &amp; equipment</h2>
+              <div className="tags">
+                {services.map((sv) => (
+                  <Link className="tag" href={`/projects?service=${sv.slug}`} key={sv.id}>
+                    {sv.title}
+                  </Link>
+                ))}
+                {equipment.map((e) => (
+                  <span className="tag" key={e.id}>
+                    {e.name}
+                  </span>
+                ))}
+                {project.extraEquipment?.map((e) => (
+                  <span className="tag" key={e}>
+                    {e}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
+          {testimonial ? (
+            <div className="chapter">
+              <h2>From the client</h2>
+              <ReviewCard t={testimonial} />
+            </div>
+          ) : null}
+
+          <div className="case-cta">
             <Link
               className="btn btn-primary"
               href={`/contact${services[0] ? `?service=${services[0].slug}` : ''}`}
             >
               {listing.projects?.detailCtaLabel || 'Get an estimate for a similar job'}
+              <Arrow />
             </Link>
-          </aside>
+            <Link className="link-arrow" href="/projects">
+              All projects
+              <Arrow />
+            </Link>
+          </div>
         </div>
       </section>
 
       {related.length ? (
-        <section className="sec pad-md bg-alt">
+        <section className="sec pad-md" style={{ paddingTop: 0 }}>
           <div className="wrap">
-            <div className="sec-head">
-              <h2>
-                Similar <span className="o">projects</span>
-              </h2>
-              <Link className="btn btn-outline" href={`/projects?service=${services[0]?.slug}`}>
-                More {services[0]?.title}
-              </Link>
-            </div>
+            <SectionHead
+              eyebrow="More work"
+              heading="Similar *projects*"
+              link={{
+                label: `More ${services[0]?.title ?? 'projects'}`,
+                url: `/projects?service=${services[0]?.slug}`,
+              }}
+            />
             <div className="proj-grid">
               {related.map((p: Project) => (
                 <ProjectCard key={p.id} project={p} />

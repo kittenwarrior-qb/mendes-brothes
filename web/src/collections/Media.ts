@@ -21,7 +21,7 @@ const altFromFilename = (filename?: string | null) =>
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  labels: { singular: 'Photo or file', plural: 'Photos & files' },
+  labels: { singular: 'Photo', plural: 'Photos' },
   folders: true,
   access: {
     create: authenticated,
@@ -32,7 +32,9 @@ export const Media: CollectionConfig = {
   admin: {
     group: 'Website',
     hideAPIURL: true,
-    description: 'All images and files. Photos are resized and converted to WebP automatically.',
+    defaultColumns: ['filename', 'alt', 'updatedAt'],
+    description:
+      'Every photo used on the website. Upload straight from your phone or computer — photos are resized automatically.',
   },
   fields: [
     {

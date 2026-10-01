@@ -13,6 +13,7 @@ import RichText from '@/components/RichText'
 import { Breadcrumbs } from '@/components/site/Breadcrumbs'
 import { Img } from '@/components/site/Img'
 import { absoluteUrl, JsonLd } from '@/components/site/JsonLd'
+import { SectionHead } from '@/components/site/Section'
 import { SiteCtaBand } from '@/components/site/SiteCtaBand'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -53,7 +54,7 @@ export default async function PostPage({ params: paramsPromise }: Args) {
   return (
     <article>
       <PayloadRedirects disableNotFound url={url} />
-      <section className="phero phero-simple hero-dark sec">
+      <section className="phero phero-simple sec">
         <div className="wrap phero-inner">
           <Breadcrumbs
             items={[
@@ -62,7 +63,7 @@ export default async function PostPage({ params: paramsPromise }: Args) {
               { name: post.title, path: url },
             ]}
           />
-          <h1 style={{ textTransform: 'none' }}>{post.title}</h1>
+          <h1>{post.title}</h1>
           <p className="lede">
             {post.publishedAt
               ? new Date(post.publishedAt).toLocaleDateString('en-US', {
@@ -75,8 +76,8 @@ export default async function PostPage({ params: paramsPromise }: Args) {
           </p>
         </div>
       </section>
-      <section className="sec pad-md">
-        <div className="wrap" style={{ maxWidth: 900 }}>
+      <section className="sec pad-md" style={{ paddingTop: 0 }}>
+        <div className="wrap" style={{ maxWidth: 980 }}>
           {hero ? (
             <div className="cover-img">
               <Img media={hero} priority sizes="(max-width: 900px) 100vw, 860px" />
@@ -91,13 +92,9 @@ export default async function PostPage({ params: paramsPromise }: Args) {
         </div>
       </section>
       {related.length ? (
-        <section className="sec pad-md bg-alt">
+        <section className="sec pad-md">
           <div className="wrap">
-            <div className="sec-head">
-              <h2>
-                Related <span className="o">posts</span>
-              </h2>
-            </div>
+            <SectionHead eyebrow="News" heading="Related *posts*" />
             <CollectionArchive posts={related} />
           </div>
         </section>

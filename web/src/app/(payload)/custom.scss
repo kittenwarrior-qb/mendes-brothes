@@ -1,4 +1,368 @@
+/*
+ * Admin look & feel. The panel is used by people who are not technical, so everything is
+ * a little larger than Payload's default and the navigation is a short, fixed menu.
+ */
+
+/* ───────── scale: bigger text, bigger click targets ───────── */
+html {
+  font-size: 15px;
+}
+@media (max-width: 1024px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+:root {
+  --mb-brand: #d96f25;
+  --mb-brand-soft: rgba(217, 111, 37, 0.12);
+  --nav-width: 290px;
+}
+
+.mb-only-dark {
+  display: none;
+}
+html[data-theme='dark'] {
+  .mb-only-light {
+    display: none;
+  }
+  .mb-only-dark {
+    display: block;
+  }
+}
+
+/* ───────── sidebar ───────── */
+.mb-nav {
+  --nav-padding-block-start: 18px;
+  --nav-padding-block-end: 18px;
+  --nav-padding-inline-start: 16px;
+  --nav-padding-inline-end: 16px;
+
+  .nav__wrap {
+    align-items: stretch;
+    gap: 6px;
+  }
+}
+
+.mb-nav__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  // leaves room for Payload's "fold the menu" button in the top-left corner
+  padding: 0 12px 18px 44px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--theme-elevation-100);
+  text-decoration: none;
+  color: var(--theme-elevation-500);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.mb-nav__logo {
+  height: 42px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left;
+}
+
+.mb-nav__group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mb-nav__label {
+  margin: 16px 12px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--theme-elevation-450);
+}
+.mb-nav__foot {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--theme-elevation-100);
+}
+
+.mb-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--theme-elevation-800);
+  text-decoration: none;
+  transition: background-color 0.12s;
+
+  svg {
+    flex-shrink: 0;
+    color: var(--theme-elevation-500);
+  }
+  &:hover {
+    background: var(--theme-elevation-50);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--mb-brand);
+    outline-offset: 2px;
+  }
+}
+.mb-nav__item--current {
+  background: var(--mb-brand-soft);
+  font-weight: 600;
+  color: var(--theme-elevation-1000);
+
+  svg {
+    color: var(--mb-brand);
+  }
+  &:hover {
+    background: var(--mb-brand-soft);
+  }
+}
+.mb-nav__text {
+  flex: 1;
+}
+.mb-nav__badge {
+  min-width: 24px;
+  padding: 2px 7px;
+  border-radius: 99px;
+  background: var(--mb-brand);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ───────── home, settings, help ───────── */
+.mb-dash {
+  max-width: 1280px;
+  padding-bottom: 60px;
+
+  h1 {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.15;
+  }
+}
+.mb-dash__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+
+  p {
+    margin: 8px 0 0;
+    font-size: 17px;
+  }
+}
+.mb-dash__status {
+  margin-top: 28px;
+  font-size: 14px;
+}
+.mb-muted {
+  color: var(--theme-elevation-600);
+}
+.mb-h2 {
+  margin: 38px 0 14px;
+  font-size: 21px;
+}
+.mb-h2__sub {
+  margin: -8px 0 14px;
+}
+
+.mb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 9px 18px;
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 10px;
+  background: var(--theme-elevation-0);
+  color: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--theme-elevation-400);
+    background: var(--theme-elevation-50);
+  }
+}
+
+.mb-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+.mb-tile,
+.mb-leads__head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: inherit;
+  text-decoration: none;
+}
+.mb-tile {
+  min-height: 104px;
+  padding: 20px;
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 14px;
+  background: var(--theme-elevation-0);
+  transition:
+    border-color 0.12s,
+    box-shadow 0.12s,
+    transform 0.12s;
+
+  &:hover {
+    border-color: var(--mb-brand);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+    transform: translateY(-1px);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--mb-brand);
+    outline-offset: 2px;
+  }
+}
+.mb-tile__icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--mb-brand-soft);
+  color: var(--mb-brand);
+}
+.mb-tile__title {
+  display: block;
+  font-size: 18px;
+  line-height: 1.3;
+}
+.mb-tile__text {
+  display: block;
+  margin-top: 3px;
+  color: var(--theme-elevation-600);
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.mb-leads {
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 14px;
+  background: var(--theme-elevation-0);
+  overflow: hidden;
+}
+.mb-leads--new {
+  border-color: var(--mb-brand);
+}
+.mb-leads__head {
+  padding: 20px;
+
+  &:hover {
+    background: var(--theme-elevation-50);
+  }
+}
+.mb-leads__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: 1.4fr 1.2fr 1.6fr 0.6fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 20px;
+    border-top: 1px solid var(--theme-elevation-100);
+    font-size: 15px;
+  }
+}
+.mb-leads__name {
+  font-weight: 600;
+}
+.mb-leads__phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.mb-status {
+  justify-self: end;
+  padding: 3px 12px;
+  border-radius: 99px;
+  background: #6b7280;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.mb-status--new {
+  background: var(--mb-brand);
+}
+.mb-status--contacted {
+  background: #2563eb;
+}
+.mb-status--quoted {
+  background: #7c3aed;
+}
+.mb-status--won {
+  background: #15803d;
+}
+@media (max-width: 800px) {
+  .mb-leads__list li {
+    grid-template-columns: 1fr auto;
+  }
+  .mb-leads__list li > :nth-child(3),
+  .mb-leads__list li > :nth-child(4) {
+    display: none;
+  }
+}
+
+.mb-help {
+  max-width: 860px;
+
+  details {
+    margin-bottom: 12px;
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 14px;
+    background: var(--theme-elevation-0);
+  }
+  summary {
+    padding: 18px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  ol {
+    margin: 0;
+    padding: 0 24px 20px 44px;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+}
+
+/* ───────── lists & forms: a bit roomier ───────── */
+.collection-list .table {
+  td,
+  th {
+    padding-block: 12px;
+  }
+}
+
 // Quote requests come from the website form — nobody types one in by hand.
 .collection-list--form-submissions .list-create-new-doc__create-new-button {
   display: none;
+}
+
+// Photo folders are switched off: one flat library with search is easier to understand.
+.default-list-view-tabs,
+.move-doc-to-folder,
+.cell-folder,
+#heading-folder {
+  display: none !important;
 }

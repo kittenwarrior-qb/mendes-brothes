@@ -51,7 +51,7 @@ export const Posts: CollectionConfig<'posts'> = {
     group: 'Website',
     hideAPIURL: true,
     description: 'News, tips and project updates shown at /posts.',
-    defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
+    defaultColumns: ['title', '_status', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({

@@ -28,25 +28,32 @@
 
 Thiết kế cho người **không rành công nghệ**: mở ra là biết bấm vào đâu, mọi tên gọi là tiếng Anh thường ngày (không có thuật ngữ kỹ thuật).
 
-**Màn hình chính (Dashboard)** — theo việc cần làm, không theo bảng dữ liệu
-- Thẻ **"N new quote requests"** + 5 yêu cầu báo giá mới nhất (tên, số điện thoại bấm gọi được, dịch vụ, trạng thái).
-- Ô **Everyday tasks**: Add a finished project · Edit a page · Photos & files · Add a review · Write a news post · Services & equipment.
-- Ô **Your business & the look of the site** (chỉ Manager/Admin): Company info & logo · Colours & fonts · Menu · Backups · Users.
-- Dòng trạng thái: lần backup gần nhất, email báo lead đang bật hay tắt.
-- Nút **How do I…?** mở trang hướng dẫn từng bước (`/admin/help`): thêm công trình, sửa chữ/ảnh, thêm/di chuyển section, trả lời yêu cầu báo giá, đổi số điện thoại/logo, đổi màu, sao lưu, hoàn tác.
+Chữ và nút trong admin to hơn mặc định (cỡ chữ gốc 15px), icon là nét vẽ đồng bộ (không dùng emoji).
 
-**Menu bên trái** — 4 nhóm cho người dùng, 1 nhóm cho dev
-- **Customers:** Quote requests.
-- **Website:** Pages, Projects, News, Photos & files.
-- **Company:** Services, Equipment, Towns we serve, Reviews, FAQs.
-- **Settings** (Manager trở lên): Users, Company info & logo, Colours & fonts, Menu, Footer, Backup schedule.
-- **Advanced** (chỉ Admin): News categories, Redirects, Forms, Search results, List page headings & filters.
+**Menu bên trái** — ngắn, cố định, có icon; logo công ty nằm trên cùng
+- **Home · Quote requests** (có số báo yêu cầu mới) **· Pages · Projects · News · Photos**
+- **Your company:** Services · Equipment · Reviews
+- Cuối menu: **Settings · Help · View website · Log out**
+- Menu luôn mở trên laptop (mặc định Payload tự gập ở màn hình ≤ 1440px).
+
+**Home** — theo việc cần làm
+- Thẻ **"N new quote requests"** + 5 yêu cầu mới nhất (tên, số điện thoại bấm gọi được, dịch vụ, trạng thái).
+- 6 ô **Everyday tasks**: Add a finished project · Edit a page · Upload photos · Add a review · Write a news post · Update services.
+- Dòng trạng thái (Manager): lần backup gần nhất, email báo lead đang bật hay tắt.
+
+**Settings** (`/admin/settings`) — mọi thứ ít khi đụng tới gom vào một màn hình các ô lớn
+- *Your business* (Manager): Company info & logo · Colours & fonts · Menu · Footer.
+- *More content* (mọi người): Towns we serve · FAQs · My account.
+- *People & safety* (Manager): Users · Backups · Backup schedule.
+- *Advanced* (chỉ Admin): News categories · List pages & filters · Forms · Redirects · Search index.
+
+**Help** (`/admin/help`): hướng dẫn từng bước — thêm công trình, sửa chữ/ảnh, thêm/di chuyển section, trả lời yêu cầu báo giá, đổi số điện thoại/logo, đổi màu, sao lưu, hoàn tác.
 
 **3 vai trò**
 | Vai trò | Dành cho | Thấy gì |
 |---|---|---|
-| Editor | Nhân viên | Customers, Website, Company |
-| Manager | Chủ doanh nghiệp | Thêm Settings + Backups |
+| Editor | Nhân viên | Nội dung, quote requests, mục "More" (towns, FAQs, tài khoản) |
+| Manager | Chủ doanh nghiệp | Thêm toàn bộ Settings + Backups |
 | Admin | Lập trình viên | Tất cả, kể cả Advanced và CSS tuỳ biến |
 
 Chỉ Admin mới cấp/thu hồi được quyền Admin. Tài khoản đầu tiên tạo ra luôn là Admin.
@@ -62,11 +69,11 @@ Chỉ Admin mới cấp/thu hồi được quyền Admin. Tài khoản đầu ti
 - Trạng thái New → Contacted → Quoted → Won/Lost và ghi chú nội bộ.
 - **Download all as a spreadsheet (CSV)** — mở được bằng Excel.
 
-**Nội dung khác:** Projects, Services, Equipment, Towns we serve, Reviews, FAQs, News. **Photos & files:** ảnh upload tự thu nhỏ và chuyển WebP; chọn điểm lấy nét.
+**Nội dung khác:** Projects, Services, Equipment, Towns we serve, Reviews, FAQs, News. **Photos:** một thư viện phẳng có tìm kiếm (đã tắt phần thư mục); ảnh upload tự thu nhỏ và chuyển WebP; chọn điểm lấy nét.
 
 **Cài đặt**
 - **Company info & logo:** tên công ty, điện thoại, địa chỉ, giờ làm việc, mạng xã hội, 4 loại logo, favicon, thanh thông báo, dải CTA, mã theo dõi (Plausible / Google Analytics).
-- **Colours & fonts:** chọn bảng màu bằng thẻ trực quan (6 bảng + tự sinh từ 1 màu thương hiệu), tinh chỉnh từng màu, 9 font, bo góc, kiểu nút, kiểu thẻ, độ rộng, kiểu header/footer, chế độ tương phản, hiệu ứng cuộn. **Thử màu ở bản nháp + Live Preview, khách chỉ thấy khi bấm Publish.**
+- **Colours & fonts:** chọn bảng màu bằng thẻ trực quan (13 bảng khác hẳn nhau + tự sinh từ 1 màu thương hiệu), tinh chỉnh từng màu, 9 font, bo góc, kiểu nút, kiểu thẻ, độ rộng, kiểu header/footer, chế độ tương phản, hiệu ứng cuộn. **Thử màu ở bản nháp + Live Preview, khách chỉ thấy khi bấm Publish.**
 - **Menu** (có menu con), **Footer**, **Backups** (xem mục C), **Users**.
 - Giao diện admin có tiếng Anh và tiếng Việt.
 

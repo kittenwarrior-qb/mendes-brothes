@@ -59,7 +59,7 @@ export const Arrow: React.FC = () => (
   </svg>
 )
 
-/** Small uppercase label above a heading. */
+/** Small uppercase label. Inside a section header it is numbered automatically (CSS counter). */
 export const Eyebrow: React.FC<{ children?: React.ReactNode }> = ({ children }) =>
   children ? <p className="eyebrow">{children}</p> : null
 
@@ -75,8 +75,8 @@ export const SectionHead: React.FC<{
   if (!eyebrow && !heading && !lede && !link?.label && !children) return null
   return (
     <div className="sec-head">
+      <Eyebrow>{eyebrow}</Eyebrow>
       <div className="sec-head-main">
-        <Eyebrow>{eyebrow}</Eyebrow>
         {heading ? (
           <h2 id={id}>
             <Highlight text={heading} />
@@ -84,13 +84,17 @@ export const SectionHead: React.FC<{
         ) : null}
         {lede ? <p className="lede">{lede}</p> : null}
       </div>
-      {link?.label && link.url ? (
-        <SmartLink className="btn btn-outline" href={link.url}>
-          {link.label}
-          <Arrow />
-        </SmartLink>
+      {(link?.label && link.url) || children ? (
+        <div className="sec-head-side">
+          {link?.label && link.url ? (
+            <SmartLink className="link-arrow" href={link.url}>
+              {link.label}
+              <Arrow />
+            </SmartLink>
+          ) : null}
+          {children}
+        </div>
       ) : null}
-      {children}
     </div>
   )
 }

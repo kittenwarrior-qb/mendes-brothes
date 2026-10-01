@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
   // Self-contained server bundle for the Docker image (see Dockerfile).
   output: 'standalone',
   poweredByHeader: false,
+  // the floating dev badge sits on top of the admin menu
+  devIndicators: false,
   async headers() {
     return [
       { source: '/:path*', headers: securityHeaders },

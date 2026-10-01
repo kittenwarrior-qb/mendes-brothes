@@ -27,14 +27,27 @@ export const fontStack: Record<FontKey, string> = {
 /** Heading weight per display font (single-weight fonts must stay at 400). */
 export const displayWeight: Record<FontKey, number> = {
   russo: 400,
-  montserrat: 800,
-  inter: 800,
-  oswald: 600,
-  barlowCondensed: 700,
-  barlow: 700,
-  archivo: 800,
-  playfair: 600,
-  dmSans: 700,
+  montserrat: 600,
+  inter: 600,
+  oswald: 500,
+  barlowCondensed: 600,
+  barlow: 600,
+  archivo: 500,
+  playfair: 500,
+  dmSans: 500,
+}
+
+/** Heading letter-spacing: wide grotesques are pulled tight, condensed faces are left alone. */
+export const displayTracking: Record<FontKey, string> = {
+  russo: '0',
+  montserrat: '-0.03em',
+  inter: '-0.035em',
+  oswald: '0',
+  barlowCondensed: '0',
+  barlow: '-0.02em',
+  archivo: '-0.035em',
+  playfair: '-0.015em',
+  dmSans: '-0.035em',
 }
 
 /** woff2 file to preload for each font (the weight used first on screen). */

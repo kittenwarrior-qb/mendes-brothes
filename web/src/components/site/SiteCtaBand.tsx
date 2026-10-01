@@ -37,14 +37,17 @@ export const CtaCard: React.FC<{
         </h2>
         {lede ? <p className="lede">{lede}</p> : null}
       </div>
-      <div>
+      <div className="cta-side">
         {phone ? (
           <a className="cta-phone" href={telHref(phone)}>
             {phone}
           </a>
         ) : null}
         {buttonLabel && buttonUrl ? (
-          <SmartLink className="btn btn-white" href={buttonUrl}>
+          <SmartLink
+            className={style === 'dark' || style === 'image' ? 'btn btn-white' : 'btn btn-primary'}
+            href={buttonUrl}
+          >
             {buttonLabel}
             <Arrow />
           </SmartLink>

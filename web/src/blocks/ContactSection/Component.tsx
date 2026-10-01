@@ -5,9 +5,7 @@ import React from 'react'
 import type { ContactSectionBlock as Props } from '@/payload-types'
 
 import { SiteFormServer } from '@/blocks/Form/SiteFormServer'
-import { Highlight } from '@/components/site/Highlight'
-import { Img } from '@/components/site/Img'
-import { Eyebrow, Section } from '@/components/site/Section'
+import { Section, SectionHead } from '@/components/site/Section'
 import { getGlobal } from '@/utilities/getGlobals'
 import { fullAddress, mapLink, telHref } from '@/utilities/site'
 import { cn } from '@/utilities/ui'
@@ -32,23 +30,10 @@ export const ContactSectionBlock: React.FC<Props> = async ({
   return (
     <Section settings={settings}>
       <div className="wrap">
-        {eyebrow || heading || lede ? (
-          <div className="sec-head">
-            <div className="sec-head-main">
-              <Eyebrow>{eyebrow}</Eyebrow>
-              {heading ? (
-                <h2>
-                  <Highlight text={heading} />
-                </h2>
-              ) : null}
-              {lede ? <p className="lede">{lede}</p> : null}
-            </div>
-          </div>
-        ) : null}
+        <SectionHead eyebrow={eyebrow} heading={heading} lede={lede} />
         <div className={cn('contact-grid', !showInfoCard && 'single')}>
           {showInfoCard ? (
             <aside className="info-card">
-              {site.logoOnDark ? <Img media={site.logoOnDark} sizes="160px" /> : null}
               {site.phone ? (
                 <>
                   <p className="ic-label">Call or text</p>

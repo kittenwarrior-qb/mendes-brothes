@@ -99,8 +99,8 @@ export default async function ProjectsPage({ searchParams }: Args) {
           { name: plainText(cfg?.heading) || 'Projects', path: '/projects' },
         ]}
         heading={cfg?.heading || 'Finished *projects*'}
-        image={cfg?.image}
         lede={cfg?.lede}
+        variant="simple"
       />
       <ProjectFilters
         options={{
@@ -114,11 +114,11 @@ export default async function ProjectsPage({ searchParams }: Args) {
         }}
         values={values}
       >
-        <section className="sec pad-sm" style={{ paddingTop: 0 }}>
+        <section className="sec pad-md" style={{ paddingTop: 0 }}>
           <div className="wrap">
             <div aria-live="polite" className="result-bar">
               <span>
-                Showing <strong>{results.totalDocs}</strong> of {total.totalDocs} projects
+                <strong>{results.totalDocs}</strong> of {total.totalDocs} projects
               </span>
             </div>
             <h2 className="sr-only">Project results</h2>

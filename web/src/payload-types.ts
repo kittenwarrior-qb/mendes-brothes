@@ -553,7 +553,7 @@ export interface Post {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * All images and files. Photos are resized and converted to WebP automatically.
+ * Every photo used on the website. Upload straight from your phone or computer — photos are resized automatically.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -3341,7 +3341,21 @@ export interface SiteSetting {
  */
 export interface Theme {
   id: number;
-  preset: 'classic' | 'limestone' | 'graphite' | 'steel' | 'forest' | 'amber' | 'auto';
+  preset:
+    | 'studio'
+    | 'classic'
+    | 'limestone'
+    | 'graphite'
+    | 'steel'
+    | 'forest'
+    | 'amber'
+    | 'midnight'
+    | 'olive'
+    | 'teal'
+    | 'brick'
+    | 'lime'
+    | 'mono'
+    | 'auto';
   /**
    * The one colour everything else is built from (your logo colour).
    */

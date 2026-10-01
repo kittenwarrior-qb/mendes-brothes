@@ -43,11 +43,13 @@ export default buildConfig({
         Logo: '@/components/admin/Graphics#AdminLogo',
         Icon: '@/components/admin/Graphics#AdminIcon',
       },
-      afterNavLinks: ['@/components/admin/backups/NavLink#BackupNavLink'],
+      // short fixed menu with icons instead of the default list of every collection
+      Nav: '@/components/admin/nav/Nav#Nav',
       views: {
         // task-first home screen instead of the default wall of cards
         dashboard: { Component: '@/components/admin/Dashboard#Dashboard' },
         help: { Component: '@/components/admin/HelpView#HelpView', path: '/help' },
+        settings: { Component: '@/components/admin/SettingsView#SettingsView', path: '/settings' },
         backups: {
           Component: '@/components/admin/backups/BackupsView#BackupsView',
           path: '/backups',
@@ -111,7 +113,7 @@ export default buildConfig({
   cors: [getServerSideURL()].filter(Boolean),
   globals: [SiteSettings, Theme, Header, Footer, ListingPages, BackupSettings],
   endpoints: [...backupEndpoints, leadsExportEndpoint],
-  // photo folders stay available inside the library; the extra "Browse by folder" screen is hidden
+  // photo folders are switched off in the admin (hidden in custom.scss); the tables are kept for now
   folders: { browseByFolder: false },
   plugins,
   secret: process.env.PAYLOAD_SECRET,

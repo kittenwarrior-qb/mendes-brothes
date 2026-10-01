@@ -48,33 +48,35 @@ export const EquipmentGridBlock: React.FC<Props & { id?: string }> = async ({
             <div className="unit reveal" data-cat={u.category} key={u.id}>
               {u.image ? (
                 <div className="u-photo">
-                  <Img media={u.image} sizes="(max-width: 600px) 92vw, 380px" />
+                  <Img media={u.image} sizes="(max-width: 860px) 90px, 220px" />
                 </div>
               ) : (
                 <Icon name={u.icon || 'fleetExcavator'} />
               )}
-              <h3>{u.name}</h3>
-              {u.spec ? <div className="spec">{u.spec}</div> : null}
-              {u.description ? <p>{u.description}</p> : null}
+              <div>
+                <h3>{u.name}</h3>
+                {u.spec ? <div className="spec">{u.spec}</div> : null}
+                {u.description ? <p>{u.description}</p> : null}
+              </div>
               {u.brand || u.model || u.quantity || u.specs?.length ? (
                 <dl>
                   {u.brand || u.model ? (
-                    <>
+                    <div>
                       <dt>Make / model</dt>
                       <dd>{[u.brand, u.model].filter(Boolean).join(' ')}</dd>
-                    </>
+                    </div>
                   ) : null}
                   {u.quantity ? (
-                    <>
+                    <div>
                       <dt>In fleet</dt>
                       <dd>{u.quantity}</dd>
-                    </>
+                    </div>
                   ) : null}
                   {u.specs?.map((s) => (
-                    <React.Fragment key={s.id ?? s.label}>
+                    <div key={s.id ?? s.label}>
                       <dt>{s.label}</dt>
                       <dd>{s.value}</dd>
-                    </React.Fragment>
+                    </div>
                   ))}
                 </dl>
               ) : null}

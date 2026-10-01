@@ -1,0 +1,74 @@
+import {
+  ArrowUpRight,
+  Building2,
+  CalendarClock,
+  CircleUser,
+  CornerUpRight,
+  DatabaseBackup,
+  Download,
+  FileText,
+  HardHat,
+  House,
+  Images,
+  Inbox,
+  LayoutList,
+  LifeBuoy,
+  ListFilter,
+  LogOut,
+  MapPin,
+  Menu,
+  MessageCircleQuestion,
+  Newspaper,
+  Palette,
+  PanelBottom,
+  Phone,
+  Search,
+  Settings,
+  Star,
+  Tags,
+  Truck,
+  Users,
+  Wrench,
+} from 'lucide-react'
+import React from 'react'
+
+/** One line-icon set for the whole admin, looked up by name so server code can pass plain strings. */
+const icons = {
+  account: CircleUser,
+  backup: DatabaseBackup,
+  categories: Tags,
+  company: Building2,
+  download: Download,
+  equipment: Truck,
+  external: ArrowUpRight,
+  faqs: MessageCircleQuestion,
+  footer: PanelBottom,
+  forms: LayoutList,
+  help: LifeBuoy,
+  home: House,
+  leads: Inbox,
+  listings: ListFilter,
+  logout: LogOut,
+  menu: Menu,
+  news: Newspaper,
+  pages: FileText,
+  palette: Palette,
+  phone: Phone,
+  photos: Images,
+  projects: HardHat,
+  redirects: CornerUpRight,
+  reviews: Star,
+  schedule: CalendarClock,
+  search: Search,
+  services: Wrench,
+  settings: Settings,
+  towns: MapPin,
+  users: Users,
+}
+
+export type IconName = keyof typeof icons
+
+export const Icon: React.FC<{ name: IconName; size?: number }> = ({ name, size = 22 }) => {
+  const Cmp = icons[name]
+  return <Cmp aria-hidden="true" size={size} strokeWidth={1.75} />
+}

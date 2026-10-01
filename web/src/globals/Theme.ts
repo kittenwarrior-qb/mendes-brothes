@@ -73,7 +73,7 @@ export const Theme: GlobalConfig = {
       name: 'preset',
       label: 'Colour palette',
       type: 'select',
-      defaultValue: 'limestone',
+      defaultValue: 'studio',
       required: true,
       options: presetOptions,
       admin: {

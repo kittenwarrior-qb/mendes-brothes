@@ -24,7 +24,7 @@ export default async function ServicesPage() {
         image={cfg?.image}
         lede={cfg?.lede}
       />
-      <ServicesGridBlock blockType="servicesGrid" linkTo="service" source="all" variant="cards" />
+      <ServicesGridBlock blockType="servicesGrid" linkTo="service" source="all" variant="list" />
       <SiteCtaBand />
     </>
   )

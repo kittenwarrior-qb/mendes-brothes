@@ -1,6 +1,6 @@
 import type { Theme } from '@/payload-types'
 
-import { displayWeight, fontStack } from './fonts'
+import { displayTracking, displayWeight, fontStack } from './fonts'
 import {
   AUTO_PALETTE,
   type ColorMode,
@@ -38,7 +38,7 @@ export const paletteTokens = (theme?: Partial<Theme> | null): ThemeTokens => {
       colorScheme: mode,
       headerStyle: mode === 'dark' ? 'dark' : 'light',
       footerStyle: 'dark',
-      cardStyle: mode === 'dark' ? 'flat' : 'bordered',
+      cardStyle: 'flat',
       colors: generatePalette(
         theme.brandColor || '#D96F25',
         (theme.neutralTone as NeutralTone) || 'warm',
@@ -47,7 +47,7 @@ export const paletteTokens = (theme?: Partial<Theme> | null): ThemeTokens => {
     }
   }
   const key: PresetKey =
-    theme?.preset && theme.preset in presets ? (theme.preset as PresetKey) : 'limestone'
+    theme?.preset && theme.preset in presets ? (theme.preset as PresetKey) : 'studio'
   return presets[key].tokens
 }
 
@@ -58,7 +58,7 @@ export const resolveTheme = (theme?: Partial<Theme> | null): ResolvedTheme => {
       ? AUTO_PALETTE
       : theme?.preset && theme.preset in presets
         ? (theme.preset as PresetKey)
-        : 'limestone'
+        : 'studio'
   const base = paletteTokens(theme)
 
   const colors = { ...base.colors }
@@ -164,6 +164,7 @@ export const themeToCss = (t: ResolvedTheme): string => {
     '--f-display': fontStack[t.fontDisplay],
     '--f-body': fontStack[t.fontBody],
     '--w-display': String(displayWeight[t.fontDisplay]),
+    '--h-track': displayTracking[t.fontDisplay],
     '--h-case': t.headingCase,
     '--fs-base': `${t.baseFontSize}px`,
     '--r': radii[t.radius].r,
