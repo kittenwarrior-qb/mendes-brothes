@@ -33,9 +33,9 @@ export const iconField = (kinds: IconKind[] = ['line'], overrides: Partial<Selec
  * Shared presentation options added to every layout block, so editors can
  * restyle a section without touching code.
  */
-export const blockSettings: GroupField = {
+const settingsGroup: GroupField = {
   name: 'settings',
-  label: 'Section settings',
+  label: false,
   type: 'group',
   admin: {
     description: 'Background, spacing and visibility of this section.',
@@ -97,6 +97,14 @@ export const blockSettings: GroupField = {
           : 'Use lowercase letters, numbers and dashes only.',
     },
   ],
+}
+
+/** The section options, collapsed by default so they don't distract from the content. */
+export const blockSettings: Field = {
+  type: 'collapsible',
+  label: 'Look of this section (optional): background, spacing, visibility',
+  admin: { initCollapsed: true },
+  fields: [settingsGroup],
 }
 
 /** Small uppercase label shown above a heading, e.g. "What we do". */

@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { adminOnly } from '../access/roles'
+import { hiddenUnlessManager, managerOnly } from '../access/roles'
 import { revalidateGlobal } from '../hooks/revalidateSite'
 
 export const socialPlatforms = [
@@ -16,13 +16,15 @@ export const socialPlatforms = [
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
-  label: 'Site settings',
+  label: 'Company info & logo',
   access: {
     read: () => true,
-    update: adminOnly,
+    update: managerOnly,
   },
   admin: {
     group: 'Settings',
+    hidden: hiddenUnlessManager,
+    hideAPIURL: true,
     description:
       'Company details, logos and site-wide options. Changes appear on the live site right after saving.',
   },

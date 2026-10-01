@@ -1,21 +1,31 @@
 import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
-import { adminOnly, adminOnlyField, adminOrSelf } from '../../access/roles'
+import {
+  hiddenUnlessManager,
+  isAdminUser,
+  managerOnly,
+  managerOnlyField,
+  managerOrSelf,
+} from '../../access/roles'
 
 export const Users: CollectionConfig = {
   slug: 'users',
+  labels: { singular: 'User', plural: 'Users' },
   access: {
     admin: authenticated,
-    create: adminOnly,
-    delete: adminOnly,
-    read: adminOrSelf,
-    update: adminOrSelf,
+    create: managerOnly,
+    delete: managerOnly,
+    read: managerOrSelf,
+    update: managerOrSelf,
   },
   admin: {
     defaultColumns: ['name', 'email', 'role'],
     group: 'Settings',
     useAsTitle: 'name',
+    hidden: hiddenUnlessManager,
+    hideAPIURL: true,
+    description: 'People who can log in here. Give staff the "Editor" role.',
   },
   auth: true,
   fields: [
@@ -30,18 +40,32 @@ export const Users: CollectionConfig = {
       required: true,
       saveToJWT: true,
       access: {
-        create: adminOnlyField,
-        update: adminOnlyField,
+        create: managerOnlyField,
+        update: managerOnlyField,
       },
       admin: {
         position: 'sidebar',
         description:
-          'Admin: everything, including theme, site settings and users. Editor: pages, projects, posts and media.',
+          'Editor: pages, projects, news, photos and quote requests. Manager: also company info, colours, menu, users and backups. Admin: everything, including technical settings.',
       },
       options: [
-        { label: 'Admin', value: 'admin' },
-        { label: 'Editor', value: 'editor' },
+        { label: 'Editor (staff)', value: 'editor' },
+        { label: 'Manager (owner)', value: 'manager' },
+        { label: 'Admin (developer)', value: 'admin' },
       ],
+      // only a developer can hand out or take away the developer role
+      validate: ((
+        value: unknown,
+        { req, previousValue }: { req: { user: unknown }; previousValue?: unknown },
+      ) => {
+        const { user } = req
+        const before = previousValue
+        if (!user || isAdminUser(user)) return true
+        if (value === 'admin' && before !== 'admin')
+          return 'Only an admin can create another admin.'
+        if (before === 'admin' && value !== 'admin') return 'Only an admin can change an admin.'
+        return true
+      }) as never,
     },
   ],
   hooks: {

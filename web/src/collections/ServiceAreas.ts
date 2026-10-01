@@ -8,7 +8,7 @@ import { siteRevalidationHooks } from '../hooks/revalidateSite'
 
 export const ServiceAreas: CollectionConfig<'service-areas'> = {
   slug: 'service-areas',
-  labels: { singular: 'Service area', plural: 'Service areas' },
+  labels: { singular: 'Town', plural: 'Towns we serve' },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -19,6 +19,7 @@ export const ServiceAreas: CollectionConfig<'service-areas'> = {
   defaultSort: 'order',
   admin: {
     group: 'Company',
+    hideAPIURL: true,
     useAsTitle: 'name',
     defaultColumns: ['name', 'county', 'state', 'order'],
     description:

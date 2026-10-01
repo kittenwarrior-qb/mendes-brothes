@@ -1,16 +1,20 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
+import { hiddenUnlessManager, managerOnly } from '@/access/roles'
 import { revalidateGlobal } from '@/hooks/revalidateSite'
 
 export const Header: GlobalConfig = {
   slug: 'header',
-  label: 'Header & menu',
+  label: 'Menu',
   access: {
     read: () => true,
+    update: managerOnly,
   },
   admin: {
     group: 'Settings',
+    hidden: hiddenUnlessManager,
+    hideAPIURL: true,
   },
   fields: [
     {

@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
+import { hiddenUnlessManager, managerOnly } from '@/access/roles'
 import { revalidateGlobal } from '@/hooks/revalidateSite'
 
 export const Footer: GlobalConfig = {
@@ -8,9 +9,12 @@ export const Footer: GlobalConfig = {
   label: 'Footer',
   access: {
     read: () => true,
+    update: managerOnly,
   },
   admin: {
     group: 'Settings',
+    hidden: hiddenUnlessManager,
+    hideAPIURL: true,
   },
   fields: [
     {

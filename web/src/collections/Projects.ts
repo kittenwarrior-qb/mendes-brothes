@@ -40,11 +40,12 @@ export const Projects: CollectionConfig<'projects'> = {
   },
   defaultSort: '-completedAt',
   admin: {
-    group: 'Projects',
+    group: 'Website',
+    hideAPIURL: true,
     useAsTitle: 'title',
-    defaultColumns: ['title', 'area', 'acres', 'completedAt', 'featured', '_status'],
+    defaultColumns: ['cover', 'title', 'area', 'completedAt', '_status'],
     description:
-      'Finished jobs shown on /projects. Visitors can filter by service, lot size, town, year and client type.',
+      'Your finished jobs. They appear on the Projects page of the website, where visitors can filter them by service, lot size, town and year.',
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({ slug: data?.slug, collection: 'projects', req }),
@@ -249,7 +250,7 @@ export const Projects: CollectionConfig<'projects'> = {
     {
       name: 'publishedAt',
       type: 'date',
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', hidden: true },
     },
     slugField(),
   ],

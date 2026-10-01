@@ -27,6 +27,7 @@ export const Services: CollectionConfig<'services'> = {
   defaultSort: 'order',
   admin: {
     group: 'Company',
+    hideAPIURL: true,
     useAsTitle: 'title',
     defaultColumns: ['title', 'order', 'showInFooter', 'updatedAt'],
     description: 'The services you offer. Each one gets its own page at /services/<slug>.',

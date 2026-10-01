@@ -3,7 +3,7 @@ import type { Endpoint, PayloadRequest } from 'payload'
 import fs from 'fs'
 import { Readable } from 'stream'
 
-import { isAdminUser } from '../access/roles'
+import { isManagerUser } from '../access/roles'
 import { revalidateEverything } from '../hooks/revalidateSite'
 import { migrations } from '../migrations'
 import {
@@ -19,9 +19,9 @@ import {
 
 const json = (data: unknown, status = 200) => Response.json(data, { status })
 
-/** Every backup route is admin-only: a backup contains the whole site, including user records. */
+/** Every backup route is for managers/admins only: a backup contains the whole site, including user records. */
 const guard = (req: PayloadRequest) =>
-  isAdminUser(req.user) ? null : json({ error: 'Admins only.' }, req.user ? 403 : 401)
+  isManagerUser(req.user) ? null : json({ error: 'Managers only.' }, req.user ? 403 : 401)
 
 const fail = (req: PayloadRequest, err: unknown, what: string) => {
   const message = err instanceof Error ? err.message : String(err)

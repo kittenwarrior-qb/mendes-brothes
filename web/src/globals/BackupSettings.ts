@@ -1,16 +1,18 @@
 import type { GlobalConfig } from 'payload'
 
-import { adminOnly } from '../access/roles'
+import { hiddenUnlessManager, managerOnly } from '../access/roles'
 
 export const BackupSettings: GlobalConfig = {
   slug: 'backup-settings',
   label: 'Backup schedule',
   access: {
-    read: adminOnly,
-    update: adminOnly,
+    read: managerOnly,
+    update: managerOnly,
   },
   admin: {
     group: 'Settings',
+    hidden: hiddenUnlessManager,
+    hideAPIURL: true,
     description:
       'Automatic backups are stored on the server. Create, download and restore backups on the Backups screen.',
   },

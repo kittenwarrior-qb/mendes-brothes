@@ -1,5 +1,6 @@
 import type { Field, GlobalConfig } from 'payload'
 
+import { hiddenUnlessAdmin } from '../access/roles'
 import { HIGHLIGHT_HINT } from '../fields/common'
 import { revalidateGlobal } from '../hooks/revalidateSite'
 
@@ -17,12 +18,14 @@ const heroFields = (defaults: { heading: string; lede: string }): Field[] => [
 
 export const ListingPages: GlobalConfig = {
   slug: 'listing-pages',
-  label: 'Listing pages',
+  label: 'List page headings & filters',
   access: {
     read: () => true,
   },
   admin: {
-    group: 'Settings',
+    group: 'Advanced',
+    hidden: hiddenUnlessAdmin,
+    hideAPIURL: true,
     description: 'Headings and options for the automatic pages: /projects, /services and /posts.',
   },
   fields: [

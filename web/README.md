@@ -54,6 +54,7 @@ src/
 - **Backup**: cần `pg_dump`/`pg_restore` trong PATH (image Docker đã có; máy dev cài PostgreSQL client). Thư mục: `BACKUP_DIR` (mặc định `./backups`).
 - **Migration**: `migrate:create` sẽ hỏi tương tác nếu một bảng vừa thêm vừa xoá cột. Khi đó tách làm hai bước: thêm trước, xoá sau.
 - **Font**: tự host trong `public/fonts` (không gọi Google Fonts). Trang chỉ preload đúng 2 font theme đang dùng.
-- **Form**: Form Builder plugin + honeypot (`company_website`) + giới hạn 5 lần / 10 phút / IP. Lead nằm ở mục *Leads*, có trạng thái New → Won/Lost.
+- **Form**: Form Builder plugin + honeypot (`company_website`) + giới hạn 5 lần / 10 phút / IP. Lead nằm ở mục *Quote requests*, có trạng thái New → Won/Lost; xuất CSV qua `GET /api/leads-export`.
 - **Ảnh**: upload tự resize (tối đa 2400px) và chuyển sang WebP. `next/image` phục vụ đúng kích thước cho từng màn hình.
-- **Phân quyền**: `admin` (mọi thứ) / `editor` (nội dung, không đụng Theme, Site settings, Users).
+- **Phân quyền** (`src/access/roles.ts`): `editor` (nội dung + quote requests) / `manager` (thêm Settings, Users, Backups) / `admin` (thêm nhóm Advanced, CSS tuỳ biến).
+- **Admin UX**: dashboard `components/admin/Dashboard.tsx`, trang hướng dẫn `HelpView.tsx` (`/admin/help`), tên + nhóm + ảnh minh hoạ của block ở `blocks/blockMeta.ts` và `public/admin-blocks/<slug>.jpg` (600×400). Thêm block mới thì thêm một dòng trong `blockMeta` và một ảnh.

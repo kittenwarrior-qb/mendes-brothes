@@ -4,7 +4,7 @@ import { DefaultTemplate } from '@payloadcms/next/templates'
 import { Gutter } from '@payloadcms/ui'
 import React from 'react'
 
-import { isAdminUser } from '@/access/roles'
+import { isManagerUser } from '@/access/roles'
 
 import { BackupsClient } from './BackupsClient'
 
@@ -33,7 +33,7 @@ export const BackupsView: React.FC<AdminViewServerProps> = ({
           plus all uploaded photos. Download a copy to keep it somewhere safe — it can be restored
           here, or on a new server.
         </p>
-        {isAdminUser(req.user) ? <BackupsClient /> : <p>Only administrators can manage backups.</p>}
+        {isManagerUser(req.user) ? <BackupsClient /> : <p>Only managers can manage backups.</p>}
       </Gutter>
     </DefaultTemplate>
   )

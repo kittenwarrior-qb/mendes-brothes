@@ -46,9 +46,11 @@ export const Posts: CollectionConfig<'posts'> = {
       description: true,
     },
   },
-  labels: { singular: 'News post', plural: 'News posts' },
+  labels: { singular: 'News post', plural: 'News' },
   admin: {
-    group: 'Content',
+    group: 'Website',
+    hideAPIURL: true,
+    description: 'News, tips and project updates shown at /posts.',
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
     livePreview: {
       url: ({ data, req }) =>

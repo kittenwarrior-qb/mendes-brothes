@@ -23,6 +23,7 @@ import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { BackupSettings } from './globals/BackupSettings'
 import { ListingPages } from './globals/ListingPages'
+import { leadsExportEndpoint } from './leads/exportEndpoint'
 import { SiteSettings } from './globals/SiteSettings'
 import { Theme } from './globals/Theme'
 import { migrations } from './migrations'
@@ -42,9 +43,11 @@ export default buildConfig({
         Logo: '@/components/admin/Graphics#AdminLogo',
         Icon: '@/components/admin/Graphics#AdminIcon',
       },
-      beforeDashboard: ['@/components/admin/Dashboard#DashboardIntro'],
       afterNavLinks: ['@/components/admin/backups/NavLink#BackupNavLink'],
       views: {
+        // task-first home screen instead of the default wall of cards
+        dashboard: { Component: '@/components/admin/Dashboard#Dashboard' },
+        help: { Component: '@/components/admin/HelpView#HelpView', path: '/help' },
         backups: {
           Component: '@/components/admin/backups/BackupsView#BackupsView',
           path: '/backups',
@@ -107,7 +110,9 @@ export default buildConfig({
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [SiteSettings, Theme, Header, Footer, ListingPages, BackupSettings],
-  endpoints: backupEndpoints,
+  endpoints: [...backupEndpoints, leadsExportEndpoint],
+  // photo folders stay available inside the library; the extra "Browse by folder" screen is hidden
+  folders: { browseByFolder: false },
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

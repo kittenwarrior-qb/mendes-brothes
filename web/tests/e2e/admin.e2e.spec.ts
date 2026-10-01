@@ -21,10 +21,32 @@ test.describe('admin panel', () => {
     await login({ page, user })
   })
 
-  test('dashboard shows the quick links', async () => {
+  test('dashboard shows the everyday tasks', async () => {
     await page.goto('/admin')
-    await expect(page.getByText('New leads')).toBeVisible()
-    await expect(page.getByText('Colours, fonts & layout')).toBeVisible()
+    await expect(page.getByText(/quote requests?$/).first()).toBeVisible()
+    await expect(page.getByRole('link', { name: /Add a finished project/ })).toBeVisible()
+    await expect(page.getByRole('link', { name: /Colours & fonts Pick/ })).toBeVisible()
+  })
+
+  test('help page lists the how-to guides', async () => {
+    await page.goto('/admin/help')
+    await expect(page.getByRole('heading', { name: 'How do I…?' })).toBeVisible()
+    await expect(page.getByText('Answer a quote request')).toBeVisible()
+  })
+
+  test('page editor names sections in plain language', async () => {
+    await page.goto('/admin/collections/pages')
+    await page.getByRole('link', { name: 'Home', exact: true }).first().click()
+    await expect(page.getByText('Big photo header').first()).toBeVisible()
+    await expect(page.getByRole('button', { name: 'Add section' })).toBeVisible()
+  })
+
+  test('quote requests can be exported', async () => {
+    await page.goto('/admin/collections/form-submissions')
+    await expect(page.getByText(/Download all as a spreadsheet/)).toBeVisible()
+    const res = await page.request.get('/api/leads-export')
+    expect(res.status()).toBe(200)
+    expect(res.headers()['content-type']).toContain('text/csv')
   })
 
   test('theme offers visual palettes and a brand-colour generator', async () => {

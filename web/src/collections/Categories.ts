@@ -2,10 +2,12 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import { hiddenUnlessAdmin } from '../access/roles'
 import { slugField } from 'payload'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
+  labels: { singular: 'News category', plural: 'News categories' },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -13,7 +15,9 @@ export const Categories: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    group: 'Content',
+    group: 'Advanced',
+    hidden: hiddenUnlessAdmin,
+    hideAPIURL: true,
     useAsTitle: 'title',
   },
   fields: [

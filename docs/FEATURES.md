@@ -26,18 +26,48 @@
 
 ## B. Trang quản trị (`/admin`)
 
-**Nội dung**
-- **Pages:** dựng trang bằng 21 loại block kéo-thả; mỗi block chỉnh nền, khoảng cách, ẩn/hiện theo thiết bị. Lưu nháp, hẹn giờ đăng, lịch sử phiên bản, xem trước trực tiếp.
-- **Projects, Services, Equipment, Service areas, Testimonials, FAQs, News posts.**
-- **Media:** thư viện ảnh có thư mục; ảnh upload tự thu nhỏ và chuyển WebP; chọn điểm lấy nét.
-- **Leads:** mọi yêu cầu báo giá, có trạng thái New → Contacted → Quoted → Won/Lost và ghi chú. **Forms:** tự tạo/sửa form.
+Thiết kế cho người **không rành công nghệ**: mở ra là biết bấm vào đâu, mọi tên gọi là tiếng Anh thường ngày (không có thuật ngữ kỹ thuật).
+
+**Màn hình chính (Dashboard)** — theo việc cần làm, không theo bảng dữ liệu
+- Thẻ **"N new quote requests"** + 5 yêu cầu báo giá mới nhất (tên, số điện thoại bấm gọi được, dịch vụ, trạng thái).
+- Ô **Everyday tasks**: Add a finished project · Edit a page · Photos & files · Add a review · Write a news post · Services & equipment.
+- Ô **Your business & the look of the site** (chỉ Manager/Admin): Company info & logo · Colours & fonts · Menu · Backups · Users.
+- Dòng trạng thái: lần backup gần nhất, email báo lead đang bật hay tắt.
+- Nút **How do I…?** mở trang hướng dẫn từng bước (`/admin/help`): thêm công trình, sửa chữ/ảnh, thêm/di chuyển section, trả lời yêu cầu báo giá, đổi số điện thoại/logo, đổi màu, sao lưu, hoàn tác.
+
+**Menu bên trái** — 4 nhóm cho người dùng, 1 nhóm cho dev
+- **Customers:** Quote requests.
+- **Website:** Pages, Projects, News, Photos & files.
+- **Company:** Services, Equipment, Towns we serve, Reviews, FAQs.
+- **Settings** (Manager trở lên): Users, Company info & logo, Colours & fonts, Menu, Footer, Backup schedule.
+- **Advanced** (chỉ Admin): News categories, Redirects, Forms, Search results, List page headings & filters.
+
+**3 vai trò**
+| Vai trò | Dành cho | Thấy gì |
+|---|---|---|
+| Editor | Nhân viên | Customers, Website, Company |
+| Manager | Chủ doanh nghiệp | Thêm Settings + Backups |
+| Admin | Lập trình viên | Tất cả, kể cả Advanced và CSS tuỳ biến |
+
+Chỉ Admin mới cấp/thu hồi được quyền Admin. Tài khoản đầu tiên tạo ra luôn là Admin.
+
+**Sửa trang (Pages)**
+- Mỗi dòng là một *section* của trang, từ trên xuống; dòng hiển thị **tên dễ hiểu + tiêu đề đang dùng** (vd. "Big photo header — We move dirt…").
+- **Add section** mở bảng chọn có **hình minh hoạ thật** của 21 loại section, xếp theo 6 nhóm (Top of the page → Advanced).
+- Tuỳ chọn nền/khoảng cách/ẩn hiện gom vào mục thu gọn **"Look of this section"** để không rối mắt.
+- Lưu nháp, hẹn giờ đăng, lịch sử phiên bản (hoàn tác), xem trước trực tiếp (biểu tượng con mắt).
+
+**Quote requests (lead)**
+- Danh sách có cột Name / Phone / Service wanted / Status / ngày gửi; tìm theo tên, số điện thoại, email, dịch vụ.
+- Trạng thái New → Contacted → Quoted → Won/Lost và ghi chú nội bộ.
+- **Download all as a spreadsheet (CSV)** — mở được bằng Excel.
+
+**Nội dung khác:** Projects, Services, Equipment, Towns we serve, Reviews, FAQs, News. **Photos & files:** ảnh upload tự thu nhỏ và chuyển WebP; chọn điểm lấy nét.
 
 **Cài đặt**
-- **Site settings:** tên công ty, điện thoại, địa chỉ, giờ làm việc, mạng xã hội, 4 loại logo, favicon, thanh thông báo, dải CTA, mã theo dõi (Plausible / Google Analytics).
-- **Theme & layout:** chọn bảng màu bằng thẻ trực quan (6 bảng + tự sinh từ 1 màu thương hiệu), tinh chỉnh từng màu, 9 font, bo góc, kiểu nút, kiểu thẻ, độ rộng, kiểu header/footer, chế độ tương phản, hiệu ứng cuộn, CSS tuỳ biến. **Thử màu ở bản nháp + Live Preview, khách chỉ thấy khi bấm Publish.**
-- **Header & menu** (có menu con), **Footer**, **Listing pages** (tiêu đề và tuỳ chọn bộ lọc của trang Công trình/Dịch vụ/Tin tức).
-- **Backups:** xem mục C.
-- **Users:** 2 vai trò — Admin (mọi thứ) và Editor (chỉ nội dung). **Redirects.**
+- **Company info & logo:** tên công ty, điện thoại, địa chỉ, giờ làm việc, mạng xã hội, 4 loại logo, favicon, thanh thông báo, dải CTA, mã theo dõi (Plausible / Google Analytics).
+- **Colours & fonts:** chọn bảng màu bằng thẻ trực quan (6 bảng + tự sinh từ 1 màu thương hiệu), tinh chỉnh từng màu, 9 font, bo góc, kiểu nút, kiểu thẻ, độ rộng, kiểu header/footer, chế độ tương phản, hiệu ứng cuộn. **Thử màu ở bản nháp + Live Preview, khách chỉ thấy khi bấm Publish.**
+- **Menu** (có menu con), **Footer**, **Backups** (xem mục C), **Users**.
 - Giao diện admin có tiếng Anh và tiếng Việt.
 
 ## C. Sao lưu (Backups)
@@ -48,7 +78,7 @@ Vào **Admin → Backups**:
 - **Restore:** khôi phục từ một bản bất kỳ (phải gõ `RESTORE` để xác nhận). Hệ thống **tự tạo một bản an toàn trước khi khôi phục**, nên luôn hoàn tác được.
 - **Upload a backup file:** đưa file backup từ máy lên (ví dụ khi chuyển sang máy chủ mới).
 - **Tự động:** mặc định mỗi ngày một bản, giữ 7 bản gần nhất (đổi trong *Backup schedule*). Bản tạo tay không bị tự xoá.
-- Chỉ Admin dùng được.
+- Manager và Admin dùng được.
 
 Lưu ý: file backup nằm trên cùng máy chủ với website. Nên định kỳ **tải về máy** một bản để phòng khi máy chủ hỏng.
 

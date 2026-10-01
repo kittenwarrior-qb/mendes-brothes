@@ -16,6 +16,7 @@ export const FAQs: CollectionConfig<'faqs'> = {
   defaultSort: 'order',
   admin: {
     group: 'Company',
+    hideAPIURL: true,
     useAsTitle: 'question',
     defaultColumns: ['question', 'order'],
   },

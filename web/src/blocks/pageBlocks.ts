@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 
 import { Archive } from './ArchiveBlock/config'
+import { blockMeta } from './blockMeta'
 import { Cards } from './Cards/config'
 import { Checklist } from './Checklist/config'
 import { ContactSection } from './ContactSection/config'
@@ -22,8 +23,7 @@ import { Stats } from './Stats/config'
 import { Steps } from './Steps/config'
 import { TestimonialsBlock } from './Testimonials/config'
 
-/** Every section an editor can add to a Page, in the order shown in the block picker. */
-export const pageBlocks: Block[] = [
+const rawBlocks: Block[] = [
   HeroHome,
   PageHero,
   ServicesGrid,
@@ -46,3 +46,28 @@ export const pageBlocks: Block[] = [
   FormBlock,
   Archive,
 ]
+
+/**
+ * Every section an editor can add to a Page. Each one gets a plain-language
+ * name, a group and a thumbnail for the "Add section" picker, and a header
+ * that shows its heading instead of "Untitled".
+ */
+export const pageBlocks: Block[] = rawBlocks.map((block) => {
+  const meta = blockMeta[block.slug]
+  if (!meta) return block
+  return {
+    ...block,
+    labels: { singular: meta.label, plural: meta.label },
+    imageURL: `/admin-blocks/${block.slug}.jpg`,
+    imageAltText: meta.hint,
+    admin: {
+      ...block.admin,
+      group: meta.group,
+      disableBlockName: true,
+      components: {
+        ...block.admin?.components,
+        Label: '@/components/admin/BlockRowLabel#BlockRowLabel',
+      },
+    },
+  }
+})

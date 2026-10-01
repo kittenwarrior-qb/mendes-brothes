@@ -6,7 +6,7 @@ import { siteRevalidationHooks } from '../hooks/revalidateSite'
 
 export const Testimonials: CollectionConfig<'testimonials'> = {
   slug: 'testimonials',
-  labels: { singular: 'Testimonial', plural: 'Testimonials' },
+  labels: { singular: 'Review', plural: 'Reviews' },
   access: {
     create: authenticated,
     delete: authenticated,
@@ -16,6 +16,7 @@ export const Testimonials: CollectionConfig<'testimonials'> = {
   defaultSort: '-date',
   admin: {
     group: 'Company',
+    hideAPIURL: true,
     useAsTitle: 'author',
     defaultColumns: ['author', 'rating', 'location', 'source', 'date'],
   },

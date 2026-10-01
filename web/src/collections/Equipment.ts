@@ -29,6 +29,7 @@ export const Equipment: CollectionConfig<'equipment'> = {
   defaultSort: 'order',
   admin: {
     group: 'Company',
+    hideAPIURL: true,
     useAsTitle: 'name',
     defaultColumns: ['name', 'category', 'quantity', 'order'],
     description: 'Machines in your fleet, shown on the Capabilities page.',

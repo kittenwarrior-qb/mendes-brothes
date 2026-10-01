@@ -1,0 +1,4 @@
+// Quote requests come from the website form — nobody types one in by hand.
+.collection-list--form-submissions .list-create-new-doc__create-new-button {
+  display: none;
+}

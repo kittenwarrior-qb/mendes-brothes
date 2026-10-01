@@ -23,9 +23,10 @@ export const Pages: CollectionConfig<'pages'> = {
     slug: true,
   },
   admin: {
-    group: 'Content',
+    group: 'Website',
+    hideAPIURL: true,
     defaultColumns: ['title', 'slug', '_status', 'updatedAt'],
-    description: 'Build any page from sections. The page with slug "home" is the home page.',
+    description: 'Your pages. Open one to change its text and photos.',
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({
@@ -56,13 +57,15 @@ export const Pages: CollectionConfig<'pages'> = {
           fields: [
             {
               name: 'layout',
+              label: 'Sections of this page',
+              labels: { singular: 'section', plural: 'sections' },
               type: 'blocks',
               blocks: pageBlocks,
               required: true,
               admin: {
                 initCollapsed: true,
                 description:
-                  'Add, reorder (drag) and remove sections. Use Live Preview to see changes.',
+                  'Each row is one section of the page, from top to bottom. Click a row to edit it, drag ⠿ to reorder, and use the eye icon (top right) to see the page while you edit.',
               },
             },
           ],
@@ -81,6 +84,7 @@ export const Pages: CollectionConfig<'pages'> = {
       type: 'date',
       admin: {
         position: 'sidebar',
+        hidden: true,
       },
     },
     slugField(),

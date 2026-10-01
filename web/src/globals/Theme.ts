@@ -1,6 +1,6 @@
 import type { Field, GlobalConfig, SelectField } from 'payload'
 
-import { adminOnly } from '../access/roles'
+import { adminOnlyField, hiddenUnlessManager, isAdminUser, managerOnly } from '../access/roles'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
 import { revalidateGlobal } from '../hooks/revalidateSite'
 import {
@@ -48,13 +48,15 @@ const colorFields: Field[] = (Object.keys(colorFieldLabels) as (keyof ThemeColor
 
 export const Theme: GlobalConfig = {
   slug: 'theme',
-  label: 'Theme & layout',
+  label: 'Colours & fonts',
   access: {
     read: () => true,
-    update: adminOnly,
+    update: managerOnly,
   },
   admin: {
     group: 'Settings',
+    hidden: hiddenUnlessManager,
+    hideAPIURL: true,
     description:
       '1) Pick a palette (or build one from your brand colour). 2) Open Live Preview to see it on the real site. 3) Publish. Nothing changes for visitors until you publish.',
     livePreview: {
@@ -274,7 +276,9 @@ export const Theme: GlobalConfig = {
       name: 'customCss',
       label: 'Custom CSS (advanced)',
       type: 'code',
+      access: { create: adminOnlyField, update: adminOnlyField },
       admin: {
+        condition: (_data, _sibling, { user }) => isAdminUser(user),
         language: 'css',
         description: 'Optional. Added at the end of the site stylesheet. For developers.',
       },
