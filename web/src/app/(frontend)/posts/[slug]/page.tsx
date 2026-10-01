@@ -8,7 +8,6 @@ import React, { cache } from 'react'
 import type { Post } from '@/payload-types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import RichText from '@/components/RichText'
 import { Breadcrumbs } from '@/components/site/Breadcrumbs'
@@ -40,7 +39,6 @@ export async function generateStaticParams() {
 type Args = { params: Promise<{ slug?: string }> }
 
 export default async function PostPage({ params: paramsPromise }: Args) {
-  const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
   const url = '/posts/' + decodedSlug
@@ -55,7 +53,6 @@ export default async function PostPage({ params: paramsPromise }: Args) {
   return (
     <article>
       <PayloadRedirects disableNotFound url={url} />
-      {draft && <LivePreviewListener />}
       <section className="phero phero-simple sec">
         <div className="wrap" style={{ maxWidth: 900 }}>
           <Breadcrumbs

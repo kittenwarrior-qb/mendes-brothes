@@ -20,8 +20,13 @@ www.{$SITE_DOMAIN} {
 		-Server
 	}
 
-	# Large uploads in the admin (photos, videos)
-	request_body {
+	# Uploads in the admin: photos/videos up to 50 MB; a full-site backup file can be large
+	@backupUpload path /api/backups/upload
+	request_body @backupUpload {
+		max_size 5GB
+	}
+	@otherRequests not path /api/backups/upload
+	request_body @otherRequests {
 		max_size 50MB
 	}
 

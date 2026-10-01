@@ -40,7 +40,12 @@ describe('project filter params', () => {
   })
 
   it('reads size buckets from settings', () => {
-    const b = sizeBuckets({ sizeBuckets: [{ label: 'Small', min: 0, max: 1 }, { label: 'Big', min: 1 }] })
+    const b = sizeBuckets({
+      sizeBuckets: [
+        { label: 'Small', min: 0, max: 1 },
+        { label: 'Big', min: 1 },
+      ],
+    })
     expect(b).toEqual([
       { key: '0', label: 'Small', min: 0, max: 1 },
       { key: '1', label: 'Big', min: 1, max: null },

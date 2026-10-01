@@ -2,6 +2,7 @@ import type { Config } from 'src/payload-types'
 
 import configPromise from '@payload-config'
 import { type DataFromGlobalSlug, getPayload } from 'payload'
+import { draftMode } from 'next/headers'
 import { cache } from 'react'
 
 type Global = keyof Config['globals']
@@ -14,7 +15,9 @@ type Global = keyof Config['globals']
 export const getGlobal = cache(
   async <T extends Global>(slug: T, depth = 1): Promise<DataFromGlobalSlug<T>> => {
     const payload = await getPayload({ config: configPromise })
-    return payload.findGlobal({ slug, depth })
+    // The theme has drafts: in preview mode show the draft being edited (Live Preview).
+    const draft = slug === 'theme' && (await draftMode()).isEnabled
+    return payload.findGlobal({ slug, depth, draft })
   },
 )
 

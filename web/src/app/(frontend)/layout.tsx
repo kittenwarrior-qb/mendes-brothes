@@ -6,6 +6,7 @@ import Script from 'next/script'
 import { getPayload } from 'payload'
 import React from 'react'
 
+import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { BackToTop, RevealOnScroll } from '@/components/site/ClientHelpers'
 import { businessSchema, JsonLd } from '@/components/site/JsonLd'
 import { SmartLink } from '@/components/site/SmartLink'
@@ -74,6 +75,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a className="skip-link" href="#main">
           Skip to content
         </a>
+        {isEnabled ? <LivePreviewListener /> : null}
         {isEnabled ? (
           <div className="announce" role="status">
             You are viewing a draft preview.

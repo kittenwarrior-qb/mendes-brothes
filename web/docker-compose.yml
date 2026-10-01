@@ -40,8 +40,10 @@ services:
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER:-mendez}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-mendez}
       MEDIA_DIR: /app/media
+      BACKUP_DIR: /app/backups
     volumes:
       - media:/app/media
+      - backups:/app/backups
     expose:
       - '3000'
     mem_limit: 1g
@@ -86,5 +88,6 @@ services:
 volumes:
   pgdata:
   media:
+  backups:
   caddy_data:
   caddy_config:

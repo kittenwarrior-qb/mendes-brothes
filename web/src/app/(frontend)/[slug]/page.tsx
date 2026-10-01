@@ -6,7 +6,6 @@ import { getPayload } from 'payload'
 import React, { cache } from 'react'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { SiteCtaBand } from '@/components/site/SiteCtaBand'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -38,7 +37,6 @@ type Args = {
 const HERO_BLOCKS = new Set(['heroHome', 'pageHero'])
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const { isEnabled: draft } = await draftMode()
   const { slug = 'home' } = await paramsPromise
   const decodedSlug = decodeURIComponent(slug)
   const url = '/' + decodedSlug
@@ -62,7 +60,6 @@ export default async function Page({ params: paramsPromise }: Args) {
     <article>
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
-      {draft && <LivePreviewListener />}
       {!firstIsHero ? <h1 className="sr-only">{page.title}</h1> : null}
       <RenderBlocks blocks={page.layout} crumbs={crumbs} />
       {!page.hideCtaBand ? <SiteCtaBand /> : null}

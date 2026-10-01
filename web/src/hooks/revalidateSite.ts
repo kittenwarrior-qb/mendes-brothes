@@ -34,6 +34,8 @@ export const revalidateAfterDelete: CollectionAfterDeleteHook = ({ doc, collecti
 }
 
 export const revalidateGlobal: GlobalAfterChangeHook = ({ doc, global, req }) => {
+  // autosaved drafts (Theme live preview) must not touch the public cache
+  if (doc?._status === 'draft') return doc
   if (!req.context.disableRevalidate)
     revalidateEverything(`global ${global.slug}`, req.payload.logger)
   return doc

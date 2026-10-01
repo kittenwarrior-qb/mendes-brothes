@@ -49,12 +49,15 @@ ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \
     HOSTNAME=0.0.0.0 \
-    MEDIA_DIR=/app/media
+    MEDIA_DIR=/app/media \
+    BACKUP_DIR=/app/backups
 
-RUN addgroup --system --gid 1001 nodejs \
+# postgresql17-client: pg_dump / pg_restore for the admin Backups screen
+RUN apk add --no-cache postgresql17-client \
+ && addgroup --system --gid 1001 nodejs \
  && adduser --system --uid 1001 nextjs \
- && mkdir -p /app/media /app/.next \
- && chown -R nextjs:nodejs /app/media /app/.next
+ && mkdir -p /app/media /app/backups /app/.next \
+ && chown -R nextjs:nodejs /app/media /app/backups /app/.next
 
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
@@ -64,7 +67,7 @@ RUN chmod +x /app/entrypoint.sh
 
 USER nextjs
 EXPOSE 3000
-VOLUME ["/app/media"]
+VOLUME ["/app/media", "/app/backups"]
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
   CMD wget -q -O /dev/null http://127.0.0.1:3000/robots.txt || exit 1

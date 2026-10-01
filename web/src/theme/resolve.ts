@@ -2,10 +2,15 @@ import type { Theme } from '@/payload-types'
 
 import { displayWeight, fontStack } from './fonts'
 import {
+  AUTO_PALETTE,
+  type ColorMode,
   contrastRatio,
+  defaultStyle,
   ensureContrast,
+  generatePalette,
   HEX_RE,
   mixHex,
+  type NeutralTone,
   presets,
   type PresetKey,
   type ThemeColors,
@@ -13,22 +18,48 @@ import {
 } from './presets'
 
 export type ResolvedTheme = ThemeTokens & {
-  preset: PresetKey
+  preset: PresetKey | typeof AUTO_PALETTE
   stickyHeader: boolean
   animations: boolean
   baseFontSize: number
   customCss: string
-  accessibleContrast: boolean
+  contrastMode: 'deepen' | 'vivid' | 'off'
 }
 
 const pick = <T extends string>(value: string | null | undefined, fallback: T): T =>
   value && value !== 'preset' ? (value as T) : fallback
 
-/** Merge the Theme global (overrides) on top of its preset. */
-export const resolveTheme = (theme?: Partial<Theme> | null): ResolvedTheme => {
-  const presetKey: PresetKey =
+/** Colours + style of the selected palette, before any per-colour overrides. */
+export const paletteTokens = (theme?: Partial<Theme> | null): ThemeTokens => {
+  if (theme?.preset === AUTO_PALETTE) {
+    const mode = (theme.autoMode as ColorMode) || 'light'
+    return {
+      ...defaultStyle,
+      colorScheme: mode,
+      headerStyle: mode === 'dark' ? 'dark' : 'light',
+      footerStyle: 'dark',
+      cardStyle: mode === 'dark' ? 'flat' : 'bordered',
+      colors: generatePalette(
+        theme.brandColor || '#D96F25',
+        (theme.neutralTone as NeutralTone) || 'warm',
+        mode,
+      ),
+    }
+  }
+  const key: PresetKey =
     theme?.preset && theme.preset in presets ? (theme.preset as PresetKey) : 'classic'
-  const base = presets[presetKey].tokens
+  return presets[key].tokens
+}
+
+/** Merge the Theme global (overrides) on top of its palette. */
+export const resolveTheme = (theme?: Partial<Theme> | null): ResolvedTheme => {
+  const presetKey =
+    theme?.preset === AUTO_PALETTE
+      ? AUTO_PALETTE
+      : theme?.preset && theme.preset in presets
+        ? (theme.preset as PresetKey)
+        : 'classic'
+  const base = paletteTokens(theme)
 
   const colors = { ...base.colors }
   const overrides = (theme?.colors ?? {}) as Partial<Record<keyof ThemeColors, string | null>>
@@ -54,7 +85,7 @@ export const resolveTheme = (theme?: Partial<Theme> | null): ResolvedTheme => {
     animations: theme?.animations ?? true,
     baseFontSize: theme?.baseFontSize ?? 16.5,
     customCss: theme?.customCss ?? '',
-    accessibleContrast: theme?.accessibleContrast ?? true,
+    contrastMode: (theme?.contrastMode as ResolvedTheme['contrastMode']) || 'deepen',
   }
 }
 
@@ -84,16 +115,18 @@ export const themeToCss = (t: ResolvedTheme): string => {
   const c = t.colors
   const card = cards[t.cardStyle]
   // WCAG AA: brand-coloured text on the page background, and white text on buttons.
-  const strict = t.accessibleContrast
+  const strict = t.contrastMode !== 'off'
   // checked against the lightest-contrast section background it may sit on
   const primaryText = strict
     ? [c.background, c.alt, c.tint].reduce((col, bg) => ensureContrast(col, bg, 4.6), c.primary)
     : c.primary
-  // Buttons: on dark themes keep the bright brand colour and switch to dark text when that
-  // passes; otherwise darken the brand colour just enough for white text.
+  // Buttons. "vivid": keep the brand colour and use dark text whenever that is readable.
+  // "deepen": darken the colour just enough for white text — except for very bright
+  // colours (yellow, amber, neon orange) where white could never work.
   const darkText = '#111111'
+  const darkPasses = contrastRatio(c.primary, darkText) >= 4.5
   const useDarkText =
-    strict && t.colorScheme === 'dark' && contrastRatio(c.primary, darkText) >= 4.5
+    strict && darkPasses && (t.contrastMode === 'vivid' || contrastRatio(c.primary, '#FFFFFF') < 3)
   const onBtn = useDarkText ? darkText : '#FFFFFF'
   const btn = strict && !useDarkText ? ensureContrast(c.primary, '#FFFFFF', 4.6) : c.primary
   const btnHover =

@@ -1,6 +1,7 @@
 node_modules
 .next
 media
+backups
 .git
 .env
 .env.*

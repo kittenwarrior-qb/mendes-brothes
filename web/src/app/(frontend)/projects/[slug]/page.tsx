@@ -11,7 +11,6 @@ import type { Equipment, Project, Service, ServiceArea, Testimonial } from '@/pa
 import { toLightboxImages } from '@/blocks/Gallery/Component'
 import { ReviewCard } from '@/blocks/Testimonials/Component'
 import { clientTypeOptions } from '@/collections/Projects'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import RichText from '@/components/RichText'
 import { BeforeAfter } from '@/components/site/BeforeAfter'
@@ -72,7 +71,6 @@ const pic = (m: unknown) => {
 }
 
 export default async function ProjectPage({ params }: Args) {
-  const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await params
   const decoded = decodeURIComponent(slug)
   const url = `/projects/${decoded}`
@@ -128,7 +126,6 @@ export default async function ProjectPage({ params }: Args) {
   return (
     <article>
       <PayloadRedirects disableNotFound url={url} />
-      {draft && <LivePreviewListener />}
 
       <section className="phero phero-simple sec">
         <div className="wrap">

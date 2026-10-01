@@ -7,6 +7,7 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { backupEndpoints } from './backup/endpoints'
 import { Categories } from './collections/Categories'
 import { Equipment } from './collections/Equipment'
 import { FAQs } from './collections/FAQs'
@@ -20,6 +21,7 @@ import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { BackupSettings } from './globals/BackupSettings'
 import { ListingPages } from './globals/ListingPages'
 import { SiteSettings } from './globals/SiteSettings'
 import { Theme } from './globals/Theme'
@@ -41,6 +43,13 @@ export default buildConfig({
         Icon: '@/components/admin/Graphics#AdminIcon',
       },
       beforeDashboard: ['@/components/admin/Dashboard#DashboardIntro'],
+      afterNavLinks: ['@/components/admin/backups/NavLink#BackupNavLink'],
+      views: {
+        backups: {
+          Component: '@/components/admin/backups/BackupsView#BackupsView',
+          path: '/backups',
+        },
+      },
     },
     meta: {
       titleSuffix: ' · Website admin',
@@ -97,7 +106,8 @@ export default buildConfig({
     Users,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [SiteSettings, Theme, Header, Footer, ListingPages],
+  globals: [SiteSettings, Theme, Header, Footer, ListingPages, BackupSettings],
+  endpoints: backupEndpoints,
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

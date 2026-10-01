@@ -657,7 +657,13 @@ async function run() {
 
   await payload.updateGlobal({
     slug: 'theme',
-    data: { preset: 'classic', stickyHeader: true, animations: true, colors: {} },
+    data: {
+      _status: 'published',
+      preset: 'classic',
+      stickyHeader: true,
+      animations: true,
+      colors: {},
+    },
     context: ctx,
   })
 

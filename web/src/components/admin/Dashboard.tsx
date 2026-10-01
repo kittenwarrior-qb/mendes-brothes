@@ -13,6 +13,7 @@ const tiles = [
   { href: '/admin/collections/media', title: 'Photo library', key: 'media' },
   { href: '/admin/globals/site-settings', title: 'Company info & logos', key: 'settings' },
   { href: '/admin/globals/theme', title: 'Colours, fonts & layout', key: 'theme' },
+  { href: '/admin/backups', title: 'Backups', key: 'backups' },
 ]
 
 export const DashboardIntro: React.FC<ServerProps> = async ({ payload, user }) => {

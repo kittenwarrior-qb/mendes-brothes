@@ -127,6 +127,7 @@ export interface Config {
     header: Header;
     footer: Footer;
     'listing-pages': ListingPage;
+    'backup-settings': BackupSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
@@ -134,6 +135,7 @@ export interface Config {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'listing-pages': ListingPagesSelect<false> | ListingPagesSelect<true>;
+    'backup-settings': BackupSettingsSelect<false> | BackupSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -3182,17 +3184,20 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
- * Pick a preset, then override any colour, font or shape. Leave a field on "Use preset" / empty to inherit.
+ * 1) Pick a palette (or build one from your brand colour). 2) Open Live Preview to see it on the real site. 3) Publish. Nothing changes for visitors until you publish.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "theme".
  */
 export interface Theme {
   id: number;
+  preset: 'classic' | 'limestone' | 'graphite' | 'steel' | 'forest' | 'amber' | 'auto';
   /**
-   * Each preset is a complete look. Switching keeps your overrides below.
+   * The one colour everything else is built from (your logo colour).
    */
-  preset: 'classic' | 'heavyIron' | 'earthStone';
+  brandColor?: string | null;
+  neutralTone?: ('warm' | 'neutral' | 'cool') | null;
+  autoMode?: ('light' | 'dark') | null;
   colors?: {
     /**
      * Buttons, links, highlights.
@@ -3277,14 +3282,15 @@ export interface Theme {
   footerStyle?: ('preset' | 'light' | 'dark') | null;
   stickyHeader?: boolean | null;
   /**
-   * Slightly deepens brand colours where needed so text stays readable. Recommended for US ADA compliance.
+   * Text must contrast 4.5:1 with its background. Both automatic modes guarantee that; they differ only in how buttons look.
    */
-  accessibleContrast?: boolean | null;
+  contrastMode?: ('deepen' | 'vivid' | 'off') | null;
   animations?: boolean | null;
   /**
    * Optional. Added at the end of the site stylesheet. For developers.
    */
   customCss?: string | null;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3503,6 +3509,23 @@ export interface ListingPage {
   createdAt?: string | null;
 }
 /**
+ * Automatic backups are stored on the server. Create, download and restore backups on the Backups screen.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "backup-settings".
+ */
+export interface BackupSetting {
+  id: number;
+  autoEnabled?: boolean | null;
+  frequency?: ('daily' | 'weekly') | null;
+  /**
+   * Older automatic backups are deleted. Manual backups are kept until you delete them.
+   */
+  keep?: number | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
@@ -3572,6 +3595,9 @@ export interface SiteSettingsSelect<T extends boolean = true> {
  */
 export interface ThemeSelect<T extends boolean = true> {
   preset?: T;
+  brandColor?: T;
+  neutralTone?: T;
+  autoMode?: T;
   colors?:
     | T
     | {
@@ -3601,9 +3627,10 @@ export interface ThemeSelect<T extends boolean = true> {
   headerStyle?: T;
   footerStyle?: T;
   stickyHeader?: T;
-  accessibleContrast?: T;
+  contrastMode?: T;
   animations?: T;
   customCss?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -3732,6 +3759,18 @@ export interface ListingPagesSelect<T extends boolean = true> {
         lede?: T;
         image?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "backup-settings_select".
+ */
+export interface BackupSettingsSelect<T extends boolean = true> {
+  autoEnabled?: T;
+  frequency?: T;
+  keep?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

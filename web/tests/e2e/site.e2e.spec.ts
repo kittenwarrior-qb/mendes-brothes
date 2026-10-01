@@ -60,7 +60,9 @@ test.describe('public site', () => {
 
   test('contact form validates and submits a lead', async ({ page, request }) => {
     await page.goto('/contact?service=grading')
-    const form = page.locator('form').filter({ has: page.getByRole('button', { name: /request estimate/i }) })
+    const form = page
+      .locator('form')
+      .filter({ has: page.getByRole('button', { name: /request estimate/i }) })
     await expect(form.locator('select[name="service"]')).toHaveValue('grading')
 
     await form.getByRole('button', { name: /request estimate/i }).click()

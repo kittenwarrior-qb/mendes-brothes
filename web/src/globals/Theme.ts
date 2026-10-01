@@ -1,8 +1,10 @@
 import type { Field, GlobalConfig, SelectField } from 'payload'
 
 import { adminOnly } from '../access/roles'
+import { generatePreviewPath } from '../utilities/generatePreviewPath'
 import { revalidateGlobal } from '../hooks/revalidateSite'
 import {
+  AUTO_PALETTE,
   colorFieldLabels,
   fontOptions,
   HEX_RE,
@@ -10,7 +12,10 @@ import {
   type ThemeColors,
 } from '../theme/presets'
 
-const INHERIT = { label: '— Use preset —', value: 'preset' }
+const INHERIT = { label: '— From palette —', value: 'preset' }
+
+const hexValidate = (value: string | null | undefined) =>
+  !value || HEX_RE.test(value) ? true : 'Use a hex colour like #D96F25'
 
 const inheritSelect = (
   name: string,
@@ -34,11 +39,10 @@ const colorFields: Field[] = (Object.keys(colorFieldLabels) as (keyof ThemeColor
     admin: {
       width: '33%',
       description: colorFieldLabels[key].description || undefined,
-      placeholder: 'Preset',
+      placeholder: 'From palette',
       components: { Field: '@/components/admin/ColorField#ColorField' },
     },
-    validate: (value: string | null | undefined) =>
-      !value || HEX_RE.test(value) ? true : 'Use a hex colour like #D96F25',
+    validate: hexValidate,
   }),
 )
 
@@ -52,23 +56,77 @@ export const Theme: GlobalConfig = {
   admin: {
     group: 'Settings',
     description:
-      'Pick a preset, then override any colour, font or shape. Leave a field on "Use preset" / empty to inherit.',
+      '1) Pick a palette (or build one from your brand colour). 2) Open Live Preview to see it on the real site. 3) Publish. Nothing changes for visitors until you publish.',
+    livePreview: {
+      url: ({ req }) => generatePreviewPath({ slug: 'home', collection: 'pages', req }),
+    },
+  },
+  versions: {
+    // drafts let admins try colours in Live Preview without touching the live site
+    drafts: { autosave: { interval: 300 } },
+    max: 25,
   },
   fields: [
     {
       name: 'preset',
+      label: 'Colour palette',
       type: 'select',
       defaultValue: 'classic',
       required: true,
       options: presetOptions,
       admin: {
-        description: 'Each preset is a complete look. Switching keeps your overrides below.',
+        components: { Field: '@/components/admin/PalettePicker#PalettePicker' },
       },
     },
     {
+      type: 'row',
+      admin: { condition: (data) => data?.preset === AUTO_PALETTE },
+      fields: [
+        {
+          name: 'brandColor',
+          label: 'Brand colour',
+          type: 'text',
+          defaultValue: '#D96F25',
+          validate: hexValidate,
+          admin: {
+            width: '34%',
+            description: 'The one colour everything else is built from (your logo colour).',
+            components: { Field: '@/components/admin/ColorField#ColorField' },
+          },
+        },
+        {
+          name: 'neutralTone',
+          label: 'Greys & backgrounds',
+          type: 'select',
+          defaultValue: 'warm',
+          options: [
+            { label: 'Warm (paper, stone)', value: 'warm' },
+            { label: 'Neutral (pure grey)', value: 'neutral' },
+            { label: 'Cool (slate blue)', value: 'cool' },
+          ],
+          admin: { width: '33%' },
+        },
+        {
+          name: 'autoMode',
+          label: 'Mode',
+          type: 'select',
+          defaultValue: 'light',
+          options: [
+            { label: 'Light', value: 'light' },
+            { label: 'Dark', value: 'dark' },
+          ],
+          admin: { width: '33%' },
+        },
+      ],
+    },
+    {
       type: 'collapsible',
-      label: 'Colours',
-      admin: { initCollapsed: false },
+      label: 'Fine-tune individual colours (optional)',
+      admin: {
+        initCollapsed: true,
+        description:
+          'Empty = taken from the palette above. The small swatch shows the colour currently in use.',
+      },
       fields: [
         {
           name: 'colors',
@@ -186,14 +244,19 @@ export const Theme: GlobalConfig = {
           fields: [
             { name: 'stickyHeader', type: 'checkbox', defaultValue: true, admin: { width: '33%' } },
             {
-              name: 'accessibleContrast',
-              label: 'Auto-fix colour contrast (WCAG AA)',
-              type: 'checkbox',
-              defaultValue: true,
+              name: 'contrastMode',
+              label: 'Readability (WCAG AA / ADA)',
+              type: 'select',
+              defaultValue: 'deepen',
+              options: [
+                { label: 'Deepen brand colour — white text on buttons', value: 'deepen' },
+                { label: 'Keep brand colour vivid — dark text on buttons', value: 'vivid' },
+                { label: 'Off — exact colours (may fail accessibility checks)', value: 'off' },
+              ],
               admin: {
-                width: '33%',
+                width: '67%',
                 description:
-                  'Slightly deepens brand colours where needed so text stays readable. Recommended for US ADA compliance.',
+                  'Text must contrast 4.5:1 with its background. Both automatic modes guarantee that; they differ only in how buttons look.',
               },
             },
             {
