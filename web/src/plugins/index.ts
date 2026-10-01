@@ -4,6 +4,7 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { APIError, type CollectionBeforeChangeHook, type Config, type Field, Plugin } from 'payload'
+import { authenticated } from '@/access/authenticated'
 import { hiddenUnlessAdmin } from '@/access/roles'
 import { revalidateEverything } from '@/hooks/revalidateSite'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
@@ -124,6 +125,9 @@ export const plugins: Plugin[] = [
     },
     formSubmissionOverrides: {
       labels: { singular: 'Quote request', plural: 'Quote requests' },
+      // The plugin locks submissions after they are sent. Staff must be able to set the
+      // status and add notes, so updates are allowed — the customer's answers stay read-only.
+      access: { update: authenticated },
       admin: {
         group: 'Customers',
         useAsTitle: 'contactName',
@@ -163,10 +167,15 @@ export const plugins: Plugin[] = [
         },
         { name: 'serviceWanted', label: 'Service wanted', type: 'text', admin: { readOnly: true } },
         { name: 'details', label: 'Message', type: 'textarea', admin: { readOnly: true } },
-        ...defaultFields.map((field) =>
-          'name' in field && field.name === 'submissionData'
-            ? ({ ...field, label: 'All answers' } as Field)
-            : field,
+        ...defaultFields.map(
+          (field) =>
+            ({
+              ...field,
+              ...('name' in field && field.name === 'submissionData'
+                ? { label: 'All answers' }
+                : {}),
+              admin: { ...field.admin, readOnly: true },
+            }) as Field,
         ),
         {
           name: 'status',
