@@ -90,3 +90,9 @@ docker compose exec db psql -U mendez # vào database
 - **Không chạy `pnpm dev` hay `pnpm seed` từ máy local trỏ vào database production.** Chế độ dev của Payload sẽ "push" schema, và lần khởi động sau app sẽ đứng chờ xác nhận. Nếu lỡ làm: `docker compose exec db psql -U mendez -c "DELETE FROM payload_migrations WHERE batch = -1;"` rồi `docker compose restart app`.
 - Mỗi lần dev sửa schema, phải chạy `pnpm payload migrate:create <tên>` và commit migration. Migration sẽ tự áp dụng khi deploy.
 - Nếu đổi domain: sửa `NEXT_PUBLIC_SERVER_URL` + `SITE_DOMAIN` rồi chạy lại `./deploy/deploy.sh` (cần build lại vì URL được gắn vào lúc build).
+
+## Chạy tạm bằng IP (chưa có tên miền)
+
+Trong `.env` đặt `NEXT_PUBLIC_SERVER_URL=http://<ip>`, `SITE_DOMAIN=<ip>` và `CADDYFILE=./deploy/Caddyfile.ip`, rồi `./deploy/deploy.sh`. Site chạy HTTP ở cổng 80, không có HTTPS.
+
+Khi tên miền đã trỏ về máy chủ: xoá dòng `CADDYFILE`, sửa hai biến còn lại theo tên miền và chạy lại `./deploy/deploy.sh` (image được build lại vì URL nằm trong bản build). Caddy tự xin chứng chỉ HTTPS.
