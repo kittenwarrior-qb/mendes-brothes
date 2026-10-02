@@ -13,7 +13,7 @@ const PORT = Number(process.env.AI_STUB_PORT || 8787)
 const answer = (prompt, hasImage, system = '') => {
   if (/built-in assistant of the website admin panel/.test(system)) {
     if (/logo/i.test(prompt))
-      return 'Use a wide logo with a transparent background.\n1. Open the Logos tab.\n2. Upload it and press Save.\n/admin/globals/site-settings'
+      return 'Use a wide logo with a transparent background.\n1. Open the Logos tab.\n2. Upload it and press Save.\n/admin/globals/site-settings\n[image: adm-logos]\n[image: not-a-real-picture]'
     return `Stub answer (${/Colour palette: Studio Paper/.test(system) ? 'knows the current palette' : 'no palette'}): ${prompt}`
   }
   if (hasImage) return 'Excavator loading soil into a dump truck on a cleared lot.'

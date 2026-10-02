@@ -39,6 +39,15 @@ test.describe.serial('AI assistant', () => {
       'href',
       '/admin/globals/site-settings',
     )
+    // the answer shows the guide's screenshots; one click enlarges, arrows move, Escape closes
+    await chat.getByRole('button', { name: /Enlarge screenshot: The Logos tab/ }).click()
+    const viewer = page.getByRole('dialog', { name: /The Logos tab/ })
+    await expect(viewer.locator('img')).toHaveAttribute('src', '/help/adm-logos.webp')
+    await expect(viewer).toContainText('2 / 2')
+    await viewer.getByRole('button', { name: 'Previous screenshot' }).click()
+    await expect(page.getByRole('dialog', { name: /Company info: phone/ })).toBeVisible()
+    await page.keyboard.press('Escape')
+    await expect(page.locator('.mb-viewer')).toHaveCount(0)
     await chat.getByLabel('Your question').fill('what is the weather tomorrow')
     await chat.getByLabel('Your question').press('Enter')
     await expect(chat.getByText('I do not have a ready answer')).toBeVisible()
@@ -89,6 +98,12 @@ test.describe.serial('AI assistant', () => {
     ).toBeVisible()
     // a path in the answer is a link
     await expect(chat.getByRole('link', { name: '/admin/globals/site-settings' })).toBeVisible()
+    // [image: …] becomes a picture; an unknown id is dropped, and no tag text is left behind
+    const last = chat.locator('.mb-chat__bubble').last()
+    await expect(last.locator('.mb-chat__thumbs button')).toHaveCount(1)
+    await expect(last).not.toContainText('[image')
+    const res = await page.request.get('/help/adm-logos.webp')
+    expect(res.headers()['content-type']).toContain('image/webp')
     // still there after a reload
     await page.reload()
     await expect(

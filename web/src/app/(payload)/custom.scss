@@ -1297,3 +1297,116 @@ button.mb-btn {
     border-color: var(--mb-brand);
   }
 }
+
+/* ───────── screenshots in the assistant ───────── */
+.mb-chat__thumbs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+
+  button {
+    display: grid;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 10px;
+    background: var(--theme-elevation-0);
+    color: inherit;
+    text-align: left;
+    cursor: zoom-in;
+
+    &:hover {
+      border-color: var(--mb-brand);
+    }
+  }
+  img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top left;
+    border-radius: 6px;
+  }
+  span {
+    padding: 0 2px 2px;
+    color: var(--theme-elevation-600);
+    font-size: 12px;
+    line-height: 1.3;
+  }
+}
+.mb-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 48px 72px;
+  background: rgba(10, 10, 10, 0.86);
+
+  figure {
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+  }
+  img {
+    max-width: min(1400px, 100%);
+    max-height: calc(100vh - 140px);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    cursor: zoom-out;
+  }
+  figcaption {
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+
+    span {
+      opacity: 0.7;
+    }
+  }
+  button {
+    position: fixed;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    font-family: inherit;
+    font-size: 26px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--mb-brand);
+    }
+  }
+}
+.mb-viewer__close {
+  top: 16px;
+  right: 16px;
+  font-size: 20px !important;
+}
+.mb-viewer__prev {
+  left: 14px;
+  top: 50%;
+}
+.mb-viewer__next {
+  right: 14px;
+  top: 50%;
+}
+@media (max-width: 700px) {
+  .mb-viewer {
+    padding: 56px 8px;
+  }
+  .mb-viewer__prev,
+  .mb-viewer__next {
+    top: auto !important;
+    bottom: 14px;
+  }
+}

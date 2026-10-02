@@ -4,6 +4,8 @@
  * background knowledge given to the AI when a key is connected.
  */
 
+import type { HelpImageId } from './helpImages'
+
 export type HelpTopic = {
   id: string
   q: string
@@ -12,11 +14,14 @@ export type HelpTopic = {
   steps: string[]
   link?: { label: string; href: string }
   managerOnly?: boolean
+  /** screenshots from the guide, shown with the answer */
+  images?: HelpImageId[]
 }
 
 export const helpTopics: HelpTopic[] = [
   {
     id: 'project',
+    images: ['adm-projects-list', 'adm-project-form', 'adm-project-photos'],
     q: 'Add a finished project',
     keywords: [
       'project',
@@ -41,6 +46,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'page',
+    images: ['adm-pages-list', 'adm-page-sections', 'adm-page-section-open'],
     q: 'Change text or a photo on a page',
     keywords: [
       'page',
@@ -71,6 +77,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'section',
+    images: ['adm-page-sections', 'adm-page-add-section'],
     q: 'Add, move or remove a section',
     keywords: [
       'section',
@@ -99,6 +106,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'news',
+    images: ['adm-posts-list', 'adm-post-form'],
     q: 'Write a news post',
     keywords: [
       'news',
@@ -121,6 +129,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'photos',
+    images: ['adm-photos-list', 'adm-photo-upload'],
     q: 'Upload or replace photos',
     keywords: [
       'photo',
@@ -147,6 +156,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'leads',
+    images: ['adm-leads-list', 'adm-lead-detail'],
     q: 'Answer a quote request',
     keywords: [
       'quote',
@@ -176,6 +186,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'company',
+    images: ['adm-company', 'adm-logos'],
     q: 'Change the phone number, address, hours or logo',
     keywords: [
       'phone',
@@ -205,6 +216,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'colours',
+    images: ['adm-theme', 'adm-theme-palettes', 'adm-theme-custom'],
     q: 'Change the colours or fonts',
     keywords: [
       'colour',
@@ -239,6 +251,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'menu',
+    images: ['adm-menu'],
     q: 'Change the website menu or footer',
     keywords: [
       'menu',
@@ -262,6 +275,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'users',
+    images: ['adm-users-list', 'adm-user-create'],
     q: 'Add a user or change what they may do',
     keywords: [
       'user',
@@ -293,6 +307,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'password',
+    images: ['adm-account', 'adm-password'],
     q: 'Change or reset a password',
     keywords: [
       'password',
@@ -316,6 +331,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'backup',
+    images: ['adm-backups'],
     q: 'Back up or restore the website',
     keywords: [
       'backup',
@@ -340,6 +356,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'stats',
+    images: ['adm-stats'],
     q: 'See how many people visit the website',
     keywords: [
       'statistics',
@@ -369,6 +386,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'publish',
+    images: ['adm-publish-bar', 'adm-page-preview'],
     q: 'Publish, preview or hide something',
     keywords: [
       'publish',
@@ -395,6 +413,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'undo',
+    images: ['adm-versions'],
     q: 'Undo a mistake',
     keywords: [
       'undo',
@@ -420,6 +439,7 @@ export const helpTopics: HelpTopic[] = [
   },
   {
     id: 'ai',
+    images: ['adm-ai-setup', 'adm-ai-field', 'adm-ai-suggestion', 'adm-ai-doc-menu'],
     q: 'Get help from the AI assistant',
     keywords: [
       'ai',

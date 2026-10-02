@@ -5,9 +5,11 @@ import { Link } from '@payloadcms/ui'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 
+import { type HelpImageId, isHelpImage } from '@/ai/helpImages'
 import { type HelpTopic, helpTopics, matchTopic } from '@/ai/helpKnowledge'
 
 import { Icon } from '../icons'
+import { ImageViewer, Thumbs } from './ImageViewer'
 import { runAi, useAiStatus } from './useAi'
 
 type Message =
@@ -35,6 +37,16 @@ const restore = (): { open: boolean; messages: Message[] } => {
     /* on the server, or storage blocked: start fresh */
   }
   return { open: false, messages: [] }
+}
+
+/** "[image: adm-logos]" lines in an AI answer become pictures; unknown ids are dropped. */
+const splitImages = (text: string): { text: string; images: HelpImageId[] } => {
+  const images: HelpImageId[] = []
+  const rest = text.replace(/\[image:\s*([\w-]+)\s*\]/gi, (_, id: string) => {
+    if (isHelpImage(id) && !images.includes(id)) images.push(id)
+    return ''
+  })
+  return { text: rest.replace(/\n{3,}/g, '\n\n').trim(), images }
 }
 
 /** Admin paths in an answer ("/admin/globals/theme") become links. */
@@ -86,6 +98,7 @@ export const AiChat: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>(saved.messages)
   const [draft, setDraft] = useState('')
   const [busy, setBusy] = useState(false)
+  const [viewer, setViewer] = useState<{ ids: HelpImageId[]; index: number } | null>(null)
   const list = useRef<HTMLDivElement>(null)
   const input = useRef<HTMLTextAreaElement>(null)
 
@@ -175,7 +188,11 @@ export const AiChat: React.FC = () => {
                 <div className="mb-chat__msg" key={i}>
                   <img alt="" className="mb-chat__avatar" src={AVATAR} />
                   <div className="mb-chat__bubble">
-                    <p>{withLinks(m.text)}</p>
+                    <p>{withLinks(splitImages(m.text).text)}</p>
+                    <Thumbs
+                      ids={splitImages(m.text).images}
+                      onOpen={(ids, index) => setViewer({ ids, index })}
+                    />
                     {m.topic ? (
                       <>
                         <ol>
@@ -183,6 +200,10 @@ export const AiChat: React.FC = () => {
                             <li key={s}>{s}</li>
                           ))}
                         </ol>
+                        <Thumbs
+                          ids={m.topic.images ?? []}
+                          onOpen={(ids, index) => setViewer({ ids, index })}
+                        />
                         {m.topic.link ? (
                           <Link className="mb-chat__go" href={m.topic.link.href}>
                             {m.topic.link.label} <Icon name="external" size={15} />
@@ -248,6 +269,15 @@ export const AiChat: React.FC = () => {
             </button>
           </form>
         </section>
+      ) : null}
+
+      {viewer ? (
+        <ImageViewer
+          ids={viewer.ids}
+          index={viewer.index}
+          onClose={() => setViewer(null)}
+          onIndex={(index) => setViewer({ ...viewer, index })}
+        />
       ) : null}
 
       <button

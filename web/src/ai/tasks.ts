@@ -24,6 +24,7 @@ import {
 import { blockMeta } from '../blocks/blockMeta'
 import { AUTO_PALETTE, fontOptions, type PresetKey, presets } from '../theme/presets'
 import { resolveTheme } from '../theme/resolve'
+import { helpImagesAsText } from './helpImages'
 import { helpAsText } from './helpKnowledge'
 import { AiError, type AiTurn, generate } from './providers'
 
@@ -345,6 +346,7 @@ export const chat = async (
     '- Answer in the language the person writes in. Button and menu names stay in English, exactly as on screen.',
     '- Be short and concrete. For how-to questions give numbered steps. Plain text only: no markdown headings, no bold, no tables.',
     '- When a screen is involved, write its path on its own line (for example /admin/globals/theme): it becomes a clickable link.',
+    '- For how-to answers, show the matching screenshot by writing [image: id] on its own line (one or two at most, only ids from the list below). Red numbers on a screenshot mark the buttons and fields to use.',
     '- When asked for advice (colours, fonts, logo, layout, wording), give a specific recommendation with the reason, then say where to apply it. Give colours as hex codes.',
     '- You cannot change anything yourself and you cannot see the screen. Never claim you did something.',
     '- Only describe features listed below. If something is not possible in this admin, say so and suggest the closest thing or asking the developer.',
@@ -357,6 +359,9 @@ export const chat = async (
     '',
     '## How to do things in this admin',
     helpAsText(),
+    '',
+    '## Screenshots you can show',
+    helpImagesAsText(),
     '',
     '## Colours & fonts screen (/admin/globals/theme)',
     'Ready-made palettes:',
