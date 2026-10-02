@@ -68,6 +68,10 @@ export const doc = {
           'AI assistant',
           'A chat that answers questions about the admin panel. Add a free AI key to fix spelling, write descriptions and Google titles, describe photos and check a page before publishing.',
         ],
+        [
+          'Statistics',
+          'Visitors, pages viewed, phone clicks, sources, redirects and 404s — right in the admin, no outside service, no cookies.',
+        ],
       ],
       widths: [24, 76],
     },
@@ -130,7 +134,7 @@ export const doc = {
     { img: 'adm-home.jpg' },
     {
       steps: [
-        'Everyday work: **Quote requests**, **Pages**, **Projects**, **News**, **Photos**.',
+        'Everyday work: **Quote requests**, **Pages**, **Projects**, **News**, **Photos**, **Statistics**.',
         'About your company: **Services**, **Equipment**, **Reviews**.',
         '**Settings**, **Help** (short how-to guides inside the admin panel), **View website**, **Log out**.',
         'New quote requests. Click to open them.',
@@ -447,6 +451,24 @@ export const doc = {
         'Open the page you want to bring back and click the **Versions** tab.',
         'Click the version you want, then press **Restore this version**.',
       ],
+    },
+
+    { h2: '3.16 Visitor statistics', newPage: true },
+    {
+      p: 'The website counts its own visits; no Google Analytics or other service is needed. The four numbers for the last 7 days are on the Home screen; click them for the details.',
+    },
+    { img: 'adm-stats.jpg' },
+    {
+      steps: [
+        'Click **Statistics** in the left menu.',
+        'Choose the period: the last 7, 30 or 90 days.',
+        'The four headline numbers: **Visitors**, **Pages viewed**, **Phone number clicked** and **Quote requests**, each compared with the period before.',
+        'Visitors per day. Point at a day to see its numbers, or press “Show the numbers as a table”.',
+        'The details: most viewed pages, where visitors came from (Google, Facebook, typed in…), what they clicked, phone or computer, redirects used and addresses that do not exist (404).',
+      ],
+    },
+    {
+      note: 'No cookies and nothing personal is stored, only daily totals. Robots and you yourself while logged in are not counted. If a 404 address keeps coming back, create a redirect for it.',
     },
 
     { h2: '3.15 The AI assistant', newPage: true },

@@ -475,6 +475,21 @@ const shots = {
     await snap('help')
   },
 
+  // ───────── statistics
+  async stats() {
+    await page.setViewportSize({ width: 1440, height: 1500 })
+    await go('/admin/statistics?days=7')
+    await mark([
+      [navItem('Statistics'), 1],
+      [page.locator('.mb-range'), 2, { side: 'right' }],
+      [page.locator('.mb-stats__tiles'), 3, { side: 'right' }],
+      [page.locator('.mb-chart'), 4, { side: 'right' }],
+      [page.locator('.mb-stats__grid'), 5, { side: 'right' }],
+    ])
+    await snap('stats')
+    await page.setViewportSize({ width: 1440, height: 900 })
+  },
+
   // ───────── AI assistant
   // Needs an AI key to show the connected screens: AI_KEY=… (with the test stub:
   // AI_KEY=test-key-good-1234 and the site started with AI_BASE_URL). The key is removed

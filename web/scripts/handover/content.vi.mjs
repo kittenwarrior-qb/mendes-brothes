@@ -68,6 +68,10 @@ export const doc = {
           'Trợ lý AI',
           'Khung chat trả lời câu hỏi về trang quản trị. Gắn thêm khoá AI miễn phí để sửa chính tả, viết mô tả, viết tiêu đề Google, mô tả ảnh và kiểm tra trang trước khi đăng.',
         ],
+        [
+          'Thống kê',
+          'Lượt khách, trang được xem, lượt bấm gọi, nguồn khách, redirect và lỗi 404 — xem ngay trong admin, không cần dịch vụ ngoài, không cookie.',
+        ],
       ],
       widths: [26, 74],
     },
@@ -126,7 +130,7 @@ export const doc = {
     { img: 'adm-home.jpg' },
     {
       steps: [
-        'Việc hằng ngày: **Quote requests** (yêu cầu báo giá), **Pages** (các trang), **Projects** (công trình), **News** (tin tức), **Photos** (ảnh).',
+        'Việc hằng ngày: **Quote requests** (yêu cầu báo giá), **Pages** (các trang), **Projects** (công trình), **News** (tin tức), **Photos** (ảnh), **Statistics** (thống kê lượt truy cập).',
         'Thông tin công ty: **Services** (dịch vụ), **Equipment** (máy móc), **Reviews** (đánh giá của khách).',
         '**Settings** (cài đặt), **Help** (hướng dẫn nhanh ngay trong trang quản trị), **View website** (mở website), **Log out** (đăng xuất).',
         'Yêu cầu báo giá mới. Bấm vào để xem.',
@@ -439,6 +443,24 @@ export const doc = {
         'Mở trang cần khôi phục, bấm tab **Versions**.',
         'Bấm vào bản muốn quay lại, rồi bấm **Restore this version**.',
       ],
+    },
+
+    { h2: '3.16 Thống kê lượt truy cập', newPage: true },
+    {
+      p: 'Website tự đếm lượt truy cập, không cần Google Analytics hay dịch vụ nào khác. Bốn con số của 7 ngày gần nhất hiện ngay trên màn hình chính; bấm vào để xem chi tiết.',
+    },
+    { img: 'adm-stats.jpg' },
+    {
+      steps: [
+        'Bấm **Statistics** ở menu trái.',
+        'Chọn khoảng thời gian: 7, 30 hoặc 90 ngày gần nhất.',
+        'Bốn con số chính: **Visitors** (khách truy cập), **Pages viewed** (số trang đã xem), **Phone number clicked** (lượt bấm gọi), **Quote requests** (yêu cầu báo giá), kèm mức tăng giảm so với kỳ trước.',
+        'Biểu đồ khách theo ngày. Rê chuột vào một ngày để xem số; bấm “Show the numbers as a table” để xem dạng bảng.',
+        'Chi tiết: trang được xem nhiều nhất, khách đến từ đâu (Google, Facebook, gõ trực tiếp…), khách đã bấm gì, dùng điện thoại hay máy tính, các redirect được dùng và các địa chỉ không tồn tại (404).',
+      ],
+    },
+    {
+      note: 'Không dùng cookie và không lưu thông tin cá nhân, chỉ lưu tổng số theo ngày. Robot và chính bạn khi đang đăng nhập admin không được tính. Nếu một địa chỉ 404 xuất hiện nhiều lần, nên tạo redirect cho nó.',
     },
 
     { h2: '3.15 Trợ lý AI', newPage: true },
