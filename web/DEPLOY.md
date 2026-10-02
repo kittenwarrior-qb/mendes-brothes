@@ -96,3 +96,7 @@ docker compose exec db psql -U mendez # vào database
 Trong `.env` đặt `NEXT_PUBLIC_SERVER_URL=http://<ip>`, `SITE_DOMAIN=<ip>` và `CADDYFILE=./deploy/Caddyfile.ip`, rồi `./deploy/deploy.sh`. Site chạy HTTP ở cổng 80, không có HTTPS.
 
 Khi tên miền đã trỏ về máy chủ: xoá dòng `CADDYFILE`, sửa hai biến còn lại theo tên miền và chạy lại `./deploy/deploy.sh` (image được build lại vì URL nằm trong bản build). Caddy tự xin chứng chỉ HTTPS.
+
+## Chạy trên subdomain (không có bản ghi `www.`)
+
+Đặt `CADDYFILE=./deploy/Caddyfile.nowww` trong `.env`. Bản mặc định có thêm chuyển hướng `www.<domain>` → `<domain>`, chỉ dùng khi cả hai bản ghi DNS đều tồn tại.

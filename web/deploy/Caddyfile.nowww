@@ -1,0 +1,42 @@
+# For a site on a single hostname with no "www" twin (for example a subdomain such as
+# demo.example.com). Select it with CADDYFILE=./deploy/Caddyfile.nowww in .env.
+# Same as the default Caddyfile, without the www redirect — Caddy would otherwise keep
+# asking for a certificate for a name that has no DNS record.
+
+{$SITE_DOMAIN} {
+	redir https://{$SITE_DOMAIN}{uri} permanent
+}
+
+{$SITE_DOMAIN} {
+	encode zstd gzip
+
+	# Static build assets and fonts never change for a given URL.
+	@immutable path /_next/static/* /fonts/*
+	header @immutable Cache-Control "public, max-age=31536000, immutable"
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+
+	# Uploads in the admin: photos/videos up to 50 MB; a full-site backup file can be large
+	@backupUpload path /api/backups/upload
+	request_body @backupUpload {
+		max_size 5GB
+	}
+	@otherRequests not path /api/backups/upload
+	request_body @otherRequests {
+		max_size 50MB
+	}
+
+	reverse_proxy app:3000 {
+		header_up X-Real-IP {remote_host}
+	}
+
+	log {
+		output file /data/access.log {
+			roll_size 10mb
+			roll_keep 5
+		}
+	}
+}
