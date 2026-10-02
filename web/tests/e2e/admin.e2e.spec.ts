@@ -39,7 +39,7 @@ test.describe('admin panel', () => {
       'Settings',
       'Help',
     ]) {
-      await expect(menu.getByRole('link', { name, exact: true })).toBeAttached()
+      await expect(menu.getByRole('link', { name: new RegExp(`^${name}`) }).first()).toBeAttached()
     }
     await page.goto('/admin/settings')
     await expect(page.getByRole('link', { name: /Colours & fonts/ })).toBeVisible()

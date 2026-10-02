@@ -48,6 +48,9 @@ export const Posts: CollectionConfig<'posts'> = {
   },
   labels: { singular: 'News post', plural: 'News' },
   admin: {
+    components: {
+      edit: { beforeDocumentControls: ['@/components/admin/ai/AiDocTools#AiDocTools'] },
+    },
     group: 'Website',
     hideAPIURL: true,
     description: 'News, tips and project updates shown at /posts.',

@@ -474,6 +474,99 @@ const shots = {
     await mark([[navItem('Help'), 1]])
     await snap('help')
   },
+
+  // ───────── AI assistant
+  // Needs an AI key to show the connected screens: AI_KEY=… (with the test stub:
+  // AI_KEY=test-key-good-1234 and the site started with AI_BASE_URL). The key is removed
+  // again at the end, and nothing is saved to any document.
+  async ai() {
+    const key = process.env.AI_KEY
+    page.on('dialog', (d) => void d.accept().catch(() => undefined))
+    await api('/api/ai/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: { remove: true },
+    })
+    await go('/admin/ai')
+    await mark([
+      [page.getByRole('radio', { name: /Google Gemini/ }), 1],
+      [page.getByRole('link', { name: /to get a key/ }), 2],
+      [page.getByLabel('API key'), 3],
+      [page.getByRole('button', { name: 'Test & save' }), 4, { side: 'right' }],
+    ])
+    await snap('ai-setup', { x: 0, y: 0, width: 1440, height: 800 })
+
+    // the assistant without a key: built-in answers
+    await go('/admin')
+    await page.evaluate(() => sessionStorage.removeItem('mb-assistant'))
+    await page.getByRole('button', { name: 'Open the assistant' }).click()
+    const chat = page.getByRole('region', { name: 'Assistant' })
+    await chat.getByLabel('Your question').fill('How do I change the logo?')
+    await chat.getByLabel('Your question').press('Enter')
+    await page.waitForTimeout(500)
+    await mark([
+      [page.locator('.mb-chat__fab'), 1],
+      [chat.getByLabel('Your question'), 2],
+      [chat.locator('.mb-chat__bubble').last(), 3],
+    ])
+    await snap('ai-chat', { x: 640, y: 150, width: 800, height: 750 })
+    await chat.getByRole('button', { name: 'New chat' }).click()
+    await chat.getByRole('button', { name: 'Close the assistant' }).click()
+    if (!key) return console.log('   (set AI_KEY for the connected AI screenshots)')
+
+    await go('/admin/ai')
+    await page.getByLabel('API key').fill(key)
+    await page.getByRole('button', { name: 'Test & save' }).click()
+    await page.getByText(/Connected to/).waitFor()
+    await snap('ai-connected', { x: 0, y: 0, width: 1440, height: 760 })
+
+    const { docs } = await api('/api/projects?limit=1&sort=-completedAt&depth=0')
+    await go(`/admin/collections/projects/${docs[0].id}`)
+    await tab('Overview').click()
+    const summary = page.locator('#field-summary')
+    const original = await summary.inputValue()
+    await summary.fill('We recieve teh lot and clear it for the builder.')
+    await page.waitForTimeout(400)
+    await mark([
+      [summary, 1],
+      [page.getByRole('button', { name: 'AI: improve this text' }), 2, { side: 'right' }],
+    ])
+    await snap('ai-field', { x: 290, y: 240, width: 1150, height: 400 })
+    await page.getByRole('button', { name: 'AI: improve this text' }).click()
+    await page.getByRole('button', { name: 'Fix spelling & grammar' }).click()
+    await page.getByLabel('AI suggestion').waitFor()
+    await mark([
+      [page.getByLabel('AI suggestion'), 3],
+      [page.getByRole('button', { name: 'Use this' }), 4],
+    ])
+    await snap('ai-suggestion', { x: 290, y: 240, width: 1150, height: 520 })
+    await page.getByRole('button', { name: 'Cancel' }).click()
+    await summary.fill(original)
+
+    await page.getByRole('button', { name: 'AI', exact: true }).click()
+    await page.waitForTimeout(300)
+    await mark([
+      [page.getByRole('button', { name: 'AI', exact: true }), 1],
+      [page.locator('.mb-ai__menu'), 2],
+    ])
+    await snap('ai-doc-menu', { x: 290, y: 0, width: 1150, height: 520 })
+    await page.getByRole('menuitem', { name: /Check before publishing/ }).click()
+    await page.getByRole('dialog').getByRole('button', { name: 'Close' }).waitFor()
+    await snap('ai-check', { x: 290, y: 150, width: 1150, height: 600 })
+    await page.getByRole('dialog').getByRole('button', { name: 'Close' }).click()
+
+    // leave the project exactly as it was, and take the key out again
+    await api(`/api/projects/${docs[0].id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: { summary: original, _status: 'published' },
+    })
+    await api('/api/ai/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: { remove: true },
+    })
+  },
 }
 
 for (const [name, fn] of Object.entries(shots)) {

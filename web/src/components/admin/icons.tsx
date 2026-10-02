@@ -23,7 +23,9 @@ import {
   PanelBottom,
   Phone,
   Search,
+  SendHorizontal,
   Settings,
+  Sparkles,
   Star,
   Tags,
   Truck,
@@ -35,6 +37,7 @@ import React from 'react'
 /** One line-icon set for the whole admin, looked up by name so server code can pass plain strings. */
 const icons = {
   account: CircleUser,
+  ai: Sparkles,
   backup: DatabaseBackup,
   categories: Tags,
   company: Building2,
@@ -60,6 +63,7 @@ const icons = {
   reviews: Star,
   schedule: CalendarClock,
   search: Search,
+  send: SendHorizontal,
   services: Wrench,
   settings: Settings,
   towns: MapPin,

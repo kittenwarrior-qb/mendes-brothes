@@ -64,6 +64,10 @@ export const doc = {
           'Sao lưu',
           'Tự động mỗi ngày, giữ 7 bản gần nhất. Tải về hoặc khôi phục bất kỳ lúc nào trong trang quản trị.',
         ],
+        [
+          'Trợ lý AI',
+          'Khung chat trả lời câu hỏi về trang quản trị. Gắn thêm khoá AI miễn phí để sửa chính tả, viết mô tả, viết tiêu đề Google, mô tả ảnh và kiểm tra trang trước khi đăng.',
+        ],
       ],
       widths: [26, 74],
     },
@@ -434,6 +438,65 @@ export const doc = {
       steps: [
         'Mở trang cần khôi phục, bấm tab **Versions**.',
         'Bấm vào bản muốn quay lại, rồi bấm **Restore this version**.',
+      ],
+    },
+
+    { h2: '3.15 Trợ lý AI', newPage: true },
+    {
+      p: 'Trang quản trị có sẵn một trợ lý. Chưa cần cài gì, trợ lý đã trả lời được các câu hỏi “làm việc này thế nào”. Khi gắn thêm một khoá AI (miễn phí), trợ lý trả lời được mọi câu hỏi và có thêm các nút AI ngay trong lúc soạn nội dung.',
+    },
+    { h3: 'Hỏi trợ lý' },
+    { img: 'adm-ai-chat.jpg', width: 430 },
+    {
+      steps: [
+        'Bấm nút tròn có logo ở góc dưới bên phải, có ở mọi màn hình.',
+        'Gõ câu hỏi, bằng tiếng Việt hay tiếng Anh đều được, rồi bấm Enter.',
+        'Trợ lý trả lời từng bước, kèm nút mở thẳng tới màn hình cần làm.',
+      ],
+    },
+    {
+      note: 'Khi đã gắn khoá AI, trợ lý còn tư vấn được: nên chọn màu nào, phông chữ nào, logo cần chuẩn bị ra sao, trang nên sắp xếp thế nào, viết câu giới thiệu sao cho hay.',
+    },
+    { h3: 'Gắn khoá AI miễn phí (làm một lần, chỉ Manager)' },
+    { p: 'Vào **Settings → AI assistant**:' },
+    { img: 'adm-ai-setup.jpg' },
+    {
+      steps: [
+        'Chọn dịch vụ. **Google Gemini** miễn phí, chỉ cần tài khoản Google, không cần thẻ.',
+        'Bấm **Open Google to get a key**. Trang Google AI Studio mở ra: đăng nhập, bấm **Create API key**, rồi sao chép khoá.',
+        'Dán khoá vào ô này.',
+        'Bấm **Test & save**. Hệ thống thử khoá trước; khoá đúng thì hiện “Connected”.',
+      ],
+    },
+    {
+      note: 'Khoá được lưu mã hoá trên máy chủ và không hiển thị lại. Gói miễn phí có giới hạn số lượt mỗi phút; nếu thấy báo bận, chờ một phút rồi thử lại. Nội dung nhờ AI xử lý sẽ được gửi tới dịch vụ đã chọn.',
+    },
+    { h3: 'Nút AI cạnh ô chữ' },
+    { img: 'adm-ai-field.jpg' },
+    {
+      steps: [
+        'Bấm vào một ô chữ bất kỳ và gõ nội dung.',
+        'Nút **AI** hiện phía trên ô. Bấm vào và chọn: sửa chính tả, viết rõ hơn, rút gọn, hoặc dịch sang tiếng Anh.',
+      ],
+    },
+    { img: 'adm-ai-suggestion.jpg' },
+    {
+      p: '**3** là bản AI đề xuất, sửa thêm được. **4** — bấm **Use this** để thay vào ô. Chưa bấm thì nội dung cũ vẫn giữ nguyên.',
+    },
+    { h3: 'Nút AI cạnh nút Publish' },
+    { img: 'adm-ai-doc-menu.jpg' },
+    {
+      steps: [
+        'Bấm **AI** ở trang, công trình, bài viết hoặc dịch vụ đang mở.',
+        'Chọn việc cần làm: **Write the description** (viết mô tả công trình từ các thông tin đã điền), **Write Google title & description** (tiêu đề và mô tả hiện trên Google), **Check before publishing** (kiểm tra trước khi đăng).',
+      ],
+    },
+    { p: 'Kết quả kiểm tra liệt kê từng chỗ cần xem lại và cách sửa:' },
+    { img: 'adm-ai-check.jpg' },
+    {
+      bullets: [
+        '**Ảnh:** ảnh mới tải lên được AI tự viết mô tả. Với ảnh cũ, mở ảnh trong **Photos** và bấm **Describe this photo**.',
+        'AI chỉ đề xuất. Website chỉ thay đổi sau khi bạn bấm **Use this** rồi **Publish changes**.',
       ],
     },
 

@@ -26,6 +26,7 @@ const settingsPaths = [
   '/admin/settings',
   '/admin/globals/',
   '/admin/backups',
+  '/admin/ai',
   '/admin/account',
   '/admin/collections/users',
   '/admin/collections/service-areas',

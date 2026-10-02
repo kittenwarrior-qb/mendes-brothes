@@ -7,6 +7,7 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { aiEndpoints } from './ai/endpoints'
 import { backupEndpoints } from './backup/endpoints'
 import { Categories } from './collections/Categories'
 import { Equipment } from './collections/Equipment'
@@ -21,6 +22,7 @@ import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { AiSettings } from './globals/AiSettings'
 import { BackupSettings } from './globals/BackupSettings'
 import { ListingPages } from './globals/ListingPages'
 import { leadsExportEndpoint } from './leads/exportEndpoint'
@@ -45,11 +47,14 @@ export default buildConfig({
       },
       // short fixed menu with icons instead of the default list of every collection
       Nav: '@/components/admin/nav/Nav#Nav',
+      // the small "AI" button that follows the text field being edited
+      providers: ['@/components/admin/ai/AiFieldAssist#AiFieldAssistProvider'],
       views: {
         // task-first home screen instead of the default wall of cards
         dashboard: { Component: '@/components/admin/Dashboard#Dashboard' },
         help: { Component: '@/components/admin/HelpView#HelpView', path: '/help' },
         settings: { Component: '@/components/admin/SettingsView#SettingsView', path: '/settings' },
+        ai: { Component: '@/components/admin/ai/AiSettingsView#AiSettingsView', path: '/ai' },
         backups: {
           Component: '@/components/admin/backups/BackupsView#BackupsView',
           path: '/backups',
@@ -111,8 +116,8 @@ export default buildConfig({
     Users,
   ],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [SiteSettings, Theme, Header, Footer, ListingPages, BackupSettings],
-  endpoints: [...backupEndpoints, leadsExportEndpoint],
+  globals: [SiteSettings, Theme, Header, Footer, ListingPages, BackupSettings, AiSettings],
+  endpoints: [...backupEndpoints, ...aiEndpoints, leadsExportEndpoint],
   // photo folders are switched off in the admin (hidden in custom.scss); the tables are kept for now
   folders: { browseByFolder: false },
   plugins,

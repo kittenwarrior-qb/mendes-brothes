@@ -39,6 +39,12 @@ const sections: Section[] = [
         title: 'Footer',
         text: 'The links and text at the bottom of every page.',
       },
+      {
+        href: '/admin/ai',
+        icon: 'ai',
+        title: 'AI assistant',
+        text: 'Connect a free AI key: spelling, rewriting, Google titles, photo descriptions.',
+      },
     ],
   },
   {

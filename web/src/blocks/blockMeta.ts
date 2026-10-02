@@ -14,7 +14,7 @@ export const blockMeta: Record<string, BlockMeta> = {
   pageHero: {
     label: 'Page title header',
     group: '1 · Top of the page',
-    hint: 'Dark band with the page title. Use as the first section of every other page.',
+    hint: 'Large page title, with a photo beside it if you like. Use as the first section of every other page.',
   },
 
   servicesGrid: {

@@ -26,6 +26,9 @@ export const Services: CollectionConfig<'services'> = {
   },
   defaultSort: 'order',
   admin: {
+    components: {
+      edit: { beforeDocumentControls: ['@/components/admin/ai/AiDocTools#AiDocTools'] },
+    },
     group: 'Company',
     hideAPIURL: true,
     useAsTitle: 'title',

@@ -46,9 +46,41 @@ export const Media: CollectionConfig = {
           'Describe the photo for screen readers and Google (e.g. "Excavator digging a pool in Lewes"). Filled from the file name if left empty.',
       },
     },
+    {
+      name: 'aiAlt',
+      type: 'ui',
+      admin: { components: { Field: '@/components/admin/ai/AiAltButton#AiAltButton' } },
+    },
   ],
   hooks: {
     beforeChange: [
+      // With the AI assistant connected, a new photo gets a real description written for it.
+      // Any failure (no key, free limit reached, slow answer) falls back to the file name below.
+      async ({ data, operation, req }) => {
+        const file = req.file
+        if (
+          operation !== 'create' ||
+          data.alt ||
+          !file?.data ||
+          !file.mimetype?.startsWith('image/')
+        )
+          return data
+        if (file.mimetype === 'image/svg+xml') return data
+        try {
+          const { getAiConfig } = await import('../ai/settings')
+          const { canSee } = await import('../ai/providers')
+          const config = await getAiConfig(req.payload)
+          if (!config?.autoAlt || !canSee(config)) return data
+          const { describeImage } = await import('../ai/tasks')
+          data.alt = await Promise.race([
+            describeImage(req.payload, config, file.data),
+            new Promise<undefined>((resolve) => setTimeout(resolve, 15_000)),
+          ])
+        } catch {
+          /* keep the upload working without AI */
+        }
+        return data
+      },
       ({ data }) => {
         if (!data.alt && data.filename) data.alt = altFromFilename(data.filename)
         return data

@@ -23,6 +23,9 @@ export const Pages: CollectionConfig<'pages'> = {
     slug: true,
   },
   admin: {
+    components: {
+      edit: { beforeDocumentControls: ['@/components/admin/ai/AiDocTools#AiDocTools'] },
+    },
     group: 'Website',
     hideAPIURL: true,
     defaultColumns: ['title', '_status', 'updatedAt'],

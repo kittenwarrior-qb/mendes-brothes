@@ -77,6 +77,14 @@ Chỉ Admin mới cấp/thu hồi được quyền Admin. Tài khoản đầu ti
 - **Menu** (có menu con), **Footer**, **Backups** (xem mục C), **Users**.
 - Giao diện admin có tiếng Anh và tiếng Việt.
 
+**Trợ lý AI** (tuỳ chọn, khách tự nhập key ở Settings → AI assistant)
+- **Khung chat** (nút tròn có logo, góc dưới phải, ở mọi màn hình): chưa có key thì trả lời theo bộ hướng dẫn có sẵn (hiểu cả câu hỏi tiếng Việt); có key thì AI trả lời mọi câu hỏi về admin và tư vấn màu, font, logo, bố cục, câu chữ. AI biết bảng màu đang dùng, danh sách bảng màu, các loại section và vai trò của người hỏi.
+- **Nút AI cạnh mọi ô chữ** (kể cả đoạn bôi đen trong ô soạn thảo): sửa chính tả, viết rõ hơn, rút gọn, dịch sang tiếng Anh. Xem bản đề xuất trước, bấm “Use this” mới thay.
+- **Nút AI cạnh Publish** (Pages, Projects, News, Services): viết mô tả công trình từ thông tin đã điền, viết tiêu đề + mô tả Google, kiểm tra trước khi đăng (chính tả, câu khó hiểu, thiếu SEO, ảnh thiếu mô tả).
+- **Ảnh:** ảnh mới tải lên được AI tự viết alt text; ảnh cũ có nút “Describe this photo”.
+- **Nhà cung cấp:** Google Gemini (miễn phí, đề xuất), Groq (miễn phí, không đọc được ảnh), OpenAI, Claude. Model được chọn tự động từ danh sách của nhà cung cấp, nên không lỗi thời khi họ đổi tên model.
+- **An toàn:** key được thử trước khi lưu, lưu mã hoá bằng `PAYLOAD_SECRET`, không đọc lại được qua API; chỉ Manager đổi được. Chưa có key thì các nút AI tự ẩn. Giới hạn 20 lượt AI/phút/người.
+
 ## C. Sao lưu (Backups)
 
 Vào **Admin → Backups**:

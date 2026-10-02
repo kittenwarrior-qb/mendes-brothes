@@ -64,6 +64,10 @@ export const doc = {
           'Backups',
           'Automatic every day, the last 7 are kept. Download or restore one at any time from the admin panel.',
         ],
+        [
+          'AI assistant',
+          'A chat that answers questions about the admin panel. Add a free AI key to fix spelling, write descriptions and Google titles, describe photos and check a page before publishing.',
+        ],
       ],
       widths: [24, 76],
     },
@@ -442,6 +446,65 @@ export const doc = {
       steps: [
         'Open the page you want to bring back and click the **Versions** tab.',
         'Click the version you want, then press **Restore this version**.',
+      ],
+    },
+
+    { h2: '3.15 The AI assistant', newPage: true },
+    {
+      p: 'The admin panel has a built-in assistant. Out of the box it answers “how do I…” questions. With a free AI key added, it answers any question and you also get AI buttons while you write.',
+    },
+    { h3: 'Asking the assistant' },
+    { img: 'adm-ai-chat.jpg', width: 430 },
+    {
+      steps: [
+        'Click the round logo button in the bottom right corner. It is on every screen.',
+        'Type your question and press Enter.',
+        'The assistant answers step by step, with a button that opens the right screen.',
+      ],
+    },
+    {
+      note: 'With an AI key connected, the assistant also gives advice: which colours or fonts to pick, how to prepare a logo, how to arrange a page, how to word an introduction.',
+    },
+    { h3: 'Connecting a free AI key (once, Managers only)' },
+    { p: 'Open **Settings → AI assistant**:' },
+    { img: 'adm-ai-setup.jpg' },
+    {
+      steps: [
+        'Choose a service. **Google Gemini** is free with a Google account and needs no card.',
+        'Click **Open Google to get a key**. Google AI Studio opens: sign in, press **Create API key** and copy the key.',
+        'Paste the key here.',
+        'Press **Test & save**. The key is tested first; if it works you see “Connected”.',
+      ],
+    },
+    {
+      note: 'The key is stored encrypted on the server and never shown again. The free plan allows a limited number of requests per minute; if the assistant says it is busy, wait a minute and try again. Text you ask the AI to work on is sent to the service you chose.',
+    },
+    { h3: 'The AI button on a text box' },
+    { img: 'adm-ai-field.jpg' },
+    {
+      steps: [
+        'Click into any text box and type.',
+        'The **AI** button appears above the box. Click it and choose: fix spelling, make it clearer, make it shorter, or translate to English.',
+      ],
+    },
+    { img: 'adm-ai-suggestion.jpg' },
+    {
+      p: '**3** is the suggestion; you can edit it. **4** — press **Use this** to put it in the box. Until you do, your own text stays as it was.',
+    },
+    { h3: 'The AI button next to Publish' },
+    { img: 'adm-ai-doc-menu.jpg' },
+    {
+      steps: [
+        'Click **AI** on the page, project, news post or service you have open.',
+        'Choose: **Write the description** (a project write-up from the details you entered), **Write Google title & description** (what shows in search results), or **Check before publishing**.',
+      ],
+    },
+    { p: 'The check lists each thing to look at and how to fix it:' },
+    { img: 'adm-ai-check.jpg' },
+    {
+      bullets: [
+        '**Photos:** new uploads get a description written by the AI. For an older photo, open it in **Photos** and press **Describe this photo**.',
+        'The AI only suggests. The website changes only after you press **Use this** and then **Publish changes**.',
       ],
     },
 

@@ -40,6 +40,9 @@ export const Projects: CollectionConfig<'projects'> = {
   },
   defaultSort: '-completedAt',
   admin: {
+    components: {
+      edit: { beforeDocumentControls: ['@/components/admin/ai/AiDocTools#AiDocTools'] },
+    },
     group: 'Website',
     hideAPIURL: true,
     useAsTitle: 'title',

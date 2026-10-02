@@ -6,6 +6,7 @@ import * as migration_20261001_153214_industrial_layout from './20261001_153214_
 import * as migration_20261001_162948_admin_roles_and_leads from './20261001_162948_admin_roles_and_leads'
 import * as migration_20261001_173940_studio_palettes from './20261001_173940_studio_palettes'
 import * as migration_20261001_173941_studio_default from './20261001_173941_studio_default'
+import * as migration_20261002_034848_ai_settings from './20261002_034848_ai_settings'
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20261001_173941_studio_default.up,
     down: migration_20261001_173941_studio_default.down,
     name: '20261001_173941_studio_default',
+  },
+  {
+    up: migration_20261002_034848_ai_settings.up,
+    down: migration_20261002_034848_ai_settings.down,
+    name: '20261002_034848_ai_settings',
   },
 ]

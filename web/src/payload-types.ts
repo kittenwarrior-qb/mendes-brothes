@@ -128,6 +128,7 @@ export interface Config {
     footer: Footer;
     'listing-pages': ListingPage;
     'backup-settings': BackupSetting;
+    'ai-settings': AiSetting;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
@@ -136,6 +137,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     'listing-pages': ListingPagesSelect<false> | ListingPagesSelect<true>;
     'backup-settings': BackupSettingsSelect<false> | BackupSettingsSelect<true>;
+    'ai-settings': AiSettingsSelect<false> | AiSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -3694,6 +3696,21 @@ export interface BackupSetting {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-settings".
+ */
+export interface AiSetting {
+  id: number;
+  provider?: ('gemini' | 'groq' | 'openai' | 'anthropic') | null;
+  apiKey?: string | null;
+  keyHint?: string | null;
+  model?: string | null;
+  visionModel?: string | null;
+  autoAlt?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
@@ -3941,6 +3958,21 @@ export interface BackupSettingsSelect<T extends boolean = true> {
   autoEnabled?: T;
   frequency?: T;
   keep?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ai-settings_select".
+ */
+export interface AiSettingsSelect<T extends boolean = true> {
+  provider?: T;
+  apiKey?: T;
+  keyHint?: T;
+  model?: T;
+  visionModel?: T;
+  autoAlt?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
