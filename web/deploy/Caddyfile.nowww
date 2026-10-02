@@ -4,10 +4,6 @@
 # asking for a certificate for a name that has no DNS record.
 
 {$SITE_DOMAIN} {
-	redir https://{$SITE_DOMAIN}{uri} permanent
-}
-
-{$SITE_DOMAIN} {
 	encode zstd gzip
 
 	# Static build assets and fonts never change for a given URL.
