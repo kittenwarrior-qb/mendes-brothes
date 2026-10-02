@@ -464,6 +464,30 @@ export const helpTopics: HelpTopic[] = [
     ],
     link: { label: 'Open AI assistant', href: '/admin/ai' },
   },
+  {
+    id: 'commands',
+    images: ['adm-ai-commands', 'adm-ai-command-card'],
+    q: 'Quick commands in the assistant',
+    keywords: [
+      'command',
+      'commands',
+      'slash',
+      'quick',
+      'shortcut',
+      'drop',
+      'drag',
+      'lệnh',
+      'kéo thả',
+      'gõ lệnh',
+    ],
+    steps: [
+      'Open the assistant (round button, bottom right) and type / to see the commands.',
+      'For a photo: drag it into the chat, paste it, or press the paperclip — then type the command, for example /logo, /favicon, /photos or /project Pool dig in Lewes.',
+      'For text: type the command and the new value, for example /phone 302-555-0100, /hours Monday to Saturday, 7 am to 6 pm, /address 12 Main St, Lewes, DE 19958.',
+      'For colours: /color #1D5FA8 builds a palette from your brand colour; /palette shows the ready-made ones. Colours are saved as a draft — preview them, then press Publish.',
+      'A card shows what will change. Nothing happens until you press Apply, and Undo puts the old value back.',
+    ],
+  },
 ]
 
 const normalise = (s: string) =>

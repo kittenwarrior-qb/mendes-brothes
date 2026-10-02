@@ -24,6 +24,7 @@ import {
 import { blockMeta } from '../blocks/blockMeta'
 import { AUTO_PALETTE, fontOptions, type PresetKey, presets } from '../theme/presets'
 import { resolveTheme } from '../theme/resolve'
+import { commandsAsText } from './commands'
 import { helpImagesAsText } from './helpImages'
 import { helpAsText } from './helpKnowledge'
 import { AiError, type AiTurn, generate } from './providers'
@@ -359,6 +360,10 @@ export const chat = async (
     '',
     '## How to do things in this admin',
     helpAsText(),
+    '',
+    '## Quick commands in this chat',
+    'The person can type these commands in this same chat (each shows a preview card and only changes something after they press Apply). When a request matches one, tell them the exact command to type; you cannot run them yourself. Photos are dragged or pasted into the chat first. Logo, contact and colour commands are for managers.',
+    commandsAsText(),
     '',
     '## Screenshots you can show',
     helpImagesAsText(),

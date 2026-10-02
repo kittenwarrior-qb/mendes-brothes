@@ -44,7 +44,7 @@ test.describe.serial('AI assistant', () => {
     const viewer = page.getByRole('dialog', { name: /The Logos tab/ })
     await expect(viewer.locator('img')).toHaveAttribute('src', '/help/adm-logos.webp')
     await expect(viewer).toContainText('2 / 2')
-    await viewer.getByRole('button', { name: 'Previous screenshot' }).click()
+    await viewer.getByRole('button', { name: 'Previous picture' }).click()
     await expect(page.getByRole('dialog', { name: /Company info: phone/ })).toBeVisible()
     await page.keyboard.press('Escape')
     await expect(page.locator('.mb-viewer')).toHaveCount(0)

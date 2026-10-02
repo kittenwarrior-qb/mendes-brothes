@@ -487,6 +487,57 @@ export const doc = {
     {
       note: 'With an AI key connected, the assistant also gives advice: which colours or fonts to pick, how to prepare a logo, how to arrange a page, how to word an introduction.',
     },
+    { h3: 'Quick commands: change the logo, phone number, colours… from the chat' },
+    {
+      p: 'Type **/** in the chat box to see the commands. Commands need no AI key and do exactly what you type — no guessing.',
+    },
+    { img: 'adm-ai-commands.jpg', width: 430 },
+    {
+      steps: [
+        'Type **/** and the list of commands appears. Type a few letters to narrow it, then press Tab or click one.',
+        'For a photo: drag it into the chat (or paste it, or press the paperclip), then type the command, for example **/logo**.',
+      ],
+    },
+    { img: 'adm-ai-command-card.jpg', width: 430 },
+    {
+      steps: [
+        'The photo and the command you sent.',
+        'A preview card shows the old value → the new one.',
+        'Nothing changes until you press **Apply**; press **Cancel** if you change your mind. After applying, **Undo** puts the old value back.',
+      ],
+    },
+    {
+      table: [
+        ['Command', 'What it does', 'Example'],
+        [
+          '**/logo**, **/logo-dark**, **/badge**, **/favicon**',
+          'Replace the logo for light backgrounds, for dark backgrounds, the round badge, the browser tab icon',
+          '/logo + drop the logo file',
+        ],
+        ['**/photos**', 'Add photos to the Photos library', '/photos + drop several photos'],
+        [
+          '**/project** title',
+          'Create a draft project from photos (the first one is the cover)',
+          '/project Pool dig in Lewes',
+        ],
+        [
+          '**/phone**, **/email**, **/hours**, **/tagline**',
+          'Change the phone number, email, opening hours, tagline',
+          '/phone 302-555-0100',
+        ],
+        [
+          '**/address**',
+          'Change the address (street, town, state zip)',
+          '/address 12 Main St, Lewes, DE 19958',
+        ],
+        ['**/color** hex', 'Build a palette from your brand colour (draft)', '/color #1D5FA8'],
+        ['**/palette** name', 'Switch to a ready-made palette (draft)', '/palette Studio'],
+      ],
+      widths: [30, 42, 28],
+    },
+    {
+      note: 'Drop a photo without a command and the assistant asks what to do with it (logo, favicon, add to Photos, new project). You can also paste a photo link after the command, e.g. /logo https://…/logo.png. Logo, company info and colour commands are for Managers. Colours are saved as a draft: open Colours & fonts, preview, then press Publish.',
+    },
     { h3: 'Connecting a free AI key (once, Managers only)' },
     { p: 'Open **Settings → AI assistant**:' },
     { img: 'adm-ai-setup.jpg' },

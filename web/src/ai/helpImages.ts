@@ -38,6 +38,8 @@ export const helpImages = {
   'adm-stats': 'Statistics: visitors, pages, clicks, sources',
   'adm-ai-setup': 'Connecting a free AI key',
   'adm-ai-chat': 'Asking the assistant',
+  'adm-ai-commands': 'Typing / in the assistant shows the quick commands',
+  'adm-ai-command-card': 'A command preview: old → new, then Apply or Cancel',
   'adm-ai-field': 'The AI button above a text box',
   'adm-ai-suggestion': 'An AI suggestion with “Use this”',
   'adm-ai-doc-menu': 'The AI menu next to Publish',

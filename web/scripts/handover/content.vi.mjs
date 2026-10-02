@@ -479,6 +479,57 @@ export const doc = {
     {
       note: 'Khi đã gắn khoá AI, trợ lý còn tư vấn được: nên chọn màu nào, phông chữ nào, logo cần chuẩn bị ra sao, trang nên sắp xếp thế nào, viết câu giới thiệu sao cho hay.',
     },
+    { h3: 'Lệnh nhanh: đổi logo, số điện thoại, màu… ngay trong khung chat' },
+    {
+      p: 'Gõ dấu **/** trong ô chat để hiện danh sách lệnh. Lệnh không cần khoá AI và làm đúng điều bạn gõ, không đoán.',
+    },
+    { img: 'adm-ai-commands.jpg', width: 430 },
+    {
+      steps: [
+        'Gõ **/** — danh sách lệnh hiện ra. Gõ thêm vài chữ để lọc, bấm Tab hoặc bấm chuột để chọn.',
+        'Với ảnh: kéo ảnh thả vào khung chat (hoặc dán, hoặc bấm biểu tượng kẹp giấy), rồi gõ lệnh, ví dụ **/logo**.',
+      ],
+    },
+    { img: 'adm-ai-command-card.jpg', width: 430 },
+    {
+      steps: [
+        'Ảnh và lệnh bạn vừa gửi.',
+        'Thẻ xem trước cho thấy cái cũ → cái mới.',
+        'Bấm **Apply** mới thay đổi; bấm **Cancel** nếu không muốn. Sau khi áp dụng có nút **Undo** để trả lại như cũ.',
+      ],
+    },
+    {
+      table: [
+        ['Lệnh', 'Làm gì', 'Ví dụ'],
+        [
+          '**/logo**, **/logo-dark**, **/badge**, **/favicon**',
+          'Thay logo nền sáng, logo nền tối, logo tròn, biểu tượng tab trình duyệt',
+          '/logo + thả file logo',
+        ],
+        ['**/photos**', 'Đưa ảnh vào thư viện Photos', '/photos + thả nhiều ảnh'],
+        [
+          '**/project** tên',
+          'Tạo công trình nháp từ ảnh (ảnh đầu là ảnh bìa)',
+          '/project Đào hồ bơi ở Lewes',
+        ],
+        [
+          '**/phone**, **/email**, **/hours**, **/tagline**',
+          'Đổi số điện thoại, email, giờ làm việc, câu khẩu hiệu',
+          '/phone 302-555-0100',
+        ],
+        [
+          '**/address**',
+          'Đổi địa chỉ (đường, thành phố, bang mã bưu chính)',
+          '/address 12 Main St, Lewes, DE 19958',
+        ],
+        ['**/color** mã màu', 'Tạo bảng màu từ màu thương hiệu (lưu nháp)', '/color #1D5FA8'],
+        ['**/palette** tên', 'Chọn bảng màu có sẵn (lưu nháp)', '/palette Studio'],
+      ],
+      widths: [30, 42, 28],
+    },
+    {
+      note: 'Thả ảnh mà không gõ lệnh, trợ lý sẽ hỏi muốn dùng ảnh làm gì (logo, favicon, thêm vào Photos, tạo công trình). Có thể dán đường link ảnh sau lệnh, ví dụ /logo https://…/logo.png. Lệnh đổi logo, thông tin công ty và màu chỉ dành cho Manager. Màu được lưu nháp: mở Colours & fonts xem trước rồi bấm Publish.',
+    },
     { h3: 'Gắn khoá AI miễn phí (làm một lần, chỉ Manager)' },
     { p: 'Vào **Settings → AI assistant**:' },
     { img: 'adm-ai-setup.jpg' },

@@ -27,54 +27,60 @@ export const Thumbs: React.FC<{
     </div>
   ) : null
 
-/** Full-screen view of a screenshot; arrows or ← → move between the pictures of that answer. */
+export type ViewerItem = { src: string; caption: string }
+
+/** Guide screenshots as viewer items. */
+export const helpItems = (ids: HelpImageId[]): ViewerItem[] =>
+  ids.map((id) => ({ src: helpImageUrl(id), caption: helpImages[id] }))
+
+/** Full-screen view of a picture; arrows or ← → move between the pictures of that answer. */
 export const ImageViewer: React.FC<{
-  ids: HelpImageId[]
+  items: ViewerItem[]
   index: number
   onIndex: (i: number) => void
   onClose: () => void
-}> = ({ ids, index, onIndex, onClose }) => {
-  const id = ids[index]
-  const many = ids.length > 1
+}> = ({ items, index, onIndex, onClose }) => {
+  const item = items[index]
+  const many = items.length > 1
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
-      if (many && e.key === 'ArrowRight') onIndex((index + 1) % ids.length)
-      if (many && e.key === 'ArrowLeft') onIndex((index - 1 + ids.length) % ids.length)
+      if (many && e.key === 'ArrowRight') onIndex((index + 1) % items.length)
+      if (many && e.key === 'ArrowLeft') onIndex((index - 1 + items.length) % items.length)
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [index, ids.length, many, onClose, onIndex])
+  }, [index, items.length, many, onClose, onIndex])
 
   return createPortal(
     <div
-      aria-label={helpImages[id]}
+      aria-label={item.caption}
       aria-modal="true"
       className="mb-viewer"
       onClick={(e) => e.target === e.currentTarget && onClose()}
       role="dialog"
     >
       <figure>
-        <img alt={helpImages[id]} onClick={onClose} src={helpImageUrl(id)} />
+        <img alt={item.caption} onClick={onClose} src={item.src} />
         <figcaption>
-          {helpImages[id]}
-          {many ? <span>{` · ${index + 1} / ${ids.length}`}</span> : null}
+          {item.caption}
+          {many ? <span>{` · ${index + 1} / ${items.length}`}</span> : null}
         </figcaption>
       </figure>
       {many ? (
         <>
           <button
-            aria-label="Previous screenshot"
+            aria-label="Previous picture"
             className="mb-viewer__nav mb-viewer__prev"
-            onClick={() => onIndex((index - 1 + ids.length) % ids.length)}
+            onClick={() => onIndex((index - 1 + items.length) % items.length)}
             type="button"
           >
             ‹
           </button>
           <button
-            aria-label="Next screenshot"
+            aria-label="Next picture"
             className="mb-viewer__nav mb-viewer__next"
-            onClick={() => onIndex((index + 1) % ids.length)}
+            onClick={() => onIndex((index + 1) % items.length)}
             type="button"
           >
             ›

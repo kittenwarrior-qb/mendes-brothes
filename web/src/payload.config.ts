@@ -7,6 +7,7 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { commandEndpoints } from './ai/commandEndpoints'
 import { aiEndpoints } from './ai/endpoints'
 import { AnalyticsDaily, AnalyticsVisitors } from './analytics/collections'
 import { trackEndpoint } from './analytics/track'
@@ -125,7 +126,13 @@ export default buildConfig({
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [SiteSettings, Theme, Header, Footer, ListingPages, BackupSettings, AiSettings],
-  endpoints: [...backupEndpoints, ...aiEndpoints, leadsExportEndpoint, trackEndpoint],
+  endpoints: [
+    ...backupEndpoints,
+    ...aiEndpoints,
+    ...commandEndpoints,
+    leadsExportEndpoint,
+    trackEndpoint,
+  ],
   // photo folders are switched off in the admin (hidden in custom.scss); the tables are kept for now
   folders: { browseByFolder: false },
   plugins,

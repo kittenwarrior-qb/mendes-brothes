@@ -21,15 +21,18 @@ import {
   MessageCircleQuestion,
   Newspaper,
   Palette,
+  Paperclip,
   PanelBottom,
   Phone,
   Search,
   SendHorizontal,
+  SquareSlash,
   Settings,
   Sparkles,
   Star,
   Tags,
   Truck,
+  Undo2,
   Users,
   Wrench,
 } from 'lucide-react'
@@ -38,9 +41,11 @@ import React from 'react'
 /** One line-icon set for the whole admin, looked up by name so server code can pass plain strings. */
 const icons = {
   account: CircleUser,
+  attach: Paperclip,
   ai: Sparkles,
   backup: DatabaseBackup,
   categories: Tags,
+  commands: SquareSlash,
   company: Building2,
   download: Download,
   equipment: Truck,
@@ -69,6 +74,7 @@ const icons = {
   stats: ChartNoAxesColumn,
   settings: Settings,
   towns: MapPin,
+  undo: Undo2,
   users: Users,
 }
 

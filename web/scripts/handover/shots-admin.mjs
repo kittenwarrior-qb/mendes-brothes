@@ -526,6 +526,30 @@ const shots = {
     ])
     await snap('ai-chat', { x: 640, y: 150, width: 800, height: 750 })
     await chat.getByRole('button', { name: 'New chat' }).click()
+
+    // quick commands: the / menu, then a /logo preview card (cancelled, nothing changes)
+    const box = chat.getByLabel('Your question')
+    await box.fill('/')
+    await page.waitForTimeout(300)
+    await mark([
+      [box, 1],
+      [chat.locator('.mb-chat__menu li').first(), 2],
+    ])
+    await snap('ai-commands', { x: 640, y: 150, width: 800, height: 750 })
+    await chat.locator('input[type=file]').setInputFiles('public/brand/logo-word.webp')
+    await box.fill('/logo')
+    await box.press('Enter')
+    const card = chat.locator('.mb-card').last()
+    await card.waitFor()
+    await page.waitForTimeout(400)
+    await mark([
+      [chat.locator('.mb-chat__msg--user').last(), 1],
+      [card.locator('.mb-card__change'), 2],
+      [card.getByRole('button', { name: 'Apply' }), 3],
+    ])
+    await snap('ai-command-card', { x: 640, y: 150, width: 800, height: 750 })
+    await card.getByRole('button', { name: 'Cancel' }).click()
+    await chat.getByRole('button', { name: 'New chat' }).click()
     await chat.getByRole('button', { name: 'Close the assistant' }).click()
     if (!key) return console.log('   (set AI_KEY for the connected AI screenshots)')
 
