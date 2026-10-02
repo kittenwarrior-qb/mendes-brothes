@@ -8,6 +8,8 @@ import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { aiEndpoints } from './ai/endpoints'
+import { AnalyticsDaily, AnalyticsVisitors } from './analytics/collections'
+import { trackEndpoint } from './analytics/track'
 import { backupEndpoints } from './backup/endpoints'
 import { Categories } from './collections/Categories'
 import { Equipment } from './collections/Equipment'
@@ -55,6 +57,10 @@ export default buildConfig({
         help: { Component: '@/components/admin/HelpView#HelpView', path: '/help' },
         settings: { Component: '@/components/admin/SettingsView#SettingsView', path: '/settings' },
         ai: { Component: '@/components/admin/ai/AiSettingsView#AiSettingsView', path: '/ai' },
+        statistics: {
+          Component: '@/components/admin/stats/StatsView#StatsView',
+          path: '/statistics',
+        },
         backups: {
           Component: '@/components/admin/backups/BackupsView#BackupsView',
           path: '/backups',
@@ -114,10 +120,12 @@ export default buildConfig({
     Categories,
     Media,
     Users,
+    AnalyticsDaily,
+    AnalyticsVisitors,
   ],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [SiteSettings, Theme, Header, Footer, ListingPages, BackupSettings, AiSettings],
-  endpoints: [...backupEndpoints, ...aiEndpoints, leadsExportEndpoint],
+  endpoints: [...backupEndpoints, ...aiEndpoints, leadsExportEndpoint, trackEndpoint],
   // photo folders are switched off in the admin (hidden in custom.scss); the tables are kept for now
   folders: { browseByFolder: false },
   plugins,

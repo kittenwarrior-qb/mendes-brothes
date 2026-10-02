@@ -7,6 +7,7 @@ import * as migration_20261001_162948_admin_roles_and_leads from './20261001_162
 import * as migration_20261001_173940_studio_palettes from './20261001_173940_studio_palettes'
 import * as migration_20261001_173941_studio_default from './20261001_173941_studio_default'
 import * as migration_20261002_034848_ai_settings from './20261002_034848_ai_settings'
+import * as migration_20261002_043902_statistics from './20261002_043902_statistics'
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20261002_034848_ai_settings.up,
     down: migration_20261002_034848_ai_settings.down,
     name: '20261002_034848_ai_settings',
+  },
+  {
+    up: migration_20261002_043902_statistics.up,
+    down: migration_20261002_043902_statistics.down,
+    name: '20261002_043902_statistics',
   },
 ]

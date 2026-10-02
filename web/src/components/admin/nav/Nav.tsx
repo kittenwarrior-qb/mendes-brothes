@@ -13,6 +13,7 @@ const main: NavItem[] = [
   { href: '/admin/collections/projects', icon: 'projects', label: 'Projects' },
   { href: '/admin/collections/posts', icon: 'news', label: 'News' },
   { href: '/admin/collections/media', icon: 'photos', label: 'Photos' },
+  { href: '/admin/statistics', icon: 'stats', label: 'Statistics' },
 ]
 
 const company: NavItem[] = [

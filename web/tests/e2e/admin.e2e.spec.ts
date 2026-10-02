@@ -82,6 +82,13 @@ test.describe('admin panel', () => {
     await expect(page.getByRole('button', { name: /Upload a backup file/ })).toBeVisible()
   })
 
+  test('statistics screen shows the numbers', async () => {
+    await page.goto('/admin/statistics?days=30')
+    await expect(page.getByRole('heading', { name: 'Statistics' })).toBeVisible()
+    await expect(page.getByRole('img', { name: 'Visitors per day' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Where visitors came from' })).toBeVisible()
+  })
+
   test('projects list opens', async () => {
     await page.goto('/admin/collections/projects')
     await expect(page.locator('h1', { hasText: 'Projects' }).first()).toBeVisible()

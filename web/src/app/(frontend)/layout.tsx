@@ -8,6 +8,7 @@ import React from 'react'
 
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { BackToTop, RevealOnScroll } from '@/components/site/ClientHelpers'
+import { Track } from '@/components/site/Track'
 import { businessSchema, JsonLd } from '@/components/site/JsonLd'
 import { SmartLink } from '@/components/site/SmartLink'
 import { Footer } from '@/Footer/Component'
@@ -111,6 +112,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             Call now · {settings.phone}
           </a>
         ) : null}
+        <Track />
         {settings.backToTop ? <BackToTop /> : null}
         {theme.animations ? <RevealOnScroll /> : null}
         {settings.plausibleDomain ? (

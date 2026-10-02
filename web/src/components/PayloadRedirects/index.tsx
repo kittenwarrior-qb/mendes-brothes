@@ -3,7 +3,15 @@ import type { Page, Post } from '@/payload-types'
 
 import { getCachedDocument } from '@/utilities/getDocument'
 import { getCachedRedirects } from '@/utilities/getRedirects'
-import { notFound, redirect } from 'next/navigation'
+import configPromise from '@payload-config'
+import { notFound, permanentRedirect as redirect } from 'next/navigation'
+import { getPayload } from 'payload'
+
+import { bumpQuietly } from '@/analytics/track'
+
+/** For the Statistics screen: which old addresses are still being used. */
+const countRedirect = async (from: string, to: string) =>
+  bumpQuietly(await getPayload({ config: configPromise }), 'redirect', `${from} → ${to}`)
 
 interface Props {
   disableNotFound?: boolean
@@ -18,6 +26,7 @@ export const PayloadRedirects: React.FC<Props> = async ({ disableNotFound, url }
 
   if (redirectItem) {
     if (redirectItem.to?.url) {
+      await countRedirect(url, redirectItem.to.url)
       redirect(redirectItem.to.url)
     }
 
@@ -39,7 +48,10 @@ export const PayloadRedirects: React.FC<Props> = async ({ disableNotFound, url }
       }`
     }
 
-    if (redirectUrl) redirect(redirectUrl)
+    if (redirectUrl) {
+      await countRedirect(url, redirectUrl)
+      redirect(redirectUrl)
+    }
   }
 
   if (disableNotFound) return null

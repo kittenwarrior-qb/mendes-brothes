@@ -79,6 +79,8 @@ export interface Config {
     faqs: Faq;
     users: User;
     categories: Category;
+    'analytics-daily': AnalyticsDaily;
+    'analytics-visitors': AnalyticsVisitor;
     redirects: Redirect;
     forms: Form;
     search: Search;
@@ -107,6 +109,8 @@ export interface Config {
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    'analytics-daily': AnalyticsDailySelect<false> | AnalyticsDailySelect<true>;
+    'analytics-visitors': AnalyticsVisitorsSelect<false> | AnalyticsVisitorsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
@@ -1795,6 +1799,26 @@ export interface ArchiveBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-daily".
+ */
+export interface AnalyticsDaily {
+  id: number;
+  day: string;
+  kind: string;
+  key: string;
+  count: number;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-visitors".
+ */
+export interface AnalyticsVisitor {
+  id: number;
+  day: string;
+  hash: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -2034,6 +2058,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'analytics-daily';
+        value: number | AnalyticsDaily;
+      } | null)
+    | ({
+        relationTo: 'analytics-visitors';
+        value: number | AnalyticsVisitor;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2979,6 +3011,24 @@ export interface CategoriesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-daily_select".
+ */
+export interface AnalyticsDailySelect<T extends boolean = true> {
+  day?: T;
+  kind?: T;
+  key?: T;
+  count?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "analytics-visitors_select".
+ */
+export interface AnalyticsVisitorsSelect<T extends boolean = true> {
+  day?: T;
+  hash?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

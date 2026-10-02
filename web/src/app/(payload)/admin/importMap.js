@@ -38,6 +38,7 @@ import { Dashboard as Dashboard_0e7b23c75ea046975e1784ba01f82886 } from '@/compo
 import { HelpView as HelpView_b49611ccd828469519fd79e264a9eb51 } from '@/components/admin/HelpView'
 import { SettingsView as SettingsView_aed186f427612c880d8a28f694f189dc } from '@/components/admin/SettingsView'
 import { AiSettingsView as AiSettingsView_ce4bb0067ddf69580a6b4ae00c7029c2 } from '@/components/admin/ai/AiSettingsView'
+import { StatsView as StatsView_3bd6f40b74fde48834c7e4c49dc24bea } from '@/components/admin/stats/StatsView'
 import { BackupsView as BackupsView_1b65dd523e815e46ea1e994c992b727b } from '@/components/admin/backups/BackupsView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -83,6 +84,7 @@ export const importMap = {
   "@/components/admin/HelpView#HelpView": HelpView_b49611ccd828469519fd79e264a9eb51,
   "@/components/admin/SettingsView#SettingsView": SettingsView_aed186f427612c880d8a28f694f189dc,
   "@/components/admin/ai/AiSettingsView#AiSettingsView": AiSettingsView_ce4bb0067ddf69580a6b4ae00c7029c2,
+  "@/components/admin/stats/StatsView#StatsView": StatsView_3bd6f40b74fde48834c7e4c49dc24bea,
   "@/components/admin/backups/BackupsView#BackupsView": BackupsView_1b65dd523e815e46ea1e994c992b727b,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

@@ -77,6 +77,12 @@ Chỉ Admin mới cấp/thu hồi được quyền Admin. Tài khoản đầu ti
 - **Menu** (có menu con), **Footer**, **Backups** (xem mục C), **Users**.
 - Giao diện admin có tiếng Anh và tiếng Việt.
 
+**Thống kê** (menu Statistics, và 4 con số 7 ngày gần nhất trên Home)
+- Khách truy cập, số trang đã xem, lượt bấm số điện thoại, yêu cầu báo giá — so với kỳ trước; biểu đồ khách theo ngày (7 / 30 / 90 ngày), có bảng số.
+- Trang xem nhiều nhất, nguồn khách (Google, Facebook, gõ trực tiếp…), các cú bấm quan trọng (gọi điện, email, nút báo giá, bản đồ, mạng xã hội, link ra ngoài), điện thoại hay máy tính, redirect được dùng, địa chỉ 404.
+- Tự đếm trong website: không cookie, không dịch vụ ngoài, không lưu IP (chỉ lưu tổng theo ngày; nhận diện khách bằng mã băm đổi mỗi ngày, xoá sau 2 ngày). Bỏ qua bot và chính người đang đăng nhập admin. Giữ 13 tháng.
+- Redirect giờ trả mã vĩnh viễn (308).
+
 **Trợ lý AI** (tuỳ chọn, khách tự nhập key ở Settings → AI assistant)
 - **Khung chat** (nút tròn có logo, góc dưới phải, ở mọi màn hình): chưa có key thì trả lời theo bộ hướng dẫn có sẵn (hiểu cả câu hỏi tiếng Việt); có key thì AI trả lời mọi câu hỏi về admin và tư vấn màu, font, logo, bố cục, câu chữ. AI biết bảng màu đang dùng, danh sách bảng màu, các loại section và vai trò của người hỏi.
 - **Nút AI cạnh mọi ô chữ** (kể cả đoạn bôi đen trong ô soạn thảo): sửa chính tả, viết rõ hơn, rút gọn, dịch sang tiếng Anh. Xem bản đề xuất trước, bấm “Use this” mới thay.

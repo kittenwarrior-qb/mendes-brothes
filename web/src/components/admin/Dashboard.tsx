@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import { isManagerUser } from '@/access/roles'
+import { getReport } from '@/analytics/report'
 import { listBackups } from '@/backup'
 
 import { Icon } from './icons'
@@ -60,6 +61,8 @@ export const Dashboard: React.FC<AdminViewServerProps> = async ({ initPageResult
     payload.find({ collection: 'form-submissions', sort: '-createdAt', limit: 5, depth: 0 }),
   ])
   const lastBackup = manager ? (await listBackups().catch(() => []))[0] : undefined
+  // a broken statistics table must never take the home screen down with it
+  const week = await getReport(payload, 7).catch(() => null)
   const emailReady = Boolean(process.env.SMTP_HOST)
   const name = user && 'name' in user && user.name ? `, ${user.name}` : ''
   const count = newLeads.totalDocs
@@ -126,6 +129,27 @@ export const Dashboard: React.FC<AdminViewServerProps> = async ({ initPageResult
           </ul>
         ) : null}
       </section>
+
+      {week ? (
+        <>
+          <h2 className="mb-h2">The last 7 days</h2>
+          <div className="mb-dash__stats">
+            {(
+              [
+                ['Visitors', week.totals.visitors],
+                ['Pages viewed', week.totals.views],
+                ['Phone number clicked', week.totals.calls],
+                ['Quote requests', week.totals.leads],
+              ] as const
+            ).map(([label, value]) => (
+              <Link className="mb-stat" href="/admin/statistics?days=7" key={label}>
+                <span className="mb-stat__label">{label}</span>
+                <strong className="mb-stat__value">{value.toLocaleString('en-US')}</strong>
+              </Link>
+            ))}
+          </div>
+        </>
+      ) : null}
 
       <h2 className="mb-h2">Everyday tasks</h2>
       <Tiles tiles={everyday} />
