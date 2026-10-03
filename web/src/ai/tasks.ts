@@ -27,6 +27,8 @@ import { resolveTheme } from '../theme/resolve'
 import { commandsAsText } from './commands'
 import { helpImagesAsText } from './helpImages'
 import { helpAsText } from './helpKnowledge'
+import { answer as guideAnswer, answerAsText, siteMapAsText } from './siteGuide'
+import { loadSite } from './siteIndex'
 import { AiError, type AiTurn, generate } from './providers'
 
 type Doc = Record<string, unknown>
@@ -333,10 +335,14 @@ export const chat = async (
   config: AiConfig,
   input: { messages: AiTurn[]; manager: boolean; path?: string },
 ) => {
-  const [site, theme] = await Promise.all([
+  const [site, theme, map] = await Promise.all([
     payload.findGlobal({ slug: 'site-settings', depth: 0 }),
     payload.findGlobal({ slug: 'theme', depth: 0 }),
+    loadSite(payload),
   ])
+  // what the built-in guide finds for this question (text copied from the site, a section…)
+  const lastQuestion = [...input.messages].reverse().find((m) => m.role === 'user')?.text ?? ''
+  const found = guideAnswer(lastQuestion, map)
   const current = resolveTheme(theme)
   const palette = current.preset === AUTO_PALETTE ? 'Custom' : presets[current.preset].label
   const system = [
@@ -361,6 +367,18 @@ export const chat = async (
     '## How to do things in this admin',
     helpAsText(),
     '',
+    '## The pages of this website, section by section',
+    'Use this to say exactly which page and which row to open. Sections that list things (services, towns, reviews…) only show them: the items are edited in their own list. To remove a section: ⋯ at the right of its row → Remove. To hide it: Look of this section → Hide on → Hidden everywhere. To move it: drag the handle on the left of the row.',
+    siteMapAsText(map),
+    '',
+    ...(found.kind === 'found' || found.kind === 'section'
+      ? [
+          '## Looked up for this question',
+          'The admin looked the question up in the website content and found this. Base your answer on it; these locations are exact.',
+          answerAsText(found),
+          '',
+        ]
+      : []),
     '## Quick commands in this chat',
     'The person can type these commands in this same chat (each shows a preview card and only changes something after they press Apply). When a request matches one, tell them the exact command to type; you cannot run them yourself. Photos are dragged or pasted into the chat first. Logo, contact and colour commands are for managers.',
     commandsAsText(),

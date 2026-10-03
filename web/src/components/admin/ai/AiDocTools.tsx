@@ -35,7 +35,7 @@ const Count: React.FC<{ value: string; max: number }> = ({ value, max }) => (
 export const AiDocTools: React.FC = () => {
   const status = useAiStatus()
   const { collectionSlug } = useDocumentInfo()
-  const { dispatchFields, getData, setModified } = useForm()
+  const { dispatchFields, getData, getDataByPath, setModified } = useForm()
   const [menu, setMenu] = useState(false)
   const [view, setView] = useState<View | null>(null)
   const wrap = useRef<HTMLDivElement>(null)
@@ -68,14 +68,30 @@ export const AiDocTools: React.FC = () => {
     }
   }
 
-  const set = (path: string, value: unknown, alsoInitial = false) =>
-    dispatchFields({
-      type: 'UPDATE',
-      path,
-      value,
-      // the rich-text editor only redraws when its initial value changes too
-      ...(alsoInitial ? { initialValue: value } : {}),
-    })
+  const set = (path: string, value: unknown, alsoInitial = false) => {
+    const before = JSON.stringify(getDataByPath(path) ?? null)
+    const write = () =>
+      dispatchFields({
+        type: 'UPDATE',
+        path,
+        value,
+        // the rich-text editor only redraws when its initial value changes too
+        ...(alsoInitial ? { initialValue: value } : {}),
+      })
+    write()
+    // An autosave that was already on its way can answer with the old value and put it
+    // back. If that happens (the field is exactly what it was before), write it again.
+    for (const ms of [700, 2000])
+      setTimeout(() => {
+        if (
+          JSON.stringify(getDataByPath(path) ?? null) === before &&
+          before !== JSON.stringify(value)
+        ) {
+          write()
+          setModified(true)
+        }
+      }, ms)
+  }
 
   const applySeo = (seo: Seo) => {
     set('meta.title', seo.title)

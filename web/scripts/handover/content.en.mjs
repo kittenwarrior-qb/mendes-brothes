@@ -487,6 +487,14 @@ export const doc = {
     {
       note: 'With an AI key connected, the assistant also gives advice: which colours or fonts to pick, how to prepare a logo, how to arrange a page, how to word an introduction.',
     },
+    { h3: 'Ask where a text is edited, or how to change any section' },
+    {
+      steps: [
+        'Copy any text from the website — a heading, a sentence, a list — and paste it into the assistant. It answers with the page and the section where that text is typed, or the list it comes from (Towns we serve, Services, FAQs, Reviews…), and a button that opens that screen.',
+        'Ask how to change, remove, hide, move or add a section, naming it by its heading or its kind (“delete the service area section”). The answer names the exact page and row.',
+        'This works without an AI key. With a key, the AI uses the same look-up, so its answers point to the right screen too.',
+      ],
+    },
     { h3: 'Quick commands: change the logo, phone number, colours… from the chat' },
     {
       p: 'Type **/** in the chat box to see the commands. Commands need no AI key and do exactly what you type — no guessing.',

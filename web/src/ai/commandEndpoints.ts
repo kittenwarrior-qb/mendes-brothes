@@ -13,6 +13,8 @@ import {
   textFields,
 } from './commands'
 import { FetchImageError, fetchImage } from './fetchImage'
+import { answer } from './siteGuide'
+import { loadSite } from './siteIndex'
 
 /*
  * What the assistant's quick commands do once the person presses "Apply" on the preview
@@ -199,6 +201,23 @@ const fail = (req: PayloadRequest, err: unknown) => {
 }
 
 export const commandEndpoints: Endpoint[] = [
+  {
+    // The built-in (no AI) answer: where a text on the site lives, how to change a section,
+    // or the matching how-to topic. Reads the site as it is right now.
+    path: '/assistant/answer',
+    method: 'post',
+    handler: async (req) => {
+      if (!req.user) return json({ error: 'Log in first.' }, 401)
+      if (tooMany(`answer:${req.user.id}`, 60))
+        return json({ error: 'That is a lot of questions. Wait a minute.' }, 429)
+      const question = String((await body(req)).question ?? '').slice(0, 4000)
+      try {
+        return json(answer(question, await loadSite(req.payload)))
+      } catch (err) {
+        return fail(req, err)
+      }
+    },
+  },
   {
     // A photo from a link: downloaded by the server (safely) into the photo library.
     path: '/assistant/image-url',

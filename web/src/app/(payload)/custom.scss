@@ -1700,3 +1700,27 @@ button.mb-btn {
   display: grid;
   gap: 8px;
 }
+
+/* ───────── assistant: answers about this website (page, section, list) ───────── */
+.mb-chat__part {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--theme-elevation-150);
+  border-left: 3px solid var(--mb-brand);
+  border-radius: 10px;
+  background: var(--theme-elevation-0);
+
+  ol {
+    margin: 4px 0 0;
+  }
+  em {
+    color: var(--theme-elevation-600);
+    font-size: 13px;
+  }
+  .mb-chat__go {
+    justify-self: start;
+    margin-top: 4px;
+  }
+}

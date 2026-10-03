@@ -479,6 +479,14 @@ export const doc = {
     {
       note: 'Khi đã gắn khoá AI, trợ lý còn tư vấn được: nên chọn màu nào, phông chữ nào, logo cần chuẩn bị ra sao, trang nên sắp xếp thế nào, viết câu giới thiệu sao cho hay.',
     },
+    { h3: 'Hỏi một đoạn chữ sửa ở đâu, hoặc cách sửa bất kỳ section nào' },
+    {
+      steps: [
+        'Sao chép một đoạn chữ bất kỳ trên website (tiêu đề, một câu, một danh sách) rồi dán vào trợ lý. Trợ lý trả lời đoạn đó nằm ở trang nào, section nào, hoặc thuộc danh sách nào (Towns we serve, Services, FAQs, Reviews…), kèm nút mở thẳng màn hình đó.',
+        'Hỏi cách sửa, xoá, ẩn, dời hoặc thêm một section, gọi theo tiêu đề hoặc loại của nó (ví dụ “xóa section service area”). Câu trả lời nêu đúng trang và đúng hàng.',
+        'Tính năng này không cần khoá AI. Khi có khoá, AI dùng cùng kết quả tra cứu nên cũng chỉ đúng màn hình.',
+      ],
+    },
     { h3: 'Lệnh nhanh: đổi logo, số điện thoại, màu… ngay trong khung chat' },
     {
       p: 'Gõ dấu **/** trong ô chat để hiện danh sách lệnh. Lệnh không cần khoá AI và làm đúng điều bạn gõ, không đoán.',

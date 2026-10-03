@@ -15,6 +15,7 @@ import {
 } from '@/ai/commands'
 import { type HelpImageId, isHelpImage } from '@/ai/helpImages'
 import { type HelpTopic, helpTopics, matchTopic } from '@/ai/helpKnowledge'
+import type { GuideAnswer, GuidePart } from '@/ai/siteGuide'
 
 import { Icon } from '../icons'
 import { CommandCard } from './CommandCard'
@@ -39,6 +40,9 @@ type Message =
       from: 'bot'
       text: string
       topic?: HelpTopic
+      /** answers about this website: one block per place (page section, list, settings) */
+      parts?: GuidePart[]
+      images?: HelpImageId[]
       note?: string
       suggest?: 'starters' | 'all'
       chips?: Chip[]
@@ -108,13 +112,11 @@ const withLinks = (text: string) =>
     ),
   )
 
-/** The built-in answer when no AI key is connected (or the AI could not be reached). */
-const builtIn = (question: string, manager: boolean): Message => {
-  const topic = matchTopic(question)
+const topicAnswer = (topic: HelpTopic | null | undefined, manager: boolean): Message => {
   if (!topic) {
     return {
       from: 'bot',
-      text: 'I do not have a ready answer for that one. These are the things I can explain:',
+      text: 'I do not have a ready answer for that one. Tip: paste the text from the website (a heading, a sentence) and I will tell you where it is changed. These are the things I can explain:',
       suggest: 'all',
       note: manager
         ? 'Connect a free AI key and I can answer any question: /admin/ai'
@@ -129,6 +131,32 @@ const builtIn = (question: string, manager: boolean): Message => {
     }
   }
   return { from: 'bot', text: `${topic.q}:`, topic }
+}
+
+/**
+ * The built-in answer when no AI key is connected (or the AI could not be reached).
+ * The server looks the question up in the website itself: text copied from a page, a
+ * section to change or remove, or a how-to topic. Offline, only the how-to topics remain.
+ */
+const builtIn = async (question: string, manager: boolean): Promise<Message> => {
+  try {
+    const res = await fetch('/api/assistant/answer', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question }),
+    })
+    if (!res.ok) throw new Error(String(res.status))
+    const a = (await res.json()) as GuideAnswer
+    if (a.kind === 'found' || a.kind === 'section')
+      return { from: 'bot', text: a.text, parts: a.parts, images: a.images }
+    return topicAnswer(
+      helpTopics.find((t) => t.id === a.topicId),
+      manager,
+    )
+  } catch {
+    return topicAnswer(matchTopic(question), manager)
+  }
 }
 
 const commandList = (manager: boolean): Message => ({
@@ -204,7 +232,12 @@ export const AiChat: React.FC = () => {
     const history = [...messages, { from: 'user', text } as Message]
     setMessages(history)
     if (!status.enabled) {
-      setMessages([...history, builtIn(text, manager)])
+      setBusy(true)
+      try {
+        setMessages([...history, await builtIn(text, manager)])
+      } finally {
+        setBusy(false)
+      }
       return
     }
     setBusy(true)
@@ -222,7 +255,7 @@ export const AiChat: React.FC = () => {
       setMessages([...history, { from: 'bot', text: answer }])
     } catch (err) {
       // the AI could not answer: fall back to the built-in guide, and say why
-      const fallback = builtIn(text, manager)
+      const fallback = await builtIn(text, manager)
       setMessages([
         ...history,
         { ...fallback, note: err instanceof Error ? err.message : String(err) } as Message,
@@ -478,6 +511,30 @@ export const AiChat: React.FC = () => {
                           </Link>
                         ) : null}
                       </>
+                    ) : null}
+                    {m.parts?.map((part) => (
+                      <div className="mb-chat__part" key={part.title}>
+                        <strong>{part.title}</strong>
+                        {part.managerOnly && !manager ? (
+                          <em>A manager does this — ask the owner of the account.</em>
+                        ) : null}
+                        <ol>
+                          {part.steps.map((step) => (
+                            <li key={step}>{step}</li>
+                          ))}
+                        </ol>
+                        {part.link && !(part.managerOnly && !manager) ? (
+                          <Link className="mb-chat__go" href={part.link.href}>
+                            {part.link.label} <Icon name="external" size={15} />
+                          </Link>
+                        ) : null}
+                      </div>
+                    ))}
+                    {m.images?.length ? (
+                      <Thumbs
+                        ids={m.images}
+                        onOpen={(ids, index) => setViewer({ items: helpItems(ids), index })}
+                      />
                     ) : null}
                     {m.chips?.length ? (
                       <div className="mb-chat__chips">
