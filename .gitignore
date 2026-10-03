@@ -1,0 +1,4 @@
+# Raw client photos: uploaded to the site database, never committed
+/img/
+# Site backups downloaded from the server (database + photos)
+/backups/
