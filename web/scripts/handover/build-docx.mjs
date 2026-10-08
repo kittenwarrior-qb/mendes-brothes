@@ -219,7 +219,7 @@ for (const b of doc.body) {
   else if (b.table) children.push(table(b.table, { widths: b.widths }), para(''))
   else if (b.img) {
     // admin screenshots are a little narrower so that a picture and its steps share a page
-    const width = b.width ?? (b.img.startsWith('adm-') ? 570 : PAGE_W)
+    const width = b.width ?? ((b.img.startsWith('adm-') || b.img.startsWith('wp-')) ? 570 : PAGE_W)
     children.push(...(await image(b.img, b.caption, width)))
   }
 }
